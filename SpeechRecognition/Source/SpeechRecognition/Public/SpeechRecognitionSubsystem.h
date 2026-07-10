@@ -19,7 +19,7 @@ class SPEECHRECOGNITION_API USpeechRecognitionSubsystem : public UWorldSubsystem
 
 	int32 instanceCtr;
 	
-	FSpeechRecognitionWorker* listenerThread;
+	FSpeechRecognitionWorker* listenerThread = nullptr;
 
 	static void WordsSpoken_trigger(FWordsSpokenSignature delegate_method, FRecognisedPhrases text);
 	static void UnknownPhrase_trigger(FUnknownPhraseSignature delegate_method);

@@ -48,14 +48,19 @@ string FSpeechRecognitionWorker::GetOriginalString(string s) const
 }
 
 FSpeechRecognitionWorker::~FSpeechRecognitionWorker() {
-	delete Thread;
-	Thread = NULL;
+	// Idempotent: if ShutDown() was already called by the owning subsystem,
+	// this is a no-op. Guarantees the thread is stopped and joined before
+	// the worker's memory is released.
+	ShutDown();
 }
 
 void FSpeechRecognitionWorker::ShutDown() {
 	Stop();
-	Thread->WaitForCompletion();
-	delete Thread;
+	if (Thread != nullptr) {
+		Thread->WaitForCompletion();
+		delete Thread;
+		Thread = nullptr;
+	}
 }
 
 bool FSpeechRecognitionWorker::EnableGrammarMode(FString grammarName)
@@ -297,7 +302,7 @@ bool FSpeechRecognitionWorker::StartThread(USpeechRecognitionSubsystem* manager)
 	const int32 threadIdx = ISpeechRecognition::Get().GetInstanceCounter();
 	const FString threadName = FString("FSpeechRecognitionWorker:") + FString::FromInt(threadIdx);
 	Thread = FRunnableThread::Create(this, *threadName, 0U, TPri_Highest);
-	return true;
+	return Thread != nullptr;
 }
 
 void FSpeechRecognitionWorker::ClientMessage(const FString& text) {
