@@ -10,6 +10,15 @@ USpeechRecognitionSubsystem::USpeechRecognitionSubsystem()
 
 bool USpeechRecognitionSubsystem::Init(ESpeechRecognitionLanguage Language, bool bInitDefaultConfigParams)
 {
+	// If the third-party DLLs failed to load, fail gracefully instead of
+	// crashing on the first delay-loaded Sphinx call.
+	if (!SPEECHRECOGNITIONPLUGIN.AreLibrariesLoaded())
+	{
+		UE_LOG(SpeechRecognitionPlugin, Error,
+			TEXT("Speech Recognition is unavailable: the SphinxBase/PocketSphinx DLLs were not loaded. See the startup log for details."));
+		return false;
+	}
+
 	bool bSuccess = false;
 	
 	// terminate any existing thread

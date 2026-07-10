@@ -6,6 +6,10 @@ IMPLEMENT_MODULE( FSpeechRecognition, SpeechRecognition )
 
 void FSpeechRecognition::StartupModule()
 {
+    // Assume available; on Windows this is downgraded if the DLLs are missing.
+    // On other platforms the Sphinx libraries are statically linked.
+    bLibrariesLoaded = true;
+
     if(PLATFORM_WINDOWS) {
         //Search project plugins folder for Dll
         FString dllName = "SphinxBase.dll";
@@ -17,8 +21,7 @@ void FSpeechRecognition::StartupModule()
         }
         else
         {
-            //Stop loading - plugin required DLL to load successfully
-            checkf(false, TEXT("Failed to load dll"));
+            bLibrariesLoaded = false;
         }
         
         dllName = "PocketSphinx.dll";
@@ -30,10 +33,24 @@ void FSpeechRecognition::StartupModule()
         }
         else
         {
-            //Stop loading - plugin required DLL to load successfully
-            checkf(false, TEXT("Failed to load dll"));
+            bLibrariesLoaded = false;
+        }
+
+        if (!bLibrariesLoaded)
+        {
+            // Do not hard-crash the editor/game (the previous behaviour was a
+            // checkf). Log the problem, and let USpeechRecognitionSubsystem
+            // fail Init() gracefully instead.
+            UE_LOG(SpeechRecognitionPlugin, Error,
+                TEXT("SpeechRecognition: failed to locate SphinxBase.dll and/or PocketSphinx.dll under the project or engine Plugins directory. ")
+                TEXT("Speech recognition will be unavailable. Ensure the plugin's ThirdParty DLLs are present (see the plugin README)."));
         }
     }
+}
+
+bool FSpeechRecognition::AreLibrariesLoaded() const
+{
+    return bLibrariesLoaded;
 }
 
 bool FSpeechRecognition::SearchForDllPath(const FString& _searchBase, FString _dllName)

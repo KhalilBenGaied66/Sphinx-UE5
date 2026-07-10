@@ -20,9 +20,6 @@
 #include "SpeechRecognition.h"
 #include "Chaos/AABB.h"
 
-//General Log
-DECLARE_LOG_CATEGORY_EXTERN(SpeechRecognitionPlugin, Log, All);
-
 #define SENSCR_SHIFT 10
 
 class USpeechRecognitionSubsystem;
