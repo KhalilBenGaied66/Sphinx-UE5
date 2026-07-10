@@ -30,5 +30,11 @@ public:
 		return instanceCtr++;
 	}
 
+	/** Whether the third-party speech libraries were successfully located at module startup */
+	virtual bool AreLibrariesLoaded() const
+	{
+		return false;
+	}
+
 };
 

@@ -5,6 +5,9 @@
 #include "ISpeechRecognition.h"
 #include "SpeechRecognition.generated.h"
 
+//General Log (defined in SpeechRecognitionWorker.cpp)
+DECLARE_LOG_CATEGORY_EXTERN(SpeechRecognitionPlugin, Log, All);
+
 //Common structures and enumerations
 USTRUCT(BlueprintType)
 struct FRecognisedPhrases
@@ -94,11 +97,17 @@ struct FRecognitionPhrase
 class FSpeechRecognition :public ISpeechRecognition
 {
 
+	/** True when the required third-party libraries were located at startup */
+	bool bLibrariesLoaded = false;
+
 public:
 
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
+
+	/** ISpeechRecognition implementation */
+	virtual bool AreLibrariesLoaded() const override;
 
 	/** Search for a dll to be loaded dynamically */
 	bool SearchForDllPath(const FString& _searchBase, FString _dllName);
