@@ -73,10 +73,10 @@ private:
 	ESpeechRecognitionLanguage language;
 
 	//Thread
-	FRunnableThread* Thread;
+	FRunnableThread* Thread = nullptr;
 
 	//Pointer to our manager
-	USpeechRecognitionSubsystem* Manager;
+	USpeechRecognitionSubsystem* Manager = nullptr;
 
 	//Thread safe counter 
 	FThreadSafeCounter StopTaskCounter;

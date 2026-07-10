@@ -21,7 +21,7 @@ bool USpeechRecognitionSubsystem::Init(ESpeechRecognitionLanguage Language, bool
 
 	bool bSuccess = false;
 	
-	// terminate any existing thread
+	// reuse any existing thread
 	if (listenerThread != NULL) {
 		listenerThread->SetLanguage(Language);
 		bSuccess = true;
@@ -34,6 +34,11 @@ bool USpeechRecognitionSubsystem::Init(ESpeechRecognitionLanguage Language, bool
 		TArray<FRecognitionPhrase> dictionaryList;
 		listenerThread->SetLanguage(Language);
 		bSuccess = listenerThread->StartThread(this);
+		if (!bSuccess)
+		{
+			delete listenerThread;
+			listenerThread = nullptr;
+		}
 	}
 
 	if (bSuccess && bInitDefaultConfigParams)
@@ -68,7 +73,10 @@ bool USpeechRecognitionSubsystem::SetConfigParam(FString param, ESpeechRecogniti
 bool USpeechRecognitionSubsystem::Shutdown()
 {
 	if (listenerThread != NULL) {
+		// stops the runnable, joins and deletes the thread...
 		listenerThread->ShutDown();
+		// ...then releases the worker object itself (previously leaked)
+		delete listenerThread;
 		listenerThread = NULL;
 		return true;
 	}
