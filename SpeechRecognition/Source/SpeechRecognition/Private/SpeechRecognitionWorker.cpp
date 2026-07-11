@@ -374,7 +374,8 @@ uint32 FSpeechRecognitionWorker::Run() {
 
 					bool skip = false;
 					for (v_It = splitString.begin(); v_It != splitString.end(); ++v_It) {
-						string orginalStr = GetOriginalString(splitString[0]);
+						// validate each word of the phrase (not just the first word)
+						string orginalStr = GetOriginalString(*v_It);
 						if (dictionary.find(orginalStr) == dictionary.end())
 						{
 							skip = true;
