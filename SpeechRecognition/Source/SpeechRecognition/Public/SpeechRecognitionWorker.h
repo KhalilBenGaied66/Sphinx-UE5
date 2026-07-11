@@ -50,7 +50,7 @@ private:
 	// Sphinx
 	ps_decoder_t *ps = nullptr;
 	cmd_ln_t *config = nullptr;
-	ad_rec_t *ad;
+	ad_rec_t *ad = nullptr;
 	int16 adbuf[1024];
 	uint8 utt_started, in_speech;
 	int32 k;
@@ -100,6 +100,10 @@ private:
 	vector<string> Split(string s);
 	//Removes brackets, and 1-9 characters, from a string
 	string GetOriginalString(string s) const;
+
+	//Releases the audio device and decoder prior to a re-initialisation,
+	//shutdown, or failed initialisation (worker thread only)
+	void ReleaseSphinxResources();
 
 public:
 	FSpeechRecognitionWorker();

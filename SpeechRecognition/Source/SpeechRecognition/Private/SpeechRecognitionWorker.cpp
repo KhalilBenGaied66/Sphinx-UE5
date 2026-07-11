@@ -63,6 +63,20 @@ void FSpeechRecognitionWorker::ShutDown() {
 	}
 }
 
+void FSpeechRecognitionWorker::ReleaseSphinxResources()
+{
+	if (ad != nullptr) {
+		ad_close(ad);
+		ad = nullptr;
+	}
+	if (ps != nullptr) {
+		// ps_free releases the decoder's own reference to the config;
+		// the worker's reference is released separately in Run()/InitConfig().
+		ps_free(ps);
+		ps = nullptr;
+	}
+}
+
 bool FSpeechRecognitionWorker::EnableGrammarMode(FString grammarName)
 {
 	const char* name = TCHAR_TO_ANSI(*grammarName);
@@ -198,8 +212,12 @@ void FSpeechRecognitionWorker::InitConfig() {
 	modelPath = contentPath_str + "model/" + langStr + "/" + langStr;
 	dictionaryPath = contentPath_str + "model/" + langStr + "/" + langStr + ".dict";
 
-	if (ps != NULL) {
+	// Release the worker's reference to any previous config. If a decoder was
+	// built from it, the decoder still holds its own reference until it is
+	// freed in ReleaseSphinxResources().
+	if (config != NULL) {
 		cmd_ln_free_r(config);
+		config = NULL;
 	}
 
 	config = cmd_ln_init(NULL, ps_args(), 1,
@@ -304,10 +322,22 @@ uint32 FSpeechRecognitionWorker::Run() {
 		// loop until we have initialised 
 		if (initRequired) {
 
+			// release any previous decoder and audio device before re-initialising
+			// (switching recognition modes at runtime lands here a second time)
+			if (initComplete) {
+				ReleaseSphinxResources();
+				initComplete = false;
+			}
+
 			ps = ps_init(config);
 
 			if (!Manager | !ps) {
 				ClientMessage(FString(TEXT("Speech Recognition Thread failed to start")));
+				ReleaseSphinxResources();
+				if (config != NULL) {
+					cmd_ln_free_r(config);
+					config = NULL;
+				}
 				return 1;
 			}
 
@@ -423,16 +453,31 @@ uint32 FSpeechRecognitionWorker::Run() {
 				(int)cmd_ln_float32_r(config,
 					"-samprate"))) == NULL) {
 				ClientMessage(FString(TEXT("Failed to open audio device")));
+				ReleaseSphinxResources();
+				if (config != NULL) {
+					cmd_ln_free_r(config);
+					config = NULL;
+				}
 				return 2;
 			}
 
 			if (ad_start_rec(ad) < 0) {
 				ClientMessage(FString(TEXT("Failed to start recording")));
+				ReleaseSphinxResources();
+				if (config != NULL) {
+					cmd_ln_free_r(config);
+					config = NULL;
+				}
 				return 3;
 			}
 
 			if (ps_start_utt(ps) < 0) {
 				ClientMessage(FString(TEXT("Failed to start utterance")));
+				ReleaseSphinxResources();
+				if (config != NULL) {
+					cmd_ln_free_r(config);
+					config = NULL;
+				}
 				return 4;
 			}
 
@@ -572,9 +617,13 @@ uint32 FSpeechRecognitionWorker::Run() {
 		}
 	}
 
-	ad_close(ad);
-	ps_free(ps);
-	cmd_ln_free_r(config);
+	// normal shutdown: release the audio device, the decoder, and the
+	// worker's own reference to the config (safe if never initialised)
+	ReleaseSphinxResources();
+	if (config != NULL) {
+		cmd_ln_free_r(config);
+		config = NULL;
+	}
 
 	return 0;
 }
