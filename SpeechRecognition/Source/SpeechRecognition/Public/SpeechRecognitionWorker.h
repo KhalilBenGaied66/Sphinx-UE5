@@ -19,6 +19,8 @@
 #include <atomic>
 
 #include "SpeechRecognition.h"
+#include "Containers/Queue.h"
+#include "Templates/Function.h"
 #include "Chaos/AABB.h"
 
 #define SENSCR_SHIFT 10
@@ -47,13 +49,13 @@ class FSpeechRecognitionWorker : public FRunnable
 {
 
 private:
-	// Sphinx
+	// Sphinx (worker thread only)
 	ps_decoder_t *ps = nullptr;
 	cmd_ln_t *config = nullptr;
 	ad_rec_t *ad = nullptr;
 	int16 adbuf[1024];
-	uint8 utt_started, in_speech;
-	int32 k;
+	uint8 utt_started = 0, in_speech = 0;
+	int32 k = 0;
 	bool initRequired = false;
 	bool wordsAdded = false;
 
@@ -61,14 +63,14 @@ private:
 	//Written by the worker thread, read from the game thread.
 	std::atomic<int32> currentVolume{0};
 
-	//A set of params to apply to Sphinx initialisation
+	//A set of params to apply to Sphinx initialisation (worker thread only)
 	TArray<FSpeechRecognitionParam> sphinxParams;
 
-	//Speech detection mode
-	ESpeechRecognitionMode detectionMode;
-	
-	//Language
-	ESpeechRecognitionLanguage language;
+	//Speech detection mode (worker thread only)
+	ESpeechRecognitionMode detectionMode = ESpeechRecognitionMode::VE_KEYWORD;
+
+	//Language (worker thread only)
+	ESpeechRecognitionLanguage language = ESpeechRecognitionLanguage::VE_English;
 
 	//Thread
 	FRunnableThread* Thread = nullptr;
@@ -76,13 +78,19 @@ private:
 	//Pointer to our manager
 	USpeechRecognitionSubsystem* Manager = nullptr;
 
-	//Thread safe counter 
+	//Thread safe counter
 	FThreadSafeCounter StopTaskCounter;
 
-	//Language
+	//Thread-safe request queue. Mode, language and config changes are enqueued
+	//from the game thread and executed on the worker thread between audio
+	//buffers, so all Sphinx state (config, keywords, detectionMode,
+	//initRequired, model paths) is only ever touched by the worker thread.
+	TQueue<TFunction<void()>, EQueueMode::Mpsc> CommandQueue;
+
+	//Language (worker thread only)
 	const char* langStr = nullptr;
 
-	//Paths
+	//Paths (worker thread only)
 	std::string argFilePath;
 	std::string contentPath_str;
 	std::string logPath;
@@ -90,16 +98,25 @@ private:
 	std::string languageModel;
 	std::string dictionaryPath;
 
-	//Stores the recognition keywords, along with their tolerances
+	//Stores the recognition keywords, along with their tolerances (worker thread only)
 	std::map <string , char*> keywords;
 
-	//Dictionary
+	//Dictionary (worker thread only)
 	std::map <string, set<string>> dictionary;
 
 	//Splits a string by whitespace
 	vector<string> Split(string s);
 	//Removes brackets, and 1-9 characters, from a string
 	string GetOriginalString(string s) const;
+
+	//Drains and executes all pending game-thread requests (worker thread only)
+	void DrainCommandQueue();
+
+	//Worker-thread implementations of the public mode/language methods
+	void EnableKeywordMode_Internal(const TArray<FRecognitionPhrase>& wordList);
+	void EnableGrammarMode_Internal(const FString& grammarName);
+	void EnableLanguageModel_Internal(const FString& InLanguageModel);
+	void SetLanguage_Internal(ESpeechRecognitionLanguage InLanguage);
 
 	//Releases the audio device and decoder prior to a re-initialisation,
 	//shutdown, or failed initialisation (worker thread only)
@@ -113,7 +130,9 @@ public:
 	virtual void Stop() override;
 	virtual uint32 Run() override;
 
-	//Methods to switch recognition modes
+	//Methods to switch recognition modes.
+	//Safe to call from the game thread: the request is queued and applied by
+	//the worker thread between audio buffers.
 	bool EnableKeywordMode(const TArray<FRecognitionPhrase>& wordList);
 	bool EnableGrammarMode(FString grammarName);
 	bool EnableLanguageModel(FString InLanguageModel);
@@ -131,4 +150,3 @@ public:
 	static void ClientMessage(const FString& txt);
 
 };
-
