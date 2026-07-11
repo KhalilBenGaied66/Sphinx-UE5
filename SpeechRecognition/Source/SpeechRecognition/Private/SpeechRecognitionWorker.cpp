@@ -63,6 +63,15 @@ void FSpeechRecognitionWorker::ShutDown() {
 	}
 }
 
+void FSpeechRecognitionWorker::DrainCommandQueue()
+{
+	TFunction<void()> Command;
+	while (CommandQueue.Dequeue(Command))
+	{
+		Command();
+	}
+}
+
 void FSpeechRecognitionWorker::ReleaseSphinxResources()
 {
 	if (ad != nullptr) {
@@ -77,33 +86,57 @@ void FSpeechRecognitionWorker::ReleaseSphinxResources()
 	}
 }
 
+/**************************
+// Recognition mode changes.
+// The public methods below run on the game thread and only enqueue a request;
+// the *_Internal counterparts execute on the worker thread, which exclusively
+// owns all Sphinx state.
+**************************/
+
 bool FSpeechRecognitionWorker::EnableGrammarMode(FString grammarName)
 {
-	const char* name = TCHAR_TO_ANSI(*grammarName);
+	CommandQueue.Enqueue([this, grammarName]() { EnableGrammarMode_Internal(grammarName); });
+	return true;
+}
+
+void FSpeechRecognitionWorker::EnableGrammarMode_Internal(const FString& grammarName)
+{
+	const std::string name(TCHAR_TO_ANSI(*grammarName));
 	const std::string grammarFile = contentPath_str + "model/" + langStr + "/grammars/" + name + ".gram";
 
 	// Init config and set default params
-	InitConfig();	
+	InitConfig();
 	cmd_ln_set_str_r(config, "-jsgf", grammarFile.c_str());
 
 	initRequired = true;
 	detectionMode = ESpeechRecognitionMode::VE_GRAMMAR;
-	return true;
 }
 
 bool FSpeechRecognitionWorker::EnableKeywordMode(const TArray<FRecognitionPhrase>& wordList)
+{
+	TArray<FRecognitionPhrase> wordListCopy = wordList;
+	CommandQueue.Enqueue([this, wordListCopy]() { EnableKeywordMode_Internal(wordListCopy); });
+	return true;
+}
+
+void FSpeechRecognitionWorker::EnableKeywordMode_Internal(const TArray<FRecognitionPhrase>& wordList)
 {
 	// Init config and set default params
 	InitConfig();
 	AddWords(wordList);
 	initRequired = true;
 	detectionMode = ESpeechRecognitionMode::VE_KEYWORD;
-	return true;
 }
 
 bool FSpeechRecognitionWorker::EnableLanguageModel(FString InLanguageModel)
 {
-	const char* name = TCHAR_TO_ANSI(*InLanguageModel);
+	CommandQueue.Enqueue([this, InLanguageModel]() { EnableLanguageModel_Internal(InLanguageModel); });
+	return true;
+}
+
+void FSpeechRecognitionWorker::EnableLanguageModel_Internal(const FString& InLanguageModel)
+{
+	const std::string name(TCHAR_TO_ANSI(*InLanguageModel));
 	const std::string langModel = contentPath_str + "model/" + langStr + "/language_models/" + name + ".lm";
 
 	// Init config and set default params
@@ -113,7 +146,6 @@ bool FSpeechRecognitionWorker::EnableLanguageModel(FString InLanguageModel)
 
 	initRequired = true;
 	detectionMode = ESpeechRecognitionMode::VE_LANGUAGE_MODEL;
-	return true;
 }
 
 void FSpeechRecognitionWorker::AddWords(const TArray<FRecognitionPhrase>& InKeywords) {
@@ -175,6 +207,10 @@ int16 FSpeechRecognitionWorker::GetCurrentVolume() const
 }
 
 void FSpeechRecognitionWorker::SetLanguage(ESpeechRecognitionLanguage InLanguage) {
+	CommandQueue.Enqueue([this, InLanguage]() { SetLanguage_Internal(InLanguage); });
+}
+
+void FSpeechRecognitionWorker::SetLanguage_Internal(ESpeechRecognitionLanguage InLanguage) {
 
 	// set Content Path
 	const FString contentPath = FPaths::ConvertRelativePathToFull(FPaths::ProjectContentDir());
@@ -265,7 +301,8 @@ bool FSpeechRecognitionWorker::SetConfigParam(const FString& param, ESpeechRecog
 	const std::string paramName(TCHAR_TO_UTF8(*param));
 	std::string paramValue(TCHAR_TO_UTF8(*value));
 
-	// Validate the incoming string, against the data type
+	// Validate the incoming string against the data type (on the calling
+	// thread, so the caller gets an immediate result)...
 	if (type == ESpeechRecognitionParamType::VE_FLOAT)
 	{
 		const double validationFloat = atof(paramValue.c_str());
@@ -292,8 +329,10 @@ bool FSpeechRecognitionWorker::SetConfigParam(const FString& param, ESpeechRecog
 		}
 	}
 
-	const FSpeechRecognitionParam sphinxParam(paramName.c_str(), type, paramValue.c_str());
-	sphinxParams.Add(sphinxParam);
+	// ...then hand the validated param to the worker thread, which owns
+	// sphinxParams and will apply it on the next (re-)initialisation.
+	FSpeechRecognitionParam sphinxParam(paramName.c_str(), type, paramValue.c_str());
+	CommandQueue.Enqueue([this, sphinxParam]() { sphinxParams.Add(sphinxParam); });
 	return true;
 }
 
@@ -318,6 +357,9 @@ uint32 FSpeechRecognitionWorker::Run() {
 
 	bool initComplete = false;
 	while (StopTaskCounter.GetValue() == 0) {
+
+		// apply any pending mode/language/config requests from the game thread
+		DrainCommandQueue();
 
 		// loop until we have initialised 
 		if (initRequired) {
