@@ -30,20 +30,16 @@ using namespace std;
 //Common structures and enumerations
 struct FSpeechRecognitionParam
 {
-	char* name;
+	std::string name;
 	ESpeechRecognitionParamType type;
-	char* value;
+	std::string value;
 
 	// constructor
-	FSpeechRecognitionParam(const char* name, ESpeechRecognitionParamType type, const char* value) {
-		const size_t nameLenght = strlen(name) + 1;
-		const size_t valueLenght = strlen(value) + 1;
-		
-		this->name = new char[nameLenght];
-		strcpy_s(this->name, nameLenght, name);
-		this->type = type;
-		this->value = new char[valueLenght];
-		strcpy_s(this->value, valueLenght, value);
+	FSpeechRecognitionParam(const char* InName, ESpeechRecognitionParamType InType, const char* InValue)
+		: name(InName)
+		, type(InType)
+		, value(InValue)
+	{
 	}
 };
 
