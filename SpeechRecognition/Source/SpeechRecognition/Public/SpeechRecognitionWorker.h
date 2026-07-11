@@ -16,6 +16,7 @@
 #include <cstdio>
 #include <vector>
 #include <utility>
+#include <atomic>
 
 #include "SpeechRecognition.h"
 #include "Chaos/AABB.h"
@@ -60,8 +61,9 @@ private:
 	bool initRequired = false;
 	bool wordsAdded = false;
 
-	//Stores the current, peak volume
-	int16 currentVolume = 0;
+	//Stores the current, peak volume.
+	//Written by the worker thread, read from the game thread.
+	std::atomic<int32> currentVolume{0};
 
 	//A set of params to apply to Sphinx initialisation
 	TArray<FSpeechRecognitionParam> sphinxParams;

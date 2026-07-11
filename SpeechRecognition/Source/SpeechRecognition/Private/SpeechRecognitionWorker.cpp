@@ -157,7 +157,7 @@ void FSpeechRecognitionWorker::AddWords(const TArray<FRecognitionPhrase>& InKeyw
 
 int16 FSpeechRecognitionWorker::GetCurrentVolume() const
 {
-	return currentVolume;
+	return (int16)currentVolume.load(std::memory_order_relaxed);
 }
 
 void FSpeechRecognitionWorker::SetLanguage(ESpeechRecognitionLanguage InLanguage) {
@@ -458,31 +458,28 @@ uint32 FSpeechRecognitionWorker::Run() {
 		ps_process_raw(ps, adbuf, k, 0, 0);
 		in_speech = ps_get_in_speech(ps);
 
-		// update the peak volume
-		vector<int16> peaks;
-		int currentPeak = 0;
+		// update the peak volume: average the positive peaks of each half-wave
+		// in this buffer, and publish the result atomically for the game thread
+		int32 peakSum = 0;
+		int32 peakCount = 0;
+		int16 runningPeak = 0;
 		for (int i = 0; i < k; i++)
 		{
-			if (adbuf[i] > currentPeak && adbuf[0] > 0)
+			if (adbuf[i] > runningPeak)
 			{
-				currentPeak = adbuf[i];
+				runningPeak = adbuf[i];
 			}
-			if (adbuf[i] < 0 && currentPeak != 0)
+			if (adbuf[i] < 0 && runningPeak != 0)
 			{
-				// add peak to the collection, and reset current peak
-				peaks.push_back(currentPeak);
-				currentPeak = 0;
+				// half-wave completed: record its peak, and reset
+				peakSum += runningPeak;
+				peakCount++;
+				runningPeak = 0;
 			}
 		}
-
-		int32 peakSum = 0;
-		for (int16 peak : peaks)
+		if (peakCount > 0)
 		{
-			peakSum += peak;
-		}
-		if (peakSum > 0)
-		{
-			currentVolume = peakSum / peaks.size();			
+			currentVolume.store(peakSum / peakCount, std::memory_order_relaxed);
 		}
 
 		// transition from silence to listening
