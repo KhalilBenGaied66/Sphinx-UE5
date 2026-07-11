@@ -212,26 +212,26 @@ void FSpeechRecognitionWorker::InitConfig() {
 	{
 		if (param.type == ESpeechRecognitionParamType::VE_FLOAT)
 		{
-			cmd_ln_set_float_r(config, param.name, atof(param.value));
+			cmd_ln_set_float_r(config, param.name.c_str(), atof(param.value.c_str()));
 		}
 		if (param.type == ESpeechRecognitionParamType::VE_BOOLEAN)
 		{
-			if (_stricmp(param.value, "0") == 0)
+			if (_stricmp(param.value.c_str(), "0") == 0)
 			{
-				cmd_ln_set_boolean_r(config, param.name, false);
+				cmd_ln_set_boolean_r(config, param.name.c_str(), false);
 			}
-			if (_stricmp(param.value, "1") == 0)
+			if (_stricmp(param.value.c_str(), "1") == 0)
 			{
-				cmd_ln_set_boolean_r(config, param.name, true);
+				cmd_ln_set_boolean_r(config, param.name.c_str(), true);
 			}
 		}
 		if (param.type == ESpeechRecognitionParamType::VE_STRING)
 		{
-			cmd_ln_set_str_r(config, param.name, param.value);
+			cmd_ln_set_str_r(config, param.name.c_str(), param.value.c_str());
 		}
 		if (param.type == ESpeechRecognitionParamType::VE_INTEGER)
 		{
-			cmd_ln_set_int_r(config, param.name, atoi(param.value));
+			cmd_ln_set_int_r(config, param.name.c_str(), atoi(param.value.c_str()));
 		}
 	}
 
@@ -242,55 +242,41 @@ void FSpeechRecognitionWorker::InitConfig() {
 
 bool FSpeechRecognitionWorker::SetConfigParam(const FString& param, ESpeechRecognitionParamType type, const FString& value)
 {
-	const char* paramName = TCHAR_TO_UTF8(*param);
-	const char* paramValue = TCHAR_TO_UTF8(*value);
+	// Copy into std::string immediately: the buffer returned by TCHAR_TO_UTF8
+	// only lives to the end of the enclosing expression.
+	const std::string paramName(TCHAR_TO_UTF8(*param));
+	std::string paramValue(TCHAR_TO_UTF8(*value));
 
 	// Validate the incoming string, against the data type
 	if (type == ESpeechRecognitionParamType::VE_FLOAT)
 	{
-		const double validationFloat = atof(paramValue);
+		const double validationFloat = atof(paramValue.c_str());
 		if (validationFloat == 0.0F) {
 			return false;
 		}
-		const FSpeechRecognitionParam sphinxParam(paramName, type, paramValue);
-		sphinxParams.Add(sphinxParam);
-		return true;
 	}
-
-	if (type == ESpeechRecognitionParamType::VE_BOOLEAN)
+	else if (type == ESpeechRecognitionParamType::VE_BOOLEAN)
 	{
 		if (value.Equals("true", ESearchCase::IgnoreCase)) {
 			paramValue = "1";
-			const FSpeechRecognitionParam sphinxParam(paramName, type, paramValue);
-			sphinxParams.Add(sphinxParam);
-			return true;
 		}
-		if (value.Equals("false", ESearchCase::IgnoreCase)) {
+		else if (value.Equals("false", ESearchCase::IgnoreCase)) {
 			paramValue = "0";
-			const FSpeechRecognitionParam sphinxParam(paramName, type, paramValue);
-			sphinxParams.Add(sphinxParam);
-			return true;
 		}
-		return false;
+		else {
+			return false;
+		}
+	}
+	else if (type == ESpeechRecognitionParamType::VE_INTEGER)
+	{
+		if (!value.IsNumeric()) {
+			return false;
+		}
 	}
 
-	if (type == ESpeechRecognitionParamType::VE_STRING)
-	{
-		const FSpeechRecognitionParam sphinxParam(paramName, type, paramValue);
-		sphinxParams.Add(sphinxParam);
-		return true;
-	}
-
-	if (type == ESpeechRecognitionParamType::VE_INTEGER)
-	{
-		if (value.IsNumeric()) {
-			const FSpeechRecognitionParam sphinxParam(paramName, type, paramValue);
-			sphinxParams.Add(sphinxParam);
-			return true;
-		}
-		return false;
-	}
-	return false;
+	const FSpeechRecognitionParam sphinxParam(paramName.c_str(), type, paramValue.c_str());
+	sphinxParams.Add(sphinxParam);
+	return true;
 }
 
 void FSpeechRecognitionWorker::Stop() {
@@ -420,6 +406,16 @@ uint32 FSpeechRecognitionWorker::Run() {
 				const char** const_copy = (const char**)phrases;
 				ps_set_keyphrase(ps, "keyphrase_search", const_copy, tolerances, phraseCnt);
 				ps_set_search(ps, "keyphrase_search");
+
+				// ps_set_keyphrase deep-copies the phrase strings and tolerance
+				// values (kws_search_init uses ckd_salloc/ckd_calloc), so the
+				// temporary buffers can be released here.
+				for (int32 p = 0; p < phraseCnt; ++p)
+				{
+					free(phrases[p]);
+				}
+				free(phrases);
+				free(tolerances);
 			}
 
 			// attempt to open the default recording device
