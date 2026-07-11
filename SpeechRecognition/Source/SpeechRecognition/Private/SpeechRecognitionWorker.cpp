@@ -101,7 +101,7 @@ bool FSpeechRecognitionWorker::EnableGrammarMode(FString grammarName)
 
 void FSpeechRecognitionWorker::EnableGrammarMode_Internal(const FString& grammarName)
 {
-	const std::string name(TCHAR_TO_ANSI(*grammarName));
+	const std::string name(TCHAR_TO_UTF8(*grammarName));
 	const std::string grammarFile = contentPath_str + "model/" + langStr + "/grammars/" + name + ".gram";
 
 	// Init config and set default params
@@ -136,7 +136,7 @@ bool FSpeechRecognitionWorker::EnableLanguageModel(FString InLanguageModel)
 
 void FSpeechRecognitionWorker::EnableLanguageModel_Internal(const FString& InLanguageModel)
 {
-	const std::string name(TCHAR_TO_ANSI(*InLanguageModel));
+	const std::string name(TCHAR_TO_UTF8(*InLanguageModel));
 	const std::string langModel = contentPath_str + "model/" + langStr + "/language_models/" + name + ".lm";
 
 	// Init config and set default params
@@ -373,7 +373,7 @@ uint32 FSpeechRecognitionWorker::Run() {
 
 			ps = ps_init(config);
 
-			if (!Manager | !ps) {
+			if (!Manager || !ps) {
 				ClientMessage(FString(TEXT("Speech Recognition Thread failed to start")));
 				ReleaseSphinxResources();
 				if (config != NULL) {
