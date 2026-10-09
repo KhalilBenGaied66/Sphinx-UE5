@@ -1,0 +1,16 @@
+# Unreal build output
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+*.sln
+*.slnx
+.vs/
+.idea/
+.vsconfig
+
+# Speech models are downloaded, not committed (see docs/models.md)
+/Content/model/
+
+# Test audio generated on the developer's machine (see Tools/New-TestAudio.ps1)
+/Plugins/SpeechRecognition/Resources/TestAudio/generated/
