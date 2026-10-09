@@ -1,51 +1,28 @@
 
 #include "SpeechRecognitionWorker.h"
-#include "SpeechRecognition.h"
-#include "SpeechRecognitionSubsystem.h"
+#include "ISpeechRecognition.h"
 
-//General Log
-DEFINE_LOG_CATEGORY(SpeechRecognitionPlugin);
+#include "HAL/PlatformProcess.h"
+#include "HAL/RunnableThread.h"
+
+THIRD_PARTY_INCLUDES_START
+#include <sphinxbase/ad.h>
+THIRD_PARTY_INCLUDES_END
+
+namespace
+{
+	// 64 ms of audio at 16 kHz
+	const int32 AudioBufferSamples = 1024;
+
+	// How long to sleep when the recording device has nothing new. The device
+	// buffers several seconds, so this costs no audio.
+	const float EmptyReadSleepSeconds = 0.005f;
+
+	// How long to sleep while there is nothing to listen to.
+	const float IdleSleepSeconds = 0.01f;
+}
 
 FSpeechRecognitionWorker::FSpeechRecognitionWorker() {}
-
-vector<string> FSpeechRecognitionWorker::Split(string s) {
-	std::locale loc;
-	regex r("\\s+");
-	auto words_begin = std::sregex_iterator(s.begin(), s.end(), r);
-	auto words_end = std::sregex_iterator();
-
-	vector<string> result;
-
-	// single word, no split necessary
-	if (words_begin == words_end) {
-		result.push_back(s);
-	}
-	else {
-		stringstream ss(s); // Insert the string into a stream
-		string buf;
-		vector<string> tokens; // Create vector to hold our words
-		while (ss >> buf)
-			result.push_back(buf);
-	}
-	return result;
-}
-
-string FSpeechRecognitionWorker::GetOriginalString(string s) const
-{
-	string result;
-	wstring wstr(s.begin(), s.end());
-	wstring wstr_stripped;
-	for (int j = 0; j < s.size(); j++) {
-		const int charInt = s[j];
-		if (charInt != 40 && charInt != 41 
-			&& (charInt < 48 || charInt > 57) 
-			&& (charInt != 60 && charInt != 62)) {
-			wstr_stripped += s[j];
-		}
-	}
-	copy(wstr_stripped.begin(), wstr_stripped.end(), back_inserter(result));
-	return result;
-}
 
 FSpeechRecognitionWorker::~FSpeechRecognitionWorker() {
 	// Idempotent: if ShutDown() was already called by the owning subsystem,
@@ -63,142 +40,25 @@ void FSpeechRecognitionWorker::ShutDown() {
 	}
 }
 
-void FSpeechRecognitionWorker::DrainCommandQueue()
-{
-	TFunction<void()> Command;
-	while (CommandQueue.Dequeue(Command))
-	{
-		Command();
-	}
+void FSpeechRecognitionWorker::Stop() {
+	bStopRequested.store(true);
 }
 
-void FSpeechRecognitionWorker::ReleaseSphinxResources()
-{
-	if (ad != nullptr) {
-		ad_close(ad);
-		ad = nullptr;
-	}
-	if (ps != nullptr) {
-		// ps_free releases the decoder's own reference to the config;
-		// the worker's reference is released separately in Run()/InitConfig().
-		ps_free(ps);
-		ps = nullptr;
-	}
+bool FSpeechRecognitionWorker::StartThread() {
+	const int32 threadIdx = ISpeechRecognition::Get().GetInstanceCounter();
+	const FString threadName = FString("FSpeechRecognitionWorker:") + FString::FromInt(threadIdx);
+	Thread = FRunnableThread::Create(this, *threadName, 0U, TPri_Normal);
+	return Thread != nullptr;
 }
 
-/**************************
-// Recognition mode changes.
-// The public methods below run on the game thread and only enqueue a request;
-// the *_Internal counterparts execute on the worker thread, which exclusively
-// owns all Sphinx state.
-**************************/
-
-bool FSpeechRecognitionWorker::EnableGrammarMode(FString grammarName)
+void FSpeechRecognitionWorker::Request(FSpeechWorkerRequest&& InRequest)
 {
-	CommandQueue.Enqueue([this, grammarName]() { EnableGrammarMode_Internal(grammarName); });
-	return true;
+	Requests.Enqueue(MoveTemp(InRequest));
 }
 
-void FSpeechRecognitionWorker::EnableGrammarMode_Internal(const FString& grammarName)
+bool FSpeechRecognitionWorker::PollEvent(FSpeechWorkerEvent& OutEvent)
 {
-	const std::string name(TCHAR_TO_UTF8(*grammarName));
-	const std::string grammarFile = contentPath_str + "model/" + langStr + "/grammars/" + name + ".gram";
-
-	// Init config and set default params
-	InitConfig();
-	cmd_ln_set_str_r(config, "-jsgf", grammarFile.c_str());
-
-	initRequired = true;
-	detectionMode = ESpeechRecognitionMode::VE_GRAMMAR;
-}
-
-bool FSpeechRecognitionWorker::EnableKeywordMode(const TArray<FRecognitionPhrase>& wordList)
-{
-	TArray<FRecognitionPhrase> wordListCopy = wordList;
-	CommandQueue.Enqueue([this, wordListCopy]() { EnableKeywordMode_Internal(wordListCopy); });
-	return true;
-}
-
-void FSpeechRecognitionWorker::EnableKeywordMode_Internal(const TArray<FRecognitionPhrase>& wordList)
-{
-	// Init config and set default params
-	InitConfig();
-	AddWords(wordList);
-	initRequired = true;
-	detectionMode = ESpeechRecognitionMode::VE_KEYWORD;
-}
-
-bool FSpeechRecognitionWorker::EnableLanguageModel(FString InLanguageModel)
-{
-	CommandQueue.Enqueue([this, InLanguageModel]() { EnableLanguageModel_Internal(InLanguageModel); });
-	return true;
-}
-
-void FSpeechRecognitionWorker::EnableLanguageModel_Internal(const FString& InLanguageModel)
-{
-	const std::string name(TCHAR_TO_UTF8(*InLanguageModel));
-	const std::string langModel = contentPath_str + "model/" + langStr + "/language_models/" + name + ".lm";
-
-	// Init config and set default params
-	InitConfig();
-	ps_default_search_args(config);
-	cmd_ln_set_str_r(config, "-lm", langModel.c_str());
-
-	initRequired = true;
-	detectionMode = ESpeechRecognitionMode::VE_LANGUAGE_MODEL;
-}
-
-void FSpeechRecognitionWorker::AddWords(const TArray<FRecognitionPhrase>& InKeywords) {
-	this->keywords.clear();
-	for (auto It = InKeywords.CreateConstIterator(); It; ++It)
-	{
-		FRecognitionPhrase word = *It;
-		std::string wordStr = std::string(TCHAR_TO_UTF8(*word.phrase));
-		transform(wordStr.begin(), wordStr.end(), wordStr.begin(), ::tolower);
-
-		const EPhraseRecognitionTolerance toleranceEnum = word.tolerance;
-		char* tolerance;
-		switch (toleranceEnum) {
-		case EPhraseRecognitionTolerance::VE_1:
-			tolerance = (char*)"1e-60/";
-			break;
-		case EPhraseRecognitionTolerance::VE_2:
-			tolerance = (char*)"1e-55/";
-			break;
-		case EPhraseRecognitionTolerance::VE_3:
-			tolerance = (char*)"1e-50/";
-			break;
-		case EPhraseRecognitionTolerance::VE_4:
-			tolerance = (char*)"1e-40/";
-			break;
-		case EPhraseRecognitionTolerance::VE_5:
-			tolerance = (char*)"1e-30/";
-			break;
-		case EPhraseRecognitionTolerance::VE_6:
-			tolerance = (char*)"1e-20/";
-			break;
-		case EPhraseRecognitionTolerance::VE_7:
-			tolerance = (char*)"1e-10/";
-			break;
-		case EPhraseRecognitionTolerance::VE_8:
-			tolerance = (char*)"1e-5/";
-			break;
-		case EPhraseRecognitionTolerance::VE_9:
-			tolerance = (char*)"1e-4/";
-			break;
-		case EPhraseRecognitionTolerance::VE_10:
-			tolerance = (char*)"1e-3/";
-			break;
-		default:
-			tolerance = (char*)"1e-2/";
-		}
-
-		const pair<map<string, char*>::iterator, bool> ret = this->keywords.insert(pair<string, char*>(wordStr, tolerance));
-		if (ret.second == false) {
-			this->keywords.erase(wordStr);
-			this->keywords.insert(pair<string, char*>(wordStr, tolerance));
-		}
-	}
+	return Events.Dequeue(OutEvent);
 }
 
 int16 FSpeechRecognitionWorker::GetCurrentVolume() const
@@ -206,466 +66,143 @@ int16 FSpeechRecognitionWorker::GetCurrentVolume() const
 	return (int16)currentVolume.load(std::memory_order_relaxed);
 }
 
-void FSpeechRecognitionWorker::SetLanguage(ESpeechRecognitionLanguage InLanguage) {
-	CommandQueue.Enqueue([this, InLanguage]() { SetLanguage_Internal(InLanguage); });
-}
-
-void FSpeechRecognitionWorker::SetLanguage_Internal(ESpeechRecognitionLanguage InLanguage) {
-
-	// set Content Path
-	const FString contentPath = FPaths::ConvertRelativePathToFull(FPaths::ProjectContentDir());
-	contentPath_str = std::string(TCHAR_TO_UTF8(*contentPath));
-	std::string languageString;
-	this->language = InLanguage;
-
-	// language model and dictionary paths
-	switch (InLanguage) {
-	case ESpeechRecognitionLanguage::VE_English:
-		langStr = (char*)"en";
-		break;
-	case ESpeechRecognitionLanguage::VE_Chinese:
-		langStr = (char*)"zn";
-		break;
-	case ESpeechRecognitionLanguage::VE_French:
-		langStr = (char*)"fr";
-		break;
-	case ESpeechRecognitionLanguage::VE_Spanish:
-		langStr = (char*)"es";
-		break;
-	case ESpeechRecognitionLanguage::VE_Russian:
-		langStr = (char*)"ru";
-		break;
-	default:
-		langStr = (char*)"en";
-		break;
-	}
-
-}
-
-void FSpeechRecognitionWorker::InitConfig() {
-	argFilePath = contentPath_str + +"model/" + langStr + "/" + langStr + ".args";
-	logPath = contentPath_str + "log/";
-	modelPath = contentPath_str + "model/" + langStr + "/" + langStr;
-	dictionaryPath = contentPath_str + "model/" + langStr + "/" + langStr + ".dict";
-
-	// Release the worker's reference to any previous config. If a decoder was
-	// built from it, the decoder still holds its own reference until it is
-	// freed in ReleaseSphinxResources().
-	if (config != NULL) {
-		cmd_ln_free_r(config);
-		config = NULL;
-	}
-
-	config = cmd_ln_init(NULL, ps_args(), 1,
-		"-hmm", modelPath.c_str(),
-		"-dict", dictionaryPath.c_str(),
-		NULL);
-
-	// loop over, and set sphinx params	
-	for (const FSpeechRecognitionParam& param : sphinxParams)
-	{
-		if (param.type == ESpeechRecognitionParamType::VE_FLOAT)
-		{
-			cmd_ln_set_float_r(config, param.name.c_str(), atof(param.value.c_str()));
-		}
-		if (param.type == ESpeechRecognitionParamType::VE_BOOLEAN)
-		{
-			if (_stricmp(param.value.c_str(), "0") == 0)
-			{
-				cmd_ln_set_boolean_r(config, param.name.c_str(), false);
-			}
-			if (_stricmp(param.value.c_str(), "1") == 0)
-			{
-				cmd_ln_set_boolean_r(config, param.name.c_str(), true);
-			}
-		}
-		if (param.type == ESpeechRecognitionParamType::VE_STRING)
-		{
-			cmd_ln_set_str_r(config, param.name.c_str(), param.value.c_str());
-		}
-		if (param.type == ESpeechRecognitionParamType::VE_INTEGER)
-		{
-			cmd_ln_set_int_r(config, param.name.c_str(), atoi(param.value.c_str()));
-		}
-	}
-
-	// reset params
-	sphinxParams.Empty();
-
-}
-
-bool FSpeechRecognitionWorker::SetConfigParam(const FString& param, ESpeechRecognitionParamType type, const FString& value)
-{
-	// Copy into std::string immediately: the buffer returned by TCHAR_TO_UTF8
-	// only lives to the end of the enclosing expression.
-	const std::string paramName(TCHAR_TO_UTF8(*param));
-	std::string paramValue(TCHAR_TO_UTF8(*value));
-
-	// Validate the incoming string against the data type (on the calling
-	// thread, so the caller gets an immediate result)...
-	if (type == ESpeechRecognitionParamType::VE_FLOAT)
-	{
-		const double validationFloat = atof(paramValue.c_str());
-		if (validationFloat == 0.0F) {
-			return false;
-		}
-	}
-	else if (type == ESpeechRecognitionParamType::VE_BOOLEAN)
-	{
-		if (value.Equals("true", ESearchCase::IgnoreCase)) {
-			paramValue = "1";
-		}
-		else if (value.Equals("false", ESearchCase::IgnoreCase)) {
-			paramValue = "0";
-		}
-		else {
-			return false;
-		}
-	}
-	else if (type == ESpeechRecognitionParamType::VE_INTEGER)
-	{
-		if (!value.IsNumeric()) {
-			return false;
-		}
-	}
-
-	// ...then hand the validated param to the worker thread, which owns
-	// sphinxParams and will apply it on the next (re-)initialisation.
-	FSpeechRecognitionParam sphinxParam(paramName.c_str(), type, paramValue.c_str());
-	CommandQueue.Enqueue([this, sphinxParam]() { sphinxParams.Add(sphinxParam); });
-	return true;
-}
-
-void FSpeechRecognitionWorker::Stop() {
-	StopTaskCounter.Increment();
-}
-
-bool FSpeechRecognitionWorker::StartThread(USpeechRecognitionSubsystem* manager) {
-	Manager = manager;
-	const int32 threadIdx = ISpeechRecognition::Get().GetInstanceCounter();
-	const FString threadName = FString("FSpeechRecognitionWorker:") + FString::FromInt(threadIdx);
-	Thread = FRunnableThread::Create(this, *threadName, 0U, TPri_Highest);
-	return Thread != nullptr;
-}
-
-void FSpeechRecognitionWorker::ClientMessage(const FString& text) {
-	UE_LOG(SpeechRecognitionPlugin, Log, TEXT("%s"), *text);
-}
-
-
 uint32 FSpeechRecognitionWorker::Run() {
 
-	bool initComplete = false;
-	while (StopTaskCounter.GetValue() == 0) {
+	// Everything Sphinx lives on this thread's stack: no other thread can reach it.
+	FSphinxDecoder decoder;
+	ad_rec_t* ad = nullptr;
+	int16 adbuf[AudioBufferSamples];
+	uint32 generation = 0;
 
-		// apply any pending mode/language/config requests from the game thread
-		DrainCommandQueue();
+	auto CloseDevice = [&ad]()
+	{
+		if (ad != nullptr) {
+			ad_close(ad);
+			ad = nullptr;
+		}
+	};
 
-		// loop until we have initialised 
-		if (initRequired) {
+	auto StopListening = [&]()
+	{
+		CloseDevice();
+		decoder.Shutdown();
+		currentVolume.store(0, std::memory_order_relaxed);
+	};
 
-			// release any previous decoder and audio device before re-initialising
-			// (switching recognition modes at runtime lands here a second time)
-			if (initComplete) {
-				ReleaseSphinxResources();
-				initComplete = false;
+	auto Fail = [&](ESpeechRecognitionError Error, const FString& Message)
+	{
+		StopListening();
+		FSpeechWorkerEvent Event;
+		Event.Type = FSpeechWorkerEvent::EType::Failed;
+		Event.Generation = generation;
+		Event.Error = Error;
+		Event.Message = Message;
+		Events.Enqueue(MoveTemp(Event));
+	};
+
+	while (!bStopRequested.load()) {
+
+		// take the most recent request from the game thread, if there is one
+		FSpeechWorkerRequest request;
+		bool hasRequest = false;
+		{
+			FSpeechWorkerRequest next;
+			while (Requests.Dequeue(next)) {
+				request = MoveTemp(next);
+				hasRequest = true;
 			}
+		}
 
-			ps = ps_init(config);
+		if (hasRequest) {
 
-			if (!Manager || !ps) {
-				ClientMessage(FString(TEXT("Speech Recognition Thread failed to start")));
-				ReleaseSphinxResources();
-				if (config != NULL) {
-					cmd_ln_free_r(config);
-					config = NULL;
-				}
-				return 1;
+			generation = request.Generation;
+
+			if (!request.bListen) {
+				StopListening();
 			}
-
-			ClientMessage(FString(TEXT("Speech Recognition has started")));
-
-			if (detectionMode == ESpeechRecognitionMode::VE_KEYWORD) {
-
-				// include multiple definitions
-				std::ifstream file(dictionaryPath);
-				std::string currentLine;
-				dictionary.clear();
-				while (file.good())
-				{
-					std::getline(file, currentLine);
-					std::string rawWord = currentLine.substr(0, currentLine.find(" "));
-					std::string mappedWord = "";
-					std::size_t beginBracket = rawWord.find("(");
-					std::size_t endBracket = rawWord.find(")");
-					if (beginBracket != std::string::npos && endBracket != std::string::npos)
-					{
-						mappedWord = rawWord.substr(0, beginBracket);
-					}
-					else {
-						mappedWord = rawWord;
-					}
-
-					std::set<std::string> mappings;
-					if (dictionary.find(mappedWord) != dictionary.end()) {
-						mappings = dictionary.at(mappedWord);
-						mappings.insert(rawWord);
-						dictionary[mappedWord] = mappings;
-					}
-					mappings.insert(rawWord);
-					dictionary.insert(make_pair(mappedWord, mappings));
+			else {
+				// Another mode or another list of phrases on the same model: the
+				// decoder is kept, and the recording device stays open. Otherwise
+				// release both before starting again.
+				if (ad == nullptr || !decoder.CanReuse(request.Config)) {
+					StopListening();
 				}
 
-				// set key-phrases
-				map<string, char*>::iterator it;
-				char** phrases = (char**)malloc(keywords.size() * sizeof(char*));
-				int32* tolerances;
-				tolerances = (int32*)malloc(keywords.size() * sizeof(int32));
-				int i = 0;
+				ESpeechRecognitionError error = ESpeechRecognitionError::None;
+				FString message;
+				if (!decoder.Initialize(request.Config, error, message)) {
+					Fail(error, message);
+					continue;
+				}
 
-				for (it = keywords.begin(); it != keywords.end(); ++it) {
-
-					// check if the word is in the dictionary. If missing, omit the phrase, and log
-					vector<string> splitString = Split(it->first);
-					vector<string>::iterator v_It;
-					std::locale loc;
-
-					bool skip = false;
-					for (v_It = splitString.begin(); v_It != splitString.end(); ++v_It) {
-						// validate each word of the phrase (not just the first word)
-						string orginalStr = GetOriginalString(*v_It);
-						if (dictionary.find(orginalStr) == dictionary.end())
-						{
-							skip = true;
-							continue;
-						}
-						if (dictionary.find(*v_It) == dictionary.end()) {
-							std::set<string> wordSet = dictionary.at(orginalStr);
-							if (wordSet.size() > 1) {
-								std::string Strtxt = "The word '" + orginalStr + "' has multiple definitions, ensure multiple phrases (for each phonetic match) is added.";
-								const char* txt = Strtxt.c_str();
-								FString msg = FString(UTF8_TO_TCHAR(txt));
-								UE_LOG(SpeechRecognitionPlugin, Log, TEXT("WARNING: %s "), *msg);
-							}
-							if (wordSet.find(*v_It) == wordSet.end()) {
-								skip = true;
-							}
-						}
-					}
-
-					if (skip)
-					{
-						std::string Strtxt = "The phrase '" + it->first + "' can not be added, as it contains words that are not in the dictionary.";
-						const char* txt = Strtxt.c_str();
-						FString msg = FString(UTF8_TO_TCHAR(txt));
-						UE_LOG(SpeechRecognitionPlugin, Log, TEXT("SKIPPED PHRASE: %s "), *msg);
+				if (ad == nullptr) {
+					// attempt to open the default recording device
+					if ((ad = ad_open_dev(nullptr, decoder.GetSampleRate())) == nullptr) {
+						Fail(ESpeechRecognitionError::AudioDeviceFailed, TEXT("Failed to open the default recording device. Check that a microphone is plugged in and that Windows allows desktop apps to use it."));
 						continue;
 					}
 
-					//add all variations of the keyword, to ensure dictionary variations are detected
-					char* str;
-					str = (char *)malloc(it->first.size() + 1);
-					memcpy(str, it->first.c_str(), it->first.size() + 1);
-					phrases[i] = str;
-
-					//tolerance
-					int32 toleranceInt = (int32)logmath_log(ps_get_logmath(ps), atof(it->second)) >> SENSCR_SHIFT;
-					tolerances[i] = toleranceInt;
-					i++;
+					if (ad_start_rec(ad) < 0) {
+						Fail(ESpeechRecognitionError::AudioDeviceFailed, TEXT("Failed to start recording from the default recording device."));
+						continue;
+					}
 				}
 
-				int phraseCnt = i;
-				const char** const_copy = (const char**)phrases;
-				ps_set_keyphrase(ps, "keyphrase_search", const_copy, tolerances, phraseCnt);
-				ps_set_search(ps, "keyphrase_search");
-
-				// ps_set_keyphrase deep-copies the phrase strings and tolerance
-				// values (kws_search_init uses ckd_salloc/ckd_calloc), so the
-				// temporary buffers can be released here.
-				for (int32 p = 0; p < phraseCnt; ++p)
-				{
-					free(phrases[p]);
-				}
-				free(phrases);
-				free(tolerances);
-			}
-
-			// attempt to open the default recording device
-			if ((ad = ad_open_dev(cmd_ln_str_r(config, "-adcdev"),
-				(int)cmd_ln_float32_r(config,
-					"-samprate"))) == NULL) {
-				ClientMessage(FString(TEXT("Failed to open audio device")));
-				ReleaseSphinxResources();
-				if (config != NULL) {
-					cmd_ln_free_r(config);
-					config = NULL;
-				}
-				return 2;
-			}
-
-			if (ad_start_rec(ad) < 0) {
-				ClientMessage(FString(TEXT("Failed to start recording")));
-				ReleaseSphinxResources();
-				if (config != NULL) {
-					cmd_ln_free_r(config);
-					config = NULL;
-				}
-				return 3;
-			}
-
-			if (ps_start_utt(ps) < 0) {
-				ClientMessage(FString(TEXT("Failed to start utterance")));
-				ReleaseSphinxResources();
-				if (config != NULL) {
-					cmd_ln_free_r(config);
-					config = NULL;
-				}
-				return 4;
-			}
-
-			initRequired = false;
-			initComplete = true;
-			utt_started = 0;
-		}
-		else {
-			if (initComplete == false) {
-				FPlatformProcess::Sleep(0.01f);
-				if (StopTaskCounter.GetValue() == 1) {
-					return 0;
-				}
-				continue;
+				FSpeechWorkerEvent Event;
+				Event.Type = FSpeechWorkerEvent::EType::Listening;
+				Event.Generation = generation;
+				Event.RejectedPhrases = decoder.GetRejectedPhrases();
+				Events.Enqueue(MoveTemp(Event));
 			}
 		}
 
-		if ((k = ad_read(ad, adbuf, 1024)) < 0)
-			ClientMessage(FString(TEXT("Failed to read audio")));
-		ps_process_raw(ps, adbuf, k, 0, 0);
-		in_speech = ps_get_in_speech(ps);
+		// nothing to listen to yet
+		if (ad == nullptr) {
+			FPlatformProcess::Sleep(IdleSleepSeconds);
+			continue;
+		}
 
-		// update the peak volume: average the positive peaks of each half-wave
-		// in this buffer, and publish the result atomically for the game thread
-		int32 peakSum = 0;
-		int32 peakCount = 0;
-		int16 runningPeak = 0;
-		for (int i = 0; i < k; i++)
+		const int32 k = ad_read(ad, adbuf, AudioBufferSamples);
+		if (k < 0) {
+			Fail(ESpeechRecognitionError::AudioDeviceFailed, TEXT("Failed to read audio: the recording device stopped delivering samples."));
+			continue;
+		}
+		if (k == 0) {
+			// ad_read does not block. Without this pause the loop spins on an
+			// empty device and keeps one core busy for nothing.
+			FPlatformProcess::Sleep(EmptyReadSleepSeconds);
+			continue;
+		}
+
+		// publish the volume for the game thread
+		currentVolume.store(FSphinxDecoder::ComputeAveragePeak(adbuf, k), std::memory_order_relaxed);
+
+		decoder.ProcessAudio(adbuf, k, [&](ESphinxDecoderEvent DecoderEvent, const TArray<FRecognisedPhraseDetail>& Phrases)
 		{
-			if (adbuf[i] > runningPeak)
+			FSpeechWorkerEvent Event;
+			Event.Generation = generation;
+			switch (DecoderEvent)
 			{
-				runningPeak = adbuf[i];
+			case ESphinxDecoderEvent::SpeechStarted:
+				Event.Type = FSpeechWorkerEvent::EType::SpeechStarted;
+				break;
+			case ESphinxDecoderEvent::Recognised:
+				Event.Type = FSpeechWorkerEvent::EType::Recognised;
+				Event.Phrases = Phrases;
+				break;
+			case ESphinxDecoderEvent::Unrecognised:
+				Event.Type = FSpeechWorkerEvent::EType::Unrecognised;
+				break;
+			default:
+				Event.Type = FSpeechWorkerEvent::EType::SpeechEnded;
+				break;
 			}
-			if (adbuf[i] < 0 && runningPeak != 0)
-			{
-				// half-wave completed: record its peak, and reset
-				peakSum += runningPeak;
-				peakCount++;
-				runningPeak = 0;
-			}
-		}
-		if (peakCount > 0)
-		{
-			currentVolume.store(peakSum / peakCount, std::memory_order_relaxed);
-		}
-
-		// transition from silence to listening
-		if (in_speech && !utt_started) {
-			utt_started = 1;
-			ClientMessage(FString(TEXT("Listening")));
-			Manager->StartedSpeaking_method();
-		}
-
-		// transition from listening to silence
-		if (!in_speech && utt_started) {
-
-			// obtain a count of the number of frames, and the hypothesis phrase spoken
-			int frame_rate = cmd_ln_int32_r(config, "-frate");
-			int32 frameCount = ps_get_n_frames(ps);
-			int32 score;
-
-			// re-loop, if there is no hypothesis
-			if (ps_get_hyp(ps, &score) != NULL) {
-
-
-				TArray<FString> phraseSet;
-				map<float, std::string> orderedPhrases;
-				map<float, std::string>::iterator it;
-
-				ps_seg_t *iter = ps_seg_iter(ps);
-
-				// Orders the detected phrases into a map.
-				// Key = seconds from the start of speech recognition detection.
-				// Value = the phrase that was detected.
-				while (iter != NULL) {
-					int32 sf, ef;
-					ps_seg_frames(iter, &sf, &ef);
-					std::string word(ps_seg_word(iter));
-					float startTime = ((float)sf / frame_rate);
-					float endTime = ((float)ef / frame_rate);
-					// For debug purposes. Logs the raw detected phrase + time they were detected
-					UE_LOG(SpeechRecognitionPlugin, Log, TEXT("Word: %s Start Time: %.3f End Time %.3f"), UTF8_TO_TCHAR(word.c_str()), startTime, endTime);
-					orderedPhrases.insert(pair<float, std::string>(startTime, word));
-					iter = ps_seg_next(iter);
-				}
-
-				// Loops through the ordered phrases (in detection order).
-				// We only pickup and use the first detection, of each unique phrase. 
-				// This is to handle words defined with multiple phonetic definitions
-				for (it = orderedPhrases.begin(); it != orderedPhrases.end(); ++it) {
-					std::string hypStr = it->second;
-					std::string originalHypothesis = GetOriginalString(hypStr);
-					FString phrase = FString(UTF8_TO_TCHAR(originalHypothesis.c_str()));
-					if (detectionMode == ESpeechRecognitionMode::VE_KEYWORD)
-					{
-						if (!phraseSet.Contains(phrase))
-						{
-							phraseSet.Add(phrase);
-							ClientMessage(phrase);
-							UE_LOG(SpeechRecognitionPlugin, Log, TEXT("Phrases: %s "), *phrase);
-						}
-					}
-					if (detectionMode == ESpeechRecognitionMode::VE_GRAMMAR)
-					{
-						if (phrase != "sil")
-						{
-							phraseSet.Add(phrase);
-							ClientMessage(phrase);
-							UE_LOG(SpeechRecognitionPlugin, Log, TEXT("Phrases: %s "), *phrase);
-						}
-					}
-					if (detectionMode == ESpeechRecognitionMode::VE_LANGUAGE_MODEL)
-					{
-						if (phrase != "s" && phrase != "sil")
-						{
-							phraseSet.Add(phrase);
-							ClientMessage(phrase);
-							UE_LOG(SpeechRecognitionPlugin, Log, TEXT("Phrases: %s "), *phrase);
-						}
-					}
-				}
-
-				FRecognisedPhrases recognisedPhrases;
-				recognisedPhrases.phrases = phraseSet;
-				Manager->WordsSpoken_method(recognisedPhrases);
-			}
-			else {
-				Manager->UnknownPhrase_method();
-			}
-
-			// Listening period has ended
-			ps_end_utt(ps);
-			if (ps_start_utt(ps) < 0)
-				ClientMessage(FString(TEXT("Failed to start")));
-			utt_started = 0;
-			Manager->StoppedSpeaking_method();
-		}
+			Events.Enqueue(MoveTemp(Event));
+		});
 	}
 
-	// normal shutdown: release the audio device, the decoder, and the
-	// worker's own reference to the config (safe if never initialised)
-	ReleaseSphinxResources();
-	if (config != NULL) {
-		cmd_ln_free_r(config);
-		config = NULL;
-	}
+	// normal shutdown: release the audio device and the decoder
+	StopListening();
 
 	return 0;
 }

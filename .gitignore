@@ -14,3 +14,6 @@ DerivedDataCache/
 
 # Test audio generated on the developer's machine (see Tools/New-TestAudio.ps1)
 /Plugins/SpeechRecognition/Resources/TestAudio/generated/
+
+# Written by the editor on first run, from the machine's keyboard layout
+/Config/DefaultInput.ini

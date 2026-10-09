@@ -2,6 +2,8 @@
 #include "SpeechRecognitionGameStateBase.h"
 #include "SpeechRecognitionSubsystem.h"
 
+#include "Engine/World.h"
+
 ASpeechRecognitionGameStateBase::ASpeechRecognitionGameStateBase(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 	, Language(ESpeechRecognitionLanguage::VE_English)
@@ -21,7 +23,10 @@ void ASpeechRecognitionGameStateBase::BeginPlay()
 	{
 		if (USpeechRecognitionSubsystem* SpeechRecognitionSubsystem = World->GetSubsystem<USpeechRecognitionSubsystem>())
 		{
-			if (SpeechRecognitionSubsystem->Init(Language))
+			const bool bInitialised = LanguageCodeOverride.IsEmpty()
+				? SpeechRecognitionSubsystem->Init(Language)
+				: SpeechRecognitionSubsystem->InitWithLanguageCode(LanguageCodeOverride);
+			if (bInitialised)
 			{
 				if (!OptionalWorldList.IsEmpty())
 				{
