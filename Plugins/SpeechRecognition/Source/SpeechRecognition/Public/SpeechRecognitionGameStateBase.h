@@ -18,6 +18,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Audio|SpeechRecognition")
 	ESpeechRecognitionLanguage Language;
 
+	/** If not empty, used instead of Language: the name of any language folder under the model folder. */
+	UPROPERTY(EditDefaultsOnly, Category = "Audio|SpeechRecognition")
+	FString LanguageCodeOverride;
+
 	/** Optional phrases to recognize */
 	UPROPERTY(EditDefaultsOnly, Category = "Audio|SpeechRecognition")
 	TArray<FRecognitionPhrase> OptionalWorldList;

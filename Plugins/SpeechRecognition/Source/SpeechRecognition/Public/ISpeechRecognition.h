@@ -2,39 +2,35 @@
 
 #pragma once
 
-#include "SpeechRecognition.h"
+#include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
 class ISpeechRecognition : public IModuleInterface
 {
 
-	int32 instanceCtr;
+	int32 instanceCtr = 0;
 
 public:
 
-	UFUNCTION(BlueprintCallable, Category = "Audio|SpeechRecognition")
 	static inline ISpeechRecognition& Get()
 	{
 		return FModuleManager::LoadModuleChecked< ISpeechRecognition >( "SpeechRecognition" );
 	}
 
-	UFUNCTION(BlueprintCallable, Category = "Audio|SpeechRecognition")
 	static inline bool IsAvailable()
 	{
 		return FModuleManager::Get().IsModuleLoaded("SpeechRecognition");
 	}
 
-	UFUNCTION(BlueprintCallable, Category = "Audio|SpeechRecognition")
 	int32 GetInstanceCounter()
 	{
 		return instanceCtr++;
 	}
 
-	/** Whether the third-party speech libraries were successfully located at module startup */
+	/** Whether the third-party speech libraries were successfully loaded at module startup */
 	virtual bool AreLibrariesLoaded() const
 	{
 		return false;
 	}
 
 };
-

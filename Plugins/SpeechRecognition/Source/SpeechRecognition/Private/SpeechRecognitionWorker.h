@@ -1,126 +1,81 @@
 #pragma once
 
-#include <sphinxbase/err.h>
-#include <sphinxbase/ad.h>
-#include <pocketsphinx.h>
-#include <stdio.h>
-#include <time.h>
-#include <regex>
-#include <string>
-#include <set>
-#include <map>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <locale>
-#include <cstdio>
-#include <vector>
-#include <utility>
+#include "CoreMinimal.h"
+#include "Containers/Queue.h"
+#include "HAL/Runnable.h"
+#include "SphinxDecoder.h"
+
 #include <atomic>
 
-#include "SpeechRecognition.h"
-#include "Containers/Queue.h"
-#include "Templates/Function.h"
-#include "Chaos/AABB.h"
+class FRunnableThread;
 
-#define SENSCR_SHIFT 10
-
-class USpeechRecognitionSubsystem;
-
-using namespace std;
-
-//Common structures and enumerations
-struct FSpeechRecognitionParam
+/** Game thread to worker: start listening with this configuration, or stop listening. */
+struct FSpeechWorkerRequest
 {
-	std::string name;
-	ESpeechRecognitionParamType type;
-	std::string value;
+	/** Stamped on every event the request produces, so that late events of an older request can be told apart. */
+	uint32 Generation = 0;
 
-	// constructor
-	FSpeechRecognitionParam(const char* InName, ESpeechRecognitionParamType InType, const char* InValue)
-		: name(InName)
-		, type(InType)
-		, value(InValue)
-	{
-	}
+	/** False closes the microphone and the decoder without starting new ones. */
+	bool bListen = true;
+
+	FSphinxDecoderConfig Config;
 };
 
+/** Worker to game thread. */
+struct FSpeechWorkerEvent
+{
+	enum class EType : uint8
+	{
+		/** The model is loaded and the microphone is open. */
+		Listening,
+		/** The request could not be honoured, or the microphone failed later on. */
+		Failed,
+		SpeechStarted,
+		Recognised,
+		Unrecognised,
+		SpeechEnded
+	};
+
+	EType Type = EType::Listening;
+	uint32 Generation = 0;
+
+	/** Recognised: what was heard. */
+	TArray<FRecognisedPhraseDetail> Phrases;
+
+	/** Listening: key phrases left out because a word is not in the dictionary. */
+	TArray<FString> RejectedPhrases;
+
+	/** Failed: why. */
+	ESpeechRecognitionError Error = ESpeechRecognitionError::None;
+	FString Message;
+};
+
+/**
+ * Owns the recording device and the decoder, on its own thread.
+ *
+ * Nothing here is shared with the game thread except the two queues and the
+ * volume: requests come in through one queue, events leave through the other,
+ * and the worker never touches a UObject.
+ */
 class FSpeechRecognitionWorker : public FRunnable
 {
 
 private:
-	// Sphinx (worker thread only)
-	ps_decoder_t *ps = nullptr;
-	cmd_ln_t *config = nullptr;
-	ad_rec_t *ad = nullptr;
-	int16 adbuf[1024];
-	uint8 utt_started = 0, in_speech = 0;
-	int32 k = 0;
-	bool initRequired = false;
-	bool wordsAdded = false;
-
-	//Stores the current, peak volume.
-	//Written by the worker thread, read from the game thread.
-	std::atomic<int32> currentVolume{0};
-
-	//A set of params to apply to Sphinx initialisation (worker thread only)
-	TArray<FSpeechRecognitionParam> sphinxParams;
-
-	//Speech detection mode (worker thread only)
-	ESpeechRecognitionMode detectionMode = ESpeechRecognitionMode::VE_KEYWORD;
-
-	//Language (worker thread only)
-	ESpeechRecognitionLanguage language = ESpeechRecognitionLanguage::VE_English;
-
 	//Thread
 	FRunnableThread* Thread = nullptr;
 
-	//Pointer to our manager
-	USpeechRecognitionSubsystem* Manager = nullptr;
+	//Set by Stop(), read by the worker loop
+	std::atomic<bool> bStopRequested{ false };
 
-	//Thread safe counter
-	FThreadSafeCounter StopTaskCounter;
+	//Stores the current, peak volume.
+	//Written by the worker thread, read from the game thread.
+	std::atomic<int32> currentVolume{ 0 };
 
-	//Thread-safe request queue. Mode, language and config changes are enqueued
-	//from the game thread and executed on the worker thread between audio
-	//buffers, so all Sphinx state (config, keywords, detectionMode,
-	//initRequired, model paths) is only ever touched by the worker thread.
-	TQueue<TFunction<void()>, EQueueMode::Mpsc> CommandQueue;
+	//Requests from the game thread. Only the most recent one matters.
+	TQueue<FSpeechWorkerRequest, EQueueMode::Mpsc> Requests;
 
-	//Language (worker thread only)
-	const char* langStr = nullptr;
-
-	//Paths (worker thread only)
-	std::string argFilePath;
-	std::string contentPath_str;
-	std::string logPath;
-	std::string modelPath;
-	std::string languageModel;
-	std::string dictionaryPath;
-
-	//Stores the recognition keywords, along with their tolerances (worker thread only)
-	std::map <string , char*> keywords;
-
-	//Dictionary (worker thread only)
-	std::map <string, set<string>> dictionary;
-
-	//Splits a string by whitespace
-	vector<string> Split(string s);
-	//Removes brackets, and 1-9 characters, from a string
-	string GetOriginalString(string s) const;
-
-	//Drains and executes all pending game-thread requests (worker thread only)
-	void DrainCommandQueue();
-
-	//Worker-thread implementations of the public mode/language methods
-	void EnableKeywordMode_Internal(const TArray<FRecognitionPhrase>& wordList);
-	void EnableGrammarMode_Internal(const FString& grammarName);
-	void EnableLanguageModel_Internal(const FString& InLanguageModel);
-	void SetLanguage_Internal(ESpeechRecognitionLanguage InLanguage);
-
-	//Releases the audio device and decoder prior to a re-initialisation,
-	//shutdown, or failed initialisation (worker thread only)
-	void ReleaseSphinxResources();
+	//Events for the game thread, in the order they happened.
+	TQueue<FSpeechWorkerEvent, EQueueMode::Spsc> Events;
 
 public:
 	FSpeechRecognitionWorker();
@@ -130,23 +85,19 @@ public:
 	virtual void Stop() override;
 	virtual uint32 Run() override;
 
-	//Methods to switch recognition modes.
-	//Safe to call from the game thread: the request is queued and applied by
-	//the worker thread between audio buffers.
-	bool EnableKeywordMode(const TArray<FRecognitionPhrase>& wordList);
-	bool EnableGrammarMode(FString grammarName);
-	bool EnableLanguageModel(FString InLanguageModel);
+	//Starts the thread. It idles until the first request.
+	bool StartThread();
 
-	//Action methods
-	void AddWords(const TArray<FRecognitionPhrase>& InKeywords);
-	int16 GetCurrentVolume() const;
-	void InitConfig();
-	bool SetConfigParam(const FString& param, ESpeechRecognitionParamType type, const FString& value);
-	void SetLanguage(ESpeechRecognitionLanguage InLanguage);
-	bool StartThread(USpeechRecognitionSubsystem* manager);
+	//Stops the thread and waits for it. Safe to call twice.
 	void ShutDown();
 
-	// Print Debug Text
-	static void ClientMessage(const FString& txt);
+	//Game thread: start listening with this configuration (or stop listening).
+	//A request replaces whatever the worker was doing.
+	void Request(FSpeechWorkerRequest&& InRequest);
+
+	//Game thread: takes the next event, if there is one.
+	bool PollEvent(FSpeechWorkerEvent& OutEvent);
+
+	int16 GetCurrentVolume() const;
 
 };

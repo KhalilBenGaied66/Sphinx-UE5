@@ -1,12 +1,10 @@
 #pragma once
 
-#include "Engine.h"
-#include "Kismet/GameplayStatics.h"
-#include "ISpeechRecognition.h"
+#include "CoreMinimal.h"
 #include "SpeechRecognition.generated.h"
 
-//General Log (defined in SpeechRecognitionWorker.cpp)
-DECLARE_LOG_CATEGORY_EXTERN(SpeechRecognitionPlugin, Log, All);
+//General Log (defined in SpeechRecognitionModule.cpp)
+SPEECHRECOGNITION_API DECLARE_LOG_CATEGORY_EXTERN(SpeechRecognitionPlugin, Log, All);
 
 //Common structures and enumerations
 USTRUCT(BlueprintType)
@@ -20,6 +18,32 @@ struct FRecognisedPhrases
 	// default constructor
 	FRecognisedPhrases() {
 	}
+};
+
+/** One recognised phrase, with where it sat in the utterance and how the decoder scored it. */
+USTRUCT(BlueprintType)
+struct FRecognisedPhraseDetail
+{
+	GENERATED_USTRUCT_BODY()
+
+	/** The phrase, lower case, without pronunciation suffixes such as "(2)". */
+	UPROPERTY(BlueprintReadOnly, Category = "Audio|SpeechRecognition")
+	FString Phrase;
+
+	/** Seconds from the start of the utterance to the start of the phrase. */
+	UPROPERTY(BlueprintReadOnly, Category = "Audio|SpeechRecognition")
+	float StartTime = 0.f;
+
+	/** Seconds from the start of the utterance to the end of the phrase. */
+	UPROPERTY(BlueprintReadOnly, Category = "Audio|SpeechRecognition")
+	float EndTime = 0.f;
+
+	/**
+	 * The decoder's raw log score for this phrase. Higher is better, and it is only
+	 * comparable between phrases recognised in the same mode: it is not a probability.
+	 */
+	UPROPERTY(BlueprintReadOnly, Category = "Audio|SpeechRecognition")
+	int32 Score = 0;
 };
 
 UENUM(BlueprintType)
@@ -39,6 +63,10 @@ enum class ESpeechRecognitionParamType : uint8
 	VE_INTEGER  UMETA(DisplayName = "Integer")
 };
 
+/**
+ * The languages the plugin has always listed. Any other language works too: put its
+ * model under the model folder and call InitWithLanguageCode with the folder's name.
+ */
 UENUM(BlueprintType)
 enum class ESpeechRecognitionLanguage : uint8
 {
@@ -46,9 +74,11 @@ enum class ESpeechRecognitionLanguage : uint8
 	VE_Chinese  UMETA(DisplayName = "Chinese"),
 	VE_French	UMETA(DisplayName = "French"),
 	VE_Spanish  UMETA(DisplayName = "Spanish"),
-	VE_Russian  UMETA(DisplayName = "Russian")
+	VE_Russian  UMETA(DisplayName = "Russian"),
+	VE_German   UMETA(DisplayName = "German")
 };
 
+/** How easily a key phrase triggers. V1 triggers most easily (more false alarms), V10 is the strictest. */
 UENUM(BlueprintType)
 enum class EPhraseRecognitionTolerance : uint8
 {
@@ -62,6 +92,49 @@ enum class EPhraseRecognitionTolerance : uint8
 	VE_8 	UMETA(DisplayName = "V8"),
 	VE_9 	UMETA(DisplayName = "V9"),
 	VE_10 	UMETA(DisplayName = "V10")
+};
+
+/** Where the recogniser is in its life. */
+UENUM(BlueprintType)
+enum class ESpeechRecognitionState : uint8
+{
+	/** Init has not been called, or Shutdown has. */
+	Stopped,
+	/** Init succeeded; no recognition mode has been enabled yet. */
+	Initialised,
+	/** A mode was requested; the model is loading and the microphone is being opened. */
+	Starting,
+	/** The microphone is open and speech is being decoded. */
+	Listening,
+	/** The last mode request failed. See the error; enabling a mode again retries. */
+	Failed
+};
+
+/** Why recognition could not start, or stopped. */
+UENUM(BlueprintType)
+enum class ESpeechRecognitionError : uint8
+{
+	None,
+	/** SphinxBase.dll or PocketSphinx.dll could not be loaded. */
+	LibrariesMissing,
+	/** Init has not been called. */
+	NotInitialised,
+	/** No acoustic model folder for the language. */
+	ModelNotFound,
+	/** No pronunciation dictionary for the language. */
+	DictionaryNotFound,
+	/** The grammar file does not exist. */
+	GrammarNotFound,
+	/** The language model file does not exist. */
+	LanguageModelNotFound,
+	/** A model path contains characters the decoder cannot open. */
+	UnsupportedPath,
+	/** No key phrase is left once those with words missing from the dictionary are removed. */
+	NoValidKeywords,
+	/** The decoder refused the model, the grammar or the configuration. */
+	DecoderInitFailed,
+	/** The recording device could not be opened or read. */
+	AudioDeviceFailed
 };
 
 USTRUCT(BlueprintType)
@@ -83,7 +156,7 @@ struct FRecognitionPhrase
 
 	// if you wish to only provide a phrase
 	FRecognitionPhrase(const FString& keyword) {
-		phrase = FString();
+		phrase = keyword;
 		tolerance = EPhraseRecognitionTolerance::VE_5;
 	}
 
@@ -92,24 +165,4 @@ struct FRecognitionPhrase
 		phrase = InPhrase;
 		tolerance = InTolerance;
 	}
-};
-
-class FSpeechRecognition :public ISpeechRecognition
-{
-
-	/** True when the required third-party libraries were located at startup */
-	bool bLibrariesLoaded = false;
-
-public:
-
-	/** IModuleInterface implementation */
-	virtual void StartupModule() override;
-	virtual void ShutdownModule() override;
-
-	/** ISpeechRecognition implementation */
-	virtual bool AreLibrariesLoaded() const override;
-
-	/** Search for a dll to be loaded dynamically */
-	bool SearchForDllPath(const FString& _searchBase, FString _dllName);
-
 };
