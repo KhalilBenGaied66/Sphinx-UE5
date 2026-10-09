@@ -1,0 +1,10 @@
+* text=auto eol=lf
+
+*.dll binary
+*.lib binary
+*.png binary
+*.gif binary
+*.wav binary
+*.raw binary
+*.uasset binary
+*.umap binary
