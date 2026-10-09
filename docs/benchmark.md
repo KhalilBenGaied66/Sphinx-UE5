@@ -48,6 +48,13 @@ quiet moment), so the difference per run is not worth quoting to the percent.
 The cause was a loop that read the recording device again at once whenever it
 had nothing new, at the highest thread priority. It now sleeps 5 ms.
 
+To measure the July build again: check out the tag `fixes-2026-07`, package
+`SpeechRecognition/SpeechRecognition.uplugin` with `RunUAT BuildPlugin`, copy
+the `ThirdParty` folder into the packaged plugin (at that commit BuildPlugin
+leaves it out), put the result in the `Plugins` folder of an empty project
+together with `Content/model/en`, and run
+`Tools\Measure-ListeningCost.ps1 -Project <that project>.uproject`.
+
 ## Switching mode
 
 From the `SpeechRecognition.Decoder.Reinitialise` test, English model, 40
