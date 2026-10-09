@@ -1,0 +1,148 @@
+id	language	source	rate	file	expected	grammar	text
+en_rec_goforward	en	recorded	0	pocketsphinx/goforward.raw	go forward	1	go forward ten meters
+en_go_forward_slow	en	synthetic	-2	generated/en/go_forward_slow.wav	go forward	0	go forward
+en_go_forward_normal	en	synthetic	0	generated/en/go_forward_normal.wav	go forward	0	go forward
+en_go_forward_fast	en	synthetic	2	generated/en/go_forward_fast.wav	go forward	0	go forward
+en_go_forward_carrier	en	synthetic	0	generated/en/go_forward_carrier.wav	go forward	0	okay go forward now
+en_go_back_slow	en	synthetic	-2	generated/en/go_back_slow.wav	go back	0	go back
+en_go_back_normal	en	synthetic	0	generated/en/go_back_normal.wav	go back	0	go back
+en_go_back_fast	en	synthetic	2	generated/en/go_back_fast.wav	go back	0	go back
+en_go_back_carrier	en	synthetic	0	generated/en/go_back_carrier.wav	go back	0	okay go back now
+en_turn_left_slow	en	synthetic	-2	generated/en/turn_left_slow.wav	turn left	0	turn left
+en_turn_left_normal	en	synthetic	0	generated/en/turn_left_normal.wav	turn left	0	turn left
+en_turn_left_fast	en	synthetic	2	generated/en/turn_left_fast.wav	turn left	0	turn left
+en_turn_left_carrier	en	synthetic	0	generated/en/turn_left_carrier.wav	turn left	0	okay turn left now
+en_turn_right_slow	en	synthetic	-2	generated/en/turn_right_slow.wav	turn right	0	turn right
+en_turn_right_normal	en	synthetic	0	generated/en/turn_right_normal.wav	turn right	0	turn right
+en_turn_right_fast	en	synthetic	2	generated/en/turn_right_fast.wav	turn right	0	turn right
+en_turn_right_carrier	en	synthetic	0	generated/en/turn_right_carrier.wav	turn right	0	okay turn right now
+en_jump_slow	en	synthetic	-2	generated/en/jump_slow.wav	jump	0	jump
+en_jump_normal	en	synthetic	0	generated/en/jump_normal.wav	jump	0	jump
+en_jump_fast	en	synthetic	2	generated/en/jump_fast.wav	jump	0	jump
+en_jump_carrier	en	synthetic	0	generated/en/jump_carrier.wav	jump	0	okay jump now
+en_stop_slow	en	synthetic	-2	generated/en/stop_slow.wav	stop	0	stop
+en_stop_normal	en	synthetic	0	generated/en/stop_normal.wav	stop	0	stop
+en_stop_fast	en	synthetic	2	generated/en/stop_fast.wav	stop	0	stop
+en_stop_carrier	en	synthetic	0	generated/en/stop_carrier.wav	stop	0	okay stop now
+en_open_the_door_slow	en	synthetic	-2	generated/en/open_the_door_slow.wav	open the door	0	open the door
+en_open_the_door_normal	en	synthetic	0	generated/en/open_the_door_normal.wav	open the door	0	open the door
+en_open_the_door_fast	en	synthetic	2	generated/en/open_the_door_fast.wav	open the door	0	open the door
+en_open_the_door_carrier	en	synthetic	0	generated/en/open_the_door_carrier.wav	open the door	0	okay open the door now
+en_close_the_door_slow	en	synthetic	-2	generated/en/close_the_door_slow.wav	close the door	0	close the door
+en_close_the_door_normal	en	synthetic	0	generated/en/close_the_door_normal.wav	close the door	0	close the door
+en_close_the_door_fast	en	synthetic	2	generated/en/close_the_door_fast.wav	close the door	0	close the door
+en_close_the_door_carrier	en	synthetic	0	generated/en/close_the_door_carrier.wav	close the door	0	okay close the door now
+en_lights_on_slow	en	synthetic	-2	generated/en/lights_on_slow.wav	lights on	0	lights on
+en_lights_on_normal	en	synthetic	0	generated/en/lights_on_normal.wav	lights on	0	lights on
+en_lights_on_fast	en	synthetic	2	generated/en/lights_on_fast.wav	lights on	0	lights on
+en_lights_on_carrier	en	synthetic	0	generated/en/lights_on_carrier.wav	lights on	0	okay lights on now
+en_lights_off_slow	en	synthetic	-2	generated/en/lights_off_slow.wav	lights off	0	lights off
+en_lights_off_normal	en	synthetic	0	generated/en/lights_off_normal.wav	lights off	0	lights off
+en_lights_off_fast	en	synthetic	2	generated/en/lights_off_fast.wav	lights off	0	lights off
+en_lights_off_carrier	en	synthetic	0	generated/en/lights_off_carrier.wav	lights off	0	okay lights off now
+en_follow_me_slow	en	synthetic	-2	generated/en/follow_me_slow.wav	follow me	0	follow me
+en_follow_me_normal	en	synthetic	0	generated/en/follow_me_normal.wav	follow me	0	follow me
+en_follow_me_fast	en	synthetic	2	generated/en/follow_me_fast.wav	follow me	0	follow me
+en_follow_me_carrier	en	synthetic	0	generated/en/follow_me_carrier.wav	follow me	0	okay follow me now
+en_wait_here_slow	en	synthetic	-2	generated/en/wait_here_slow.wav	wait here	0	wait here
+en_wait_here_normal	en	synthetic	0	generated/en/wait_here_normal.wav	wait here	0	wait here
+en_wait_here_fast	en	synthetic	2	generated/en/wait_here_fast.wav	wait here	0	wait here
+en_wait_here_carrier	en	synthetic	0	generated/en/wait_here_carrier.wav	wait here	0	okay wait here now
+en_negative_1	en	synthetic	0	generated/en/negative_1.wav		0	what a lovely morning
+en_negative_2	en	synthetic	0	generated/en/negative_2.wav		0	i think it is going to rain
+en_negative_3	en	synthetic	0	generated/en/negative_3.wav		0	there is nothing to see
+en_negative_4	en	synthetic	0	generated/en/negative_4.wav		0	please be quiet
+en_negative_5	en	synthetic	0	generated/en/negative_5.wav		0	it is five to ten
+en_negative_6	en	synthetic	0	generated/en/negative_6.wav		0	thank you very much
+fr_avance_slow	fr	synthetic	-2	generated/fr/avance_slow.wav	avance	0	avance
+fr_avance_normal	fr	synthetic	0	generated/fr/avance_normal.wav	avance	0	avance
+fr_avance_fast	fr	synthetic	2	generated/fr/avance_fast.wav	avance	0	avance
+fr_avance_carrier	fr	synthetic	0	generated/fr/avance_carrier.wav	avance	0	bon avance maintenant
+fr_recule_slow	fr	synthetic	-2	generated/fr/recule_slow.wav	recule	0	recule
+fr_recule_normal	fr	synthetic	0	generated/fr/recule_normal.wav	recule	0	recule
+fr_recule_fast	fr	synthetic	2	generated/fr/recule_fast.wav	recule	0	recule
+fr_recule_carrier	fr	synthetic	0	generated/fr/recule_carrier.wav	recule	0	bon recule maintenant
+fr_a_gauche_slow	fr	synthetic	-2	generated/fr/a_gauche_slow.wav	à gauche	0	à gauche
+fr_a_gauche_normal	fr	synthetic	0	generated/fr/a_gauche_normal.wav	à gauche	0	à gauche
+fr_a_gauche_fast	fr	synthetic	2	generated/fr/a_gauche_fast.wav	à gauche	0	à gauche
+fr_a_gauche_carrier	fr	synthetic	0	generated/fr/a_gauche_carrier.wav	à gauche	0	bon à gauche maintenant
+fr_a_droite_slow	fr	synthetic	-2	generated/fr/a_droite_slow.wav	à droite	0	à droite
+fr_a_droite_normal	fr	synthetic	0	generated/fr/a_droite_normal.wav	à droite	0	à droite
+fr_a_droite_fast	fr	synthetic	2	generated/fr/a_droite_fast.wav	à droite	0	à droite
+fr_a_droite_carrier	fr	synthetic	0	generated/fr/a_droite_carrier.wav	à droite	0	bon à droite maintenant
+fr_saute_slow	fr	synthetic	-2	generated/fr/saute_slow.wav	saute	0	saute
+fr_saute_normal	fr	synthetic	0	generated/fr/saute_normal.wav	saute	0	saute
+fr_saute_fast	fr	synthetic	2	generated/fr/saute_fast.wav	saute	0	saute
+fr_saute_carrier	fr	synthetic	0	generated/fr/saute_carrier.wav	saute	0	bon saute maintenant
+fr_arrete_slow	fr	synthetic	-2	generated/fr/arrete_slow.wav	arrête	0	arrête
+fr_arrete_normal	fr	synthetic	0	generated/fr/arrete_normal.wav	arrête	0	arrête
+fr_arrete_fast	fr	synthetic	2	generated/fr/arrete_fast.wav	arrête	0	arrête
+fr_arrete_carrier	fr	synthetic	0	generated/fr/arrete_carrier.wav	arrête	0	bon arrête maintenant
+fr_ouvre_la_porte_slow	fr	synthetic	-2	generated/fr/ouvre_la_porte_slow.wav	ouvre la porte	0	ouvre la porte
+fr_ouvre_la_porte_normal	fr	synthetic	0	generated/fr/ouvre_la_porte_normal.wav	ouvre la porte	0	ouvre la porte
+fr_ouvre_la_porte_fast	fr	synthetic	2	generated/fr/ouvre_la_porte_fast.wav	ouvre la porte	0	ouvre la porte
+fr_ouvre_la_porte_carrier	fr	synthetic	0	generated/fr/ouvre_la_porte_carrier.wav	ouvre la porte	0	bon ouvre la porte maintenant
+fr_ferme_la_porte_slow	fr	synthetic	-2	generated/fr/ferme_la_porte_slow.wav	ferme la porte	0	ferme la porte
+fr_ferme_la_porte_normal	fr	synthetic	0	generated/fr/ferme_la_porte_normal.wav	ferme la porte	0	ferme la porte
+fr_ferme_la_porte_fast	fr	synthetic	2	generated/fr/ferme_la_porte_fast.wav	ferme la porte	0	ferme la porte
+fr_ferme_la_porte_carrier	fr	synthetic	0	generated/fr/ferme_la_porte_carrier.wav	ferme la porte	0	bon ferme la porte maintenant
+fr_allume_la_lumiere_slow	fr	synthetic	-2	generated/fr/allume_la_lumiere_slow.wav	allume la lumière	0	allume la lumière
+fr_allume_la_lumiere_normal	fr	synthetic	0	generated/fr/allume_la_lumiere_normal.wav	allume la lumière	0	allume la lumière
+fr_allume_la_lumiere_fast	fr	synthetic	2	generated/fr/allume_la_lumiere_fast.wav	allume la lumière	0	allume la lumière
+fr_allume_la_lumiere_carrier	fr	synthetic	0	generated/fr/allume_la_lumiere_carrier.wav	allume la lumière	0	bon allume la lumière maintenant
+fr_coupe_la_lumiere_slow	fr	synthetic	-2	generated/fr/coupe_la_lumiere_slow.wav	coupe la lumière	0	coupe la lumière
+fr_coupe_la_lumiere_normal	fr	synthetic	0	generated/fr/coupe_la_lumiere_normal.wav	coupe la lumière	0	coupe la lumière
+fr_coupe_la_lumiere_fast	fr	synthetic	2	generated/fr/coupe_la_lumiere_fast.wav	coupe la lumière	0	coupe la lumière
+fr_coupe_la_lumiere_carrier	fr	synthetic	0	generated/fr/coupe_la_lumiere_carrier.wav	coupe la lumière	0	bon coupe la lumière maintenant
+fr_suis_moi_slow	fr	synthetic	-2	generated/fr/suis_moi_slow.wav	suis moi	0	suis moi
+fr_suis_moi_normal	fr	synthetic	0	generated/fr/suis_moi_normal.wav	suis moi	0	suis moi
+fr_suis_moi_fast	fr	synthetic	2	generated/fr/suis_moi_fast.wav	suis moi	0	suis moi
+fr_suis_moi_carrier	fr	synthetic	0	generated/fr/suis_moi_carrier.wav	suis moi	0	bon suis moi maintenant
+fr_attends_ici_slow	fr	synthetic	-2	generated/fr/attends_ici_slow.wav	attends ici	0	attends ici
+fr_attends_ici_normal	fr	synthetic	0	generated/fr/attends_ici_normal.wav	attends ici	0	attends ici
+fr_attends_ici_fast	fr	synthetic	2	generated/fr/attends_ici_fast.wav	attends ici	0	attends ici
+fr_attends_ici_carrier	fr	synthetic	0	generated/fr/attends_ici_carrier.wav	attends ici	0	bon attends ici maintenant
+fr_negative_1	fr	synthetic	0	generated/fr/negative_1.wav		0	il fait beau aujourd'hui
+fr_negative_2	fr	synthetic	0	generated/fr/negative_2.wav		0	je ne sais pas quoi dire
+fr_negative_3	fr	synthetic	0	generated/fr/negative_3.wav		0	bonjour tout le monde
+fr_negative_4	fr	synthetic	0	generated/fr/negative_4.wav		0	merci beaucoup
+fr_negative_5	fr	synthetic	0	generated/fr/negative_5.wav		0	le chat dort sur le lit
+fr_negative_6	fr	synthetic	0	generated/fr/negative_6.wav		0	nous partons demain matin
+en_grammar_1	en	synthetic	0	generated/en/grammar_1.wav		1	go back five meters
+en_grammar_2	en	synthetic	0	generated/en/grammar_2.wav		1	turn left
+en_grammar_3	en	synthetic	0	generated/en/grammar_3.wav		1	turn right
+en_grammar_4	en	synthetic	0	generated/en/grammar_4.wav		1	open the door
+en_grammar_5	en	synthetic	0	generated/en/grammar_5.wav		1	close the door
+en_grammar_6	en	synthetic	0	generated/en/grammar_6.wav		1	go forward
+en_grammar_7	en	synthetic	0	generated/en/grammar_7.wav		1	go back
+en_grammar_8	en	synthetic	0	generated/en/grammar_8.wav		1	go forward three meters
+de_voxforge_01	de	recorded	0	generated/de/de115-01.wav	verschiedene situationen	0	es gibt verschiedene situationen
+de_voxforge_02	de	recorded	0	generated/de/de115-02.wav	nur teilweise	0	dieses ziel wurde nur teilweise erreicht
+de_voxforge_03	de	recorded	0	generated/de/de115-03.wav		0	es gibt viele einsatzmöglichkeiten für holz
+de_voxforge_06	de	recorded	0	generated/de/de115-06.wav		0	es gibt viele möglichkeiten dazu
+de_voxforge_07	de	recorded	0	generated/de/de115-07.wav		0	das land soll reformiert werden
+de_voxforge_08	de	recorded	0	generated/de/de115-08.wav		0	das war eine sehr viel bessere anlage
+de_voxforge_09	de	recorded	0	generated/de/de115-09.wav		0	es gibt wieder eine erneute welle
+de_voxforge_10	de	recorded	0	generated/de/de115-10.wav	jederzeit zusammenbrechen	0	das wird jederzeit zusammenbrechen
+de_voxforge_11	de	recorded	0	generated/de/de115-11.wav		0	man kann in die aktienmärkte gehen
+de_voxforge_12	de	recorded	0	generated/de/de115-12.wav	zahlreiche ausnahmen	0	es gibt zahlreiche ausnahmen
+de_voxforge_13	de	recorded	0	generated/de/de115-13.wav		0	die wege zur versorgung sind abgeschnitten
+de_voxforge_14	de	recorded	0	generated/de/de115-14.wav		0	es gibt keine ausweichmöglichkeiten
+de_voxforge_15	de	recorded	0	generated/de/de115-15.wav		0	es gibt zahlreiche notizen zu veröffentlichen
+de_voxforge_16	de	recorded	0	generated/de/de115-16.wav		0	dazu werden die leistungen reduziert
+de_voxforge_17	de	recorded	0	generated/de/de115-17.wav		0	das ende wird irgendwann eintreten
+de_voxforge_18	de	recorded	0	generated/de/de115-18.wav		0	es hätte in person geleistet werden müssen
+de_voxforge_19	de	recorded	0	generated/de/de115-19.wav		0	das hat sich damals deutlich erhöht
+de_voxforge_20	de	recorded	0	generated/de/de115-20.wav		0	einzelne staaten können ausscheiden
+de_voxforge_21	de	recorded	0	generated/de/de115-21.wav	viel geld	0	es hätte viel geld gewonnen werden können
+de_voxforge_22	de	recorded	0	generated/de/de115-22.wav		0	auf eine weitere anhebung wurde verzichtet
+de_voxforge_30	de	recorded	0	generated/de/de115-30.wav	die aktuelle version	0	es handelt sich nicht um die aktuelle version
+de_voxforge_34	de	recorded	0	generated/de/de115-34.wav	doppelt so teuer	0	mittlerweile ist das doppelt so teuer
+de_voxforge_35	de	recorded	0	generated/de/de115-35.wav	neun prozent	0	die geldmenge ist jährlich um neun prozent gewachsen
+de_voxforge_36	de	recorded	0	generated/de/de115-36.wav	die dritte staffel	0	es handelt sich um die dritte staffel
+de_voxforge_48	de	recorded	0	generated/de/de115-48.wav	ein fass ohne boden	0	es handelt sich um ein fass ohne boden
+de_voxforge_58	de	recorded	0	generated/de/de115-58.wav	ganz massive auswirkungen	0	das hat ganz massive auswirkungen
+de_voxforge_76	de	recorded	0	generated/de/de115-76.wav	im radio	0	über das thema wird im radio berichtet
+de_voxforge_84	de	recorded	0	generated/de/de115-84.wav	aus der flasche	0	der geist ist inzwischen aus der flasche entwichen
+de_voxforge_97	de	recorded	0	generated/de/de115-97.wav	ganz direkt	0	das wird uns dann ganz direkt betreffen
+de_voxforge_99	de	recorded	0	generated/de/de115-99.wav	unter anderen namen	0	es ist auch unter anderen namen bekannt

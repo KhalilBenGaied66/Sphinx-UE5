@@ -1,0 +1,40 @@
+language	phrase	tolerance
+en	go forward	5
+en	go back	5
+en	turn left	5
+en	turn right	5
+en	jump	8
+en	stop	8
+en	open the door	5
+en	close the door	5
+en	lights on	5
+en	lights off	5
+en	follow me	5
+en	wait here	5
+fr	avance	8
+fr	recule	8
+fr	à gauche	5
+fr	à droite	5
+fr	saute	8
+fr	arrête	8
+fr	ouvre la porte	5
+fr	ferme la porte	5
+fr	allume la lumière	5
+fr	coupe la lumière	5
+fr	suis moi	5
+fr	attends ici	5
+de	verschiedene situationen	5
+de	nur teilweise	5
+de	jederzeit zusammenbrechen	5
+de	zahlreiche ausnahmen	5
+de	viel geld	5
+de	die aktuelle version	5
+de	doppelt so teuer	5
+de	neun prozent	5
+de	die dritte staffel	5
+de	ein fass ohne boden	5
+de	ganz massive auswirkungen	5
+de	im radio	5
+de	aus der flasche	5
+de	ganz direkt	5
+de	unter anderen namen	5
