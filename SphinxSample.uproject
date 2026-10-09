@@ -1,0 +1,19 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "5.8",
+	"Category": "",
+	"Description": "A cube that obeys spoken commands: the smallest project that exercises the Speech Recognition plugin.",
+	"Modules": [
+		{
+			"Name": "SphinxSample",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "SpeechRecognition",
+			"Enabled": true
+		}
+	]
+}
