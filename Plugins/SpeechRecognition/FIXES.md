@@ -1,5 +1,10 @@
 # Fixes & Improvements over the upstream UE5 fork
 
+> This is the record of the nine fixes made in July 2026, kept as written. The
+> code has moved on since (see `CHANGELOG.md` at the root of the repository);
+> the note at the end says which of the manual checks below an automated test
+> now covers.
+
 Baseline: [ukustra/sphinx-ue4](https://github.com/ukustra/sphinx-ue4) (UE5 fork of
 [shanecolb/sphinx-ue4](https://github.com/shanecolb/sphinx-ue4)), source state as of the
 "5.8 update" commit. Files changed: `SpeechRecognitionWorker.h/.cpp`,
@@ -149,3 +154,25 @@ expression, then used it in later statements.
 7. Missing-DLL start: editor survives, `Init` returns false (fix #4).
 8. 10x PIE start/stop: thread count stable, exit clean (fix #1).
 9. Level travel (`open <map>`) mid-listen: clean teardown via `Deinitialize`.
+
+---
+
+## October 2026: what is checked automatically now
+
+`Tools/Run-Tests.ps1` runs these in a headless editor (UE 5.8).
+
+| Fix | Automated check | Still by hand |
+|---|---|---|
+| 1. Worker teardown | `Subsystem.Live`: four start / switch mode / shutdown cycles on the microphone | thread count over many PIE sessions |
+| 2. Shared state | The shared fields no longer exist: the worker only receives copies. `Subsystem.Live` switches mode while listening | |
+| 3. Volume | `Unit.Volume`: a buffer that starts below zero is measured like any other | the meter on screen with a real voice |
+| 4. Missing DLLs | none | rename a DLL and start the editor |
+| 5. Keyword and parameter leaks, 6. Decoder leak | `Decoder.Reinitialise`: 40 switches on a kept decoder, then 40 with a full reload, watching the process's memory | |
+| 7. Multi-word validation | `Decoder.KeywordValidation`: a phrase whose last word is unknown is rejected | |
+| 8. Dangling pointer | The code is gone: parameters are stored as `FString` on the game thread | |
+| 9. Logical OR, UTF-8 names | `Decoder.NonAsciiPath`: a model under a folder with accents in its name | |
+
+Checklist items 2 to 5 (the three modes, switching between them) are covered
+on audio files by `Decoder.RecordedSpeech` and on the microphone by
+`Subsystem.Live`, which opens the device but has nobody speaking into it.
+Items 7 (missing DLL) and 9 (level travel while listening) are still manual.
