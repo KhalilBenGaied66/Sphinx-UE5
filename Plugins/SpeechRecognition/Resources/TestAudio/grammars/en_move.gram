@@ -1,0 +1,20 @@
+#JSGF V1.0;
+
+/**
+ * Movement commands used by the grammar-mode tests. Every sentence it accepts:
+ *   go forward | go back, optionally followed by "<number> meters"
+ *   turn left | turn right
+ *   open the door | close the door
+ */
+
+grammar move;
+
+public <command> = <move> | <turn> | <door>;
+
+<move> = go ( forward | back ) [ <number> meters ];
+
+<turn> = turn ( left | right );
+
+<door> = ( open | close ) the door;
+
+<number> = one | two | three | four | five | six | seven | eight | nine | ten;
