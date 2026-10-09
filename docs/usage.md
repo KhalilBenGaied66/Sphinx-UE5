@@ -1,0 +1,150 @@
+# Using the plugin
+
+Everything goes through one object, the **Speech Recognition Subsystem** of the
+world, or through the **Voice Command** component that drives it for you.
+
+## The short way: a Voice Command component
+
+1. Add a **Voice Command** component to an actor.
+2. Fill **Commands**. Each has a name, one or more phrases that trigger it, a
+   tolerance, and optionally a gameplay tag.
+3. Bind **On Voice Command**. It hands you the command's name, its tag, and the
+   phrase that was heard with its timing and score.
+
+The component starts the recogniser if nothing has (with its **Language Code**),
+adds its phrases to those being listened for, and removes them when it is
+deactivated or destroyed. Several components can be active at once; each one
+only reports its own commands. Activate and deactivate them to change what the
+player can say in a given context: the recogniser is not reloaded, so the switch
+is immediate.
+
+In C++:
+
+```cpp
+VoiceCommands = CreateDefaultSubobject<UVoiceCommandComponent>(TEXT("VoiceCommands"));
+
+FVoiceCommand OpenDoor;
+OpenDoor.Command = TEXT("OpenDoor");
+OpenDoor.Phrases = { TEXT("open the door"), TEXT("open door") };
+OpenDoor.Tolerance = EPhraseRecognitionTolerance::VE_5;
+VoiceCommands->Commands.Add(OpenDoor);
+
+VoiceCommands->OnVoiceCommand.AddDynamic(this, &AMyActor::HandleVoiceCommand);
+```
+
+`Source/SphinxSample/VoiceControlledCube.cpp` is a complete example.
+
+## The subsystem
+
+Get it with **Get World Subsystem > Speech Recognition Subsystem**, then:
+
+1. **Init** (a language from the list) or **Init With Language Code** (the name
+   of any model folder). Returns false if the DLLs could not be loaded.
+2. Enable one mode:
+   - **Enable Keyword Mode** with a list of phrases and their tolerances;
+   - **Enable Grammar Mode** with the name of a JSGF file in the language's
+     `grammars` folder;
+   - **Enable Language Model Mode** with the name of an n-gram model in its
+     `language_models` folder.
+
+   Each returns false at once when a file is missing. Calling another one later
+   switches mode. On the same language the model is not loaded again: a new
+   list of key phrases or a grammar takes well under a millisecond.
+3. Bind the events.
+
+| Event | When |
+|---|---|
+| On Listening Started | The model is loaded and the microphone is open. |
+| On Recognition Failed | A mode could not start, or the microphone failed. Carries an error code and a message. |
+| On Started Speaking | The voice detector heard the start of speech. |
+| On Words Spoken | The utterance ended and something was recognised: the list of phrases. |
+| On Phrases Recognised | Same moment, with each phrase's start time, end time and score. |
+| On Unknown Phrase | The utterance ended and nothing was recognised. |
+| On Stopped Speaking | Always follows one of the two above. |
+
+All of them are raised on the game thread.
+
+**Get Speech Recognition State** tells where things are: Stopped, Initialised
+(no mode yet), Starting, Listening, Failed. **Get Last Error Message** says why
+it failed, in words a user can act on. **Get Rejected Phrases** lists the key
+phrases that were left out because a word is not in the dictionary.
+
+**Shutdown** stops everything; it also happens when the world ends.
+
+## Which mode
+
+| | Keyword | Grammar | Language model |
+|---|---|---|---|
+| You give it | a list of phrases | a JSGF grammar | an n-gram model |
+| It reports | the phrases it spots, ignoring the rest | the sentence, word by word | whatever was said, word by word |
+| Other speech | ignored | forced into a sentence of the grammar | transcribed |
+| Good for | commands shouted in the middle of anything | structured orders: "go back five meters" | free text, roughly |
+
+Keyword mode is the one to start with for a game.
+
+## Tolerance
+
+Each key phrase has a tolerance from V1 to V10. V1 triggers most easily and
+V10 is the strictest. Too loose and a phrase fires on speech that only
+resembles it; too strict and it is missed.
+
+- Longer phrases are easier to tell apart: three or four syllables at least,
+  and V5 to V7.
+- A single short word ("stop", "jump") needs V8 or stricter, and will still be
+  missed more often. Prefer "stop now" to "stop".
+- Phrases that start alike ("lights on", "lights off") get spotted together.
+  The plugin keeps the better-scored of the two, which is usually the right
+  one; phrases that differ early are safer still.
+
+`docs/benchmark.md` shows what each setting does on the test audio. Use
+`Tools/Run-Tests.ps1 -Filter SpeechBenchmark` with your own phrases and
+recordings to choose yours.
+
+## Options
+
+- **Set Report Key Phrases Early** (keyword mode, off by default). A phrase is
+  reported the moment it is spotted instead of when the speaker pauses: a few
+  hundred milliseconds sooner, more so when the command is followed by other
+  words. The price: the recogniser cannot yet know what comes next, so phrases
+  that start alike can both be reported.
+- **Set Keep Best Of Overlapping Key Phrases** (on by default). See above.
+- **Set Config Param** passes a PocketSphinx parameter through, for instance
+  `-vad_postspeech` (hundredths of a second of silence that end an utterance;
+  `Init` sets 10) or `-vad_threshold`. It applies the next time a mode is
+  enabled, and changing one reloads the model.
+- Console variable `SpeechRecognition.StartUpReplays` (default 2): how many
+  times an utterance may be replayed through a decoder that has just started.
+  0 turns the start-up handling off.
+- Console command `Log SpeechRecognitionPlugin Verbose` shows each recognised
+  phrase and PocketSphinx's own log.
+
+## Grammars
+
+A JSGF file, for instance `Content/model/en/grammars/move.gram`:
+
+```
+#JSGF V1.0;
+grammar move;
+public <command> = <move> | <turn> | <door>;
+<move> = go ( forward | back ) [ <number> meters ];
+<turn> = turn ( left | right );
+<door> = ( open | close ) the door;
+<number> = one | two | three | four | five | six | seven | eight | nine | ten;
+```
+
+`Enable Grammar Mode "move"` then reports "go", "back", "five", "meters" as four
+entries of one utterance. Every word must be in the dictionary.
+
+## Limits to know about
+
+- **Windows, 64-bit only.** The bundled libraries are Windows builds.
+- **The default recording device only.** The bundled audio layer has no way to
+  choose another one.
+- **16 kHz models.** The microphone is opened at the rate the model asks for.
+- **One recogniser per world**, shared by everything that uses the subsystem.
+- **No dedicated servers**: the subsystem is not created there.
+- **A model that is damaged can end the process.** The 2016 library calls
+  `exit` on some malformed files. The plugin checks that the files exist before
+  handing them over; it cannot check that they are sound.
+- **Accuracy is that of a 2010s recogniser.** It is quick and small, and good at
+  a short list of well-chosen phrases. It is not a transcription engine.

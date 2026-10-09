@@ -1,12 +1,183 @@
-# Sphinx-UE5
-Sphinx-UE5 is a speech recognition plugin for Unreal Engine 5. 
-The plugin makes use of the PocketSphinx library.
+# Sphinx-UE5: offline voice commands for Unreal Engine 5
 
-<b>Note:</b> 
-This plugin uses a slightly modified version of PocketSphinx, to support passing in a set of keywords, dynamically.
+A speech recognition plugin for Unreal Engine 5 built on
+[PocketSphinx](https://github.com/cmusphinx/pocketsphinx). It listens to the
+microphone on a worker thread and raises Blueprint events when the player says
+one of your phrases. It runs offline, on the CPU, in about 26 MB of memory for
+English, and decodes more than a hundred times faster than real time on one
+thread.
 
-# Information
-Please read https://unrealcommunity.wiki/speech-recognition-plugin-yg8mvl5w for usage information.
+It is a recogniser for **commands**: a short list of phrases, a grammar, at a
+push a sentence. It is not a transcription engine, and a model from the 2010s
+will not behave like one from the 2020s. In return it costs almost nothing to
+run next to a game.
 
-I would love any feedback/advice on the plugin.
-Feel free to fork the code, or to contact me at shane.colbert@gmail.com
+## Where this comes from
+
+This is a continuation of two people's work, and most of the plugin's shape is
+theirs:
+
+- **Shane Colbert** wrote the plugin for Unreal Engine 4, with its last update
+  in 2016 ([shanecolb/sphinx-ue4](https://github.com/shanecolb/sphinx-ue4)).
+- **Urszula Kustra** ported it to Unreal Engine 5 and has kept it building
+  through UE 5.8 ([ukustra/sphinx-ue4](https://github.com/ukustra/sphinx-ue4)).
+
+This repository starts from that port (commit `08e3957`, June 2026) and adds
+what is listed below. The first nine commits after the import are bug fixes to
+the port, one per commit, kept apart so that they can go back to it as a pull
+request.
+
+## What this repository adds
+
+**Fixes.** A worker object leaked on every level change and a thread deleted
+twice; game-thread writes to state the worker thread was reading; a volume
+meter that tested the first sample of each buffer instead of the current one;
+an editor crash when the DLLs were missing; a decoder and a recording device
+leaked on every mode switch; a multi-word phrase check that only looked at the
+first word; failures that were only ever written to the log; a microphone loop
+that kept a core busy. The full list is in [CHANGELOG.md](CHANGELOG.md).
+
+**Measured on this machine** (how, and on what audio: [docs/benchmark.md](docs/benchmark.md)):
+
+| | Before | Now |
+|---|---|---|
+| CPU used by the process while listening, nobody speaking | about 1.8 cores | about 0.9 core, the same as when not listening |
+| First phrase after start-up recognised, English | 33 of 49 | 45 of 49 |
+| First phrase after start-up recognised, French | 7 of 48 | 27 of 48 |
+| First phrase after start-up recognised, German | 3 of 15 | 10 of 15 |
+| Phrases reported that were not said, English | 6 | 0 |
+| Switching key phrases or grammar | 394 ms, the model was loaded again | 0.2 ms |
+
+The CPU row compares the July build (the nine fixes and nothing else) with the
+current one. The other rows compare this code with a feature switched off,
+which is how the plugin behaved before, and with it on. The recognition rows
+come from synthetic English and French voices and from recorded German: they
+show the change, not what a player will get.
+
+With early reports switched on, a command said on its own reaches the game
+about 250 ms sooner (105 ms before the end of the speech instead of 152 ms
+after it), and one said inside a sentence about 430 ms sooner.
+
+**Features.**
+
+- Any language without recompiling: a language is a folder of model files, and
+  `Init With Language Code` takes its name. English, French and German models
+  are one script away.
+- A **Voice Command** component: commands with several wordings, an optional
+  gameplay tag, a cooldown, one event. Components can be switched on and off to
+  change what the player may say; the recogniser is not reloaded.
+- State, error codes and an `On Recognition Failed` event with a message that
+  says what to do.
+- Start time, end time and score of every phrase.
+- Optional early reports: the event fires when the phrase is spotted, not when
+  the speaker pauses.
+- A C++ decoder class without thread or microphone, for tools and tests.
+- 14 automated tests, a benchmark, and a sample project.
+
+## Status
+
+| What | State |
+|---|---|
+| Builds as a standalone plugin (`RunUAT BuildPlugin`, Win64) | UE 5.5.4, 5.6.1 and 5.8.1: builds, no compiler warning |
+| Automated tests (`Tools/Run-Tests.ps1`), UE 5.8 | 14 of 14 pass |
+| ... of which on the live microphone | start, switch mode, shut down, four times over: passes. The device is opened and read; nobody spoke into it |
+| Benchmark on audio files | run; 116 synthetic utterances (English, French), 31 recorded (1 English, 30 German) |
+| Sample project | builds; started as a game without a window, it spawns the cube and reports that it is listening. The cube has not been driven by a human voice |
+| A person speaking into a microphone | **not verified here.** Everything about recognition was measured on audio files |
+| Packaged game build | **not verified.** The staging line is documented, the result is untested |
+| Mac, Linux, consoles | not supported: the bundled libraries are 64-bit Windows builds |
+| Unreal Engine 5.4 and earlier | not tried |
+
+## Quick start
+
+Requirements: Windows, Unreal Engine 5.5 or later with Visual Studio 2022, a
+microphone.
+
+```
+git clone <this repository>
+cd sphinx-ue5
+powershell -ExecutionPolicy Bypass -File Tools\Get-Models.ps1
+```
+
+Open `SphinxSample.uproject` (it is set to UE 5.8; right-click it to switch
+engine version), let it compile, press Play, and say "go forward", "turn left",
+"jump", "stop". The screen shows the recogniser's state, the microphone level,
+and the last command heard with its timing.
+
+To use the plugin in your own project:
+
+1. Copy `Plugins/SpeechRecognition` into your project's `Plugins` folder.
+2. Put models in your project's `Content/model`
+   (`Tools\Get-Models.ps1 -Destination <YourProject>\Content\model`).
+3. Add a **Voice Command** component to an actor, fill in its commands, bind
+   **On Voice Command**.
+4. Before packaging, stage the models: see [docs/models.md](docs/models.md).
+
+More: [docs/usage.md](docs/usage.md) (modes, events, tolerance, limits) and
+[docs/design.md](docs/design.md) (threads, start-up handling, why).
+
+## Languages
+
+| | Model | Checked here with |
+|---|---|---|
+| English | CMUSphinx `en-us-ptm-5.2` | synthetic speech, one recording |
+| French | CMUSphinx `fr-ptm-5.2` | synthetic speech |
+| German | VoxForge / Zamia `de-voxforge-5.2` | 30 recorded sentences from the corpus the model was trained on |
+| Others | any CMUSphinx model in the same layout | not tried |
+| Arabic | none exists for CMUSphinx | see the roadmap |
+
+Accented and non-Latin words work: key phrases are lower-cased with Unicode
+rules and looked up in the dictionary as UTF-8. French recognition is clearly
+weaker than English on the test audio (35 of 48 commands against 48 of 49);
+the numbers are in the benchmark.
+
+## Reproducing the numbers
+
+```
+powershell -ExecutionPolicy Bypass -File Tools\Get-Models.ps1 -Language en,fr,de -LanguageModel
+powershell -ExecutionPolicy Bypass -File Tools\New-TestAudio.ps1      # needs English and French Windows voices
+powershell -ExecutionPolicy Bypass -File Tools\Get-TestSpeech.ps1     # German recordings; needs ffmpeg
+powershell -ExecutionPolicy Bypass -File Tools\Run-Tests.ps1
+powershell -ExecutionPolicy Bypass -File Tools\Run-Tests.ps1 -Filter SpeechBenchmark -NoBuild
+powershell -ExecutionPolicy Bypass -File Tools\Measure-ListeningCost.ps1
+powershell -ExecutionPolicy Bypass -File Tools\Build-Plugin.ps1 -Version 5.5,5.6,5.8
+```
+
+The benchmark writes `Saved/SpeechRecognition/benchmark.md`;
+[docs/benchmark.md](docs/benchmark.md) is that file from the run described
+there, with the measurements the other scripts print. Synthetic voices differ
+between Windows versions, so your figures will not match to the unit.
+
+## Limits
+
+- Windows 64-bit only, default recording device only, 16 kHz models.
+- The bundled PocketSphinx is a 2016 build. It reads files with the narrow C
+  runtime (handled for model paths) and ends the process on some malformed
+  model files (not something the plugin can catch).
+- A single short word is an unreliable command. Use phrases of two words or
+  more; see the tolerance tables in the benchmark.
+- The accuracy figures come from synthetic and read speech in a quiet setting.
+  A player in a room with a headset microphone will do worse; how much worse
+  has not been measured.
+
+## Roadmap
+
+1. **PocketSphinx 5.1 and Unreal's own audio capture.** The current library is
+   ten years old and brings its own Windows-only microphone code. Moving to the
+   maintained release and to Unreal's audio capture gives a choice of input
+   device, removes the process-ending failure modes, and opens the way to other
+   platforms.
+2. **A recorded test set.** A few speakers, a headset, a room: the accuracy
+   figures that matter.
+3. **Arabic**, through a second recognition engine behind the same component.
+4. **A packaged-build check** in the test script.
+
+## Licence and credits
+
+The plugin's source is in the public domain ([The Unlicense](License.md)), as
+it has been since the first version. PocketSphinx and SphinxBase are
+distributed under a BSD-style licence, and each speech model has its own:
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+Original plugin: Shane Colbert. Unreal Engine 5 port: Urszula Kustra. Fixes,
+tests and the additions above: Khalil Ben Gaied.
