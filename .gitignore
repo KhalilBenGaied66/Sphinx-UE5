@@ -17,3 +17,6 @@ DerivedDataCache/
 
 # Written by the editor on first run, from the machine's keyboard layout
 /Config/DefaultInput.ini
+
+# Written by packaging (BuildCookRun)
+/Build/

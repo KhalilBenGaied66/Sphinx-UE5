@@ -66,12 +66,27 @@ Two things to check in a dictionary:
   word the dictionary lacks, add a line for it: the word, then its phones in
   the model's phone set.
 
-### Arabic
+### Arabic and Tunisian Darija
 
-CMUSphinx publishes no Arabic model, so Arabic is not available today. The two
-ways to get it are to train an acoustic model with SphinxTrain, which needs
-tens of hours of transcribed speech, or to give the plugin a second recognition
-engine. The second is the plan: see the roadmap in the README.
+CMUSphinx publishes no Arabic model, so Arabic is not available today.
+Training one with SphinxTrain needs tens of hours of transcribed speech, and
+Tunisian Darija, which mixes Arabic with French and has no standard spelling,
+would need its own. The plan is a second engine instead, behind the same
+Voice Command component, so that a game changes language and nothing else.
+
+What was looked at (October 2026, nothing of it run yet):
+
+| Candidate | Where it runs | For Darija commands |
+|---|---|---|
+| whisper.cpp with a Whisper model fine-tuned on Tunisian speech (for example TuniSpeech-AI/whisper-tunisian-dialect, from Whisper large-v2) | offline, CPU or GPU, C/C++ under the MIT licence: embeddable in the plugin | the most likely route. The published Tunisian fine-tunes are large models; a game wants a small one, which may mean fine-tuning Whisper small on open Tunisian data |
+| Gemini (Google), through its API | online | handles Derja when the prompt names the dialect (the author's Derja voice-agent prototype uses it), but needs a network, an API key that cannot ship inside a game, and a quota. Useful as a reference to score the others, not as the engine |
+| Gemma audio models (Google, open weights, E2B and E4B) | offline | built for speech recognition in many languages; Darija quality not published; too heavy for a command recogniser running next to a game |
+| A small keyword-spotting network trained on recorded Darija commands, run with Unreal's Neural Network Engine | offline, tiny | the best fit for a fixed command list, but it needs recordings: each command, many speakers, several takes |
+| The French acoustic model with Darija words added to its dictionary in French phones | offline, possible today | a cheap experiment: French and Darija share many sounds and loanwords, but ع, ح and ق have no close French equivalent. May work for a handful of distinct commands, unmeasured |
+
+The first step is a measurement, not an engine: twenty Darija commands
+recorded by a few speakers, scored against each candidate, with Gemini as the
+reference.
 
 ## Shipping a game
 
