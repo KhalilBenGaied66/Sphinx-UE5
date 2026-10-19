@@ -98,6 +98,18 @@ Two things were checked by hand, once, on the same day:
   sample loads its game mode, spawns the cube, and the recogniser reports that
   it is listening within a few seconds. Nobody spoke to it.
 
+Checked by hand on 19 October 2026:
+
+- **A packaged build.** `RunUAT BuildCookRun -platform=Win64
+  -clientconfig=Development -build -cook -stage -pak -archive` on the sample,
+  with the line from [models.md](models.md) in `DefaultGame.ini`. The archive
+  holds `Content/model` as loose files and both PocketSphinx DLLs under the
+  plugin's `ThirdParty` folder. Started windowless, the packaged game logged
+  "Speech Recognition has started" (the model is loaded and the microphone
+  open) a second after start-up, and was still running 25 s later. The same
+  with `-clientconfig=Shipping` packages and runs for 20 s without a crash;
+  a Shipping build writes no log, so whether it listened was not seen.
+
 ## Builds
 
 `Tools/Build-Plugin.ps1 -Version 5.5,5.6,5.8` packages the plugin on its own

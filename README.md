@@ -12,6 +12,46 @@ push a sentence. It is not a transcription engine, and a model from the 2010s
 will not behave like one from the 2020s. In return it costs almost nothing to
 run next to a game.
 
+## What it is for
+
+Voice as an input, next to the keyboard and the gamepad: a known set of things
+the player can say, each mapped to an action.
+
+- **Accessibility.** Menus, camera, and the actions that need a button, for
+  players who cannot press one easily. A Voice Command component per screen
+  changes what can be said without reloading anything.
+- **Hands that are busy.** VR and XR (on a Windows PC for now), simulators,
+  cockpits: "lower the gear", "next page", "call the tower".
+- **Orders to a squad or a companion.** "Flank left", "hold position",
+  "follow me". Commands are reported with a gameplay tag, so they can feed the
+  same routing as the input system.
+- **Voice as the mechanic.** Spells said aloud, passwords at a door, a horror
+  game that listens for the player. This plugin started in such a game: the
+  author's university capstone, a voice-driven prototype built with Lanterns
+  Studios.
+- **Training and serious games.** A procedure said step by step and checked as
+  it is said, offline, with nothing recorded or sent anywhere.
+- **Kiosks and installations.** Museums, exhibitions, trade-show stands: no
+  network, no account, no per-minute bill.
+
+What it is not for: dictation, free conversation with a character, or open
+questions. Those need a transcription model; see the next section.
+
+## Choosing a recogniser
+
+| | This plugin (PocketSphinx) | A Whisper-based plugin (whisper.cpp) | A cloud service (Gemini, Azure, Google Cloud) |
+|---|---|---|---|
+| Best at | a list of commands or a grammar | transcribing free speech | transcribing free speech, dialects, noisy audio |
+| Runs | offline, on the CPU, alongside the game | offline, on the CPU or the GPU | online, on someone else's servers |
+| Size and cost | 26 MB of memory for English, about 7 ms of one core to decode a second of speech | from about 75 MB (tiny) to several GB (large) | an API key, a quota, a bill or a free tier |
+| When the game hears it | as the phrase is spotted, before the speaker stops if asked | after a chunk of audio is complete | after the audio has gone and come back |
+| Languages | any CMUSphinx model: English, French, German, Spanish, Russian... no Arabic | about a hundred, of very uneven quality | the most, including Arabic dialects |
+| Accuracy on free speech | well behind current models | close to current models | current models |
+
+Pick this one when the player says one of a few dozen known things and the game
+must react at once, on any Windows PC, without a network. Pick another when the player
+may say anything.
+
 ## Where this comes from
 
 This is a continuation of two people's work, and most of the plugin's shape is
@@ -80,11 +120,12 @@ after it), and one said inside a sentence about 430 ms sooner.
 |---|---|
 | Builds as a standalone plugin (`RunUAT BuildPlugin`, Win64) | UE 5.5.4, 5.6.1 and 5.8.1: builds, no compiler warning |
 | Automated tests (`Tools/Run-Tests.ps1`), UE 5.8 | 14 of 14 pass |
+| Pre-built plugin (the release zip) in a Blueprint-only project, UE 5.8 | loads without compiling; the unit tests and the recorded-speech decoder test pass there. 5.5 and 5.6 zips built the same way, not opened |
 | ... of which on the live microphone | start, switch mode, shut down, four times over: passes. The device is opened and read; nobody spoke into it |
 | Benchmark on audio files | run; 116 synthetic utterances (English, French), 31 recorded (1 English, 30 German) |
-| Sample project | builds; started as a game without a window, it spawns the cube and reports that it is listening. The cube has not been driven by a human voice |
-| A person speaking into a microphone | **not verified here.** Everything about recognition was measured on audio files |
-| Packaged game build | **not verified.** The staging line is documented, the result is untested |
+| Sample project | builds and runs in the editor on UE 5.8; driven by the author's voice |
+| A person speaking into a microphone | used by the author with their own voice, in their capstone game (UE 5.6) and in the sample (UE 5.8). Not measured: every accuracy figure comes from audio files |
+| Packaged game build | the sample, packaged with `BuildCookRun` (UE 5.8, Win64, Development): the models and the DLLs are staged, and the game loads the English model and starts listening. Shipping: packages and runs without a crash; it writes no log, so listening was not confirmed there |
 | Mac, Linux, consoles | not supported: the bundled libraries are 64-bit Windows builds |
 | Unreal Engine 5.4 and earlier | not tried |
 
@@ -106,7 +147,9 @@ and the last command heard with its timing.
 
 To use the plugin in your own project:
 
-1. Copy `Plugins/SpeechRecognition` into your project's `Plugins` folder.
+1. Copy `Plugins/SpeechRecognition` into your project's `Plugins` folder. For
+   a Blueprint-only project, take the pre-built zip for your engine version
+   from the repository's Releases page instead: it needs no compiler.
 2. Put models in your project's `Content/model`
    (`Tools\Get-Models.ps1 -Destination <YourProject>\Content\model`).
 3. Add a **Voice Command** component to an actor, fill in its commands, bind
@@ -124,7 +167,7 @@ More: [docs/usage.md](docs/usage.md) (modes, events, tolerance, limits) and
 | French | CMUSphinx `fr-ptm-5.2` | synthetic speech |
 | German | VoxForge / Zamia `de-voxforge-5.2` | 30 recorded sentences from the corpus the model was trained on |
 | Others | any CMUSphinx model in the same layout | not tried |
-| Arabic | none exists for CMUSphinx | see the roadmap |
+| Arabic, Tunisian Darija | none exists for CMUSphinx | planned with a second engine: see the roadmap |
 
 Accented and non-Latin words work: key phrases are lower-cased with Unicode
 rules and looked up in the dictionary as UTF-8. French recognition is clearly
@@ -169,8 +212,12 @@ between Windows versions, so your figures will not match to the unit.
    platforms.
 2. **A recorded test set.** A few speakers, a headset, a room: the accuracy
    figures that matter.
-3. **Arabic**, through a second recognition engine behind the same component.
-4. **A packaged-build check** in the test script.
+3. **Arabic and Tunisian Darija**, through a second recognition engine behind
+   the same Voice Command component: whisper.cpp with a model fine-tuned on
+   Tunisian speech, its transcript matched against the command list. First
+   step, a measurement: Darija commands recorded by a few speakers, scored
+   against each candidate model. See [docs/models.md](docs/models.md#arabic-and-tunisian-darija).
+4. **A packaged-build check** in the test script (done by hand so far).
 
 ## Licence and credits
 
