@@ -61,6 +61,10 @@ void ASphinxSampleHUD::DrawHUD()
 		: State == ESpeechRecognitionState::Failed ? FLinearColor::Red
 		: FLinearColor::Yellow;
 	Line(FString::Printf(TEXT("Speech recognition: %s (language '%s')"), *StateName, *Speech->GetLanguageCode()), StateColour);
+	if (Speech->IsTranscribing())
+	{
+		Line(FString::Printf(TEXT("Transcribed by: %s"), *Speech->GetTranscriberDescription()), FLinearColor(0.6f, 0.8f, 1.f));
+	}
 
 	if (State == ESpeechRecognitionState::Failed)
 	{
@@ -81,6 +85,7 @@ void ASphinxSampleHUD::DrawHUD()
 	}
 
 	Y += LineHeight * 0.5f;
+	Line(TEXT("L: switch language (en, aeb Tunisian, ar MSA, any: spells)"), FLinearColor(0.6f, 0.8f, 1.f));
 	Line(TEXT("Say:"), FLinearColor::White);
 	for (const FVoiceCommand& Command : Cube->VoiceCommands->Commands)
 	{
@@ -96,8 +101,32 @@ void ASphinxSampleHUD::DrawHUD()
 	{
 		Y += LineHeight * 0.5f;
 		const double Age = World->GetRealTimeSeconds() - Cube->LastCommandTime;
-		Line(FString::Printf(TEXT("Heard \"%s\" -> %s   (%.2fs to %.2fs in the utterance, score %d, %.1fs ago)"),
-			*Cube->LastPhrase.Phrase, *Cube->LastCommand.ToString(), Cube->LastPhrase.StartTime, Cube->LastPhrase.EndTime, Cube->LastPhrase.Score, Age),
-			Age < 1.0 ? FLinearColor::Green : FLinearColor::White);
+		if (Cube->LastPhrase.bIsTranscript && Cube->LastPhrase.PhraseScores.Num() > 0)
+		{
+			Line(FString::Printf(TEXT("Heard \"%s\" -> %s   (phrase \"%s\" scored %.2f, in %.0f ms, %.1fs ago)"),
+				*Cube->LastPhrase.Phrase, *Cube->LastCommand.ToString(), *Cube->LastPhrase.MatchedPhrase, Cube->LastPhrase.PhraseScore,
+				Cube->LastPhrase.ProcessingSeconds * 1000.f, Age),
+				Age < 1.0 ? FLinearColor::Green : FLinearColor::White);
+		}
+		else if (Cube->LastPhrase.bIsTranscript)
+		{
+			Line(FString::Printf(TEXT("Heard \"%s\" -> %s   (matched \"%s\", score %d, transcribed in %.0f ms, %.1fs ago)"),
+				*Cube->LastPhrase.Phrase, *Cube->LastCommand.ToString(), *Cube->LastPhrase.MatchedPhrase, Cube->LastPhrase.Score,
+				Cube->LastPhrase.ProcessingSeconds * 1000.f, Age),
+				Age < 1.0 ? FLinearColor::Green : FLinearColor::White);
+		}
+		else
+		{
+			Line(FString::Printf(TEXT("Heard \"%s\" -> %s   (%.2fs to %.2fs in the utterance, score %d, %.1fs ago)"),
+				*Cube->LastPhrase.Phrase, *Cube->LastCommand.ToString(), Cube->LastPhrase.StartTime, Cube->LastPhrase.EndTime, Cube->LastPhrase.Score, Age),
+				Age < 1.0 ? FLinearColor::Green : FLinearColor::White);
+		}
+	}
+
+	if (Speech->IsTranscribing() && !Cube->LastTranscript.IsEmpty())
+	{
+		// what the engine wrote, whether it matched a command or not
+		const double Age = World->GetRealTimeSeconds() - Cube->LastTranscriptTime;
+		Line(FString::Printf(TEXT("Last transcript: \"%s\"   (%.0f ms, %.1fs ago)"), *Cube->LastTranscript, Cube->LastTranscriptSeconds * 1000.f, Age), FLinearColor(0.8f, 0.8f, 0.8f));
 	}
 }
