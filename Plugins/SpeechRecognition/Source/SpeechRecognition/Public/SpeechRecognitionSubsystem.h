@@ -55,7 +55,13 @@ class SPEECHRECOGNITION_API USpeechRecognitionSubsystem : public UTickableWorldS
 	// Identifies the current mode request; events of older requests are dropped
 	uint32 RequestGeneration = 0;
 
+	// Languages without a PocketSphinx model: the engine that transcribes them.
+	// Kept across mode changes, since creating one can mean loading a large model.
+	FSpeechTranscriberPtr Transcriber;
+	FString TranscriberKey;
+
 	bool ApplyMode();
+	bool EnsureTranscriber(FString& OutError);
 	void StopListening();
 	void ReportFailure(ESpeechRecognitionError Error, const FString& Message);
 	void WarnIfModelsAreNotStaged() const;
@@ -132,6 +138,19 @@ public:
 	/** The language code given to Init. */
 	UFUNCTION(BlueprintPure, Category = "Audio|SpeechRecognition")
 	FString GetLanguageCode() const;
+
+	/**
+	 * Whether the language is transcribed rather than decoded by PocketSphinx: it has
+	 * no PocketSphinx model. Recognised phrases are then transcripts, which voice
+	 * command components match loosely against their phrases. Only keyword mode
+	 * (and voice command components) work for such a language.
+	 */
+	UFUNCTION(BlueprintPure, Category = "Audio|SpeechRecognition")
+	bool IsTranscribing() const;
+
+	/** Engine, model and where it runs, for a language that is transcribed; empty otherwise. */
+	UFUNCTION(BlueprintPure, Category = "Audio|SpeechRecognition")
+	FString GetTranscriberDescription() const;
 
 	/** Codes of the languages that have a model installed under the model folder. */
 	UFUNCTION(BlueprintPure, Category = "Audio|SpeechRecognition")

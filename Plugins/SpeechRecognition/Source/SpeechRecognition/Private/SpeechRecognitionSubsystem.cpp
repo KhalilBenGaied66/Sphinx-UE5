@@ -2,6 +2,7 @@
 #include "SpeechRecognitionSubsystem.h"
 #include "ISpeechRecognition.h"
 #include "SpeechRecognitionSettings.h"
+#include "SpeechTranscribers.h"
 #include "SpeechRecognitionWorker.h"
 
 #include "Engine/World.h"
@@ -163,6 +164,8 @@ bool USpeechRecognitionSubsystem::Shutdown()
 
 		State = ESpeechRecognitionState::Stopped;
 		bModeEnabled = false;
+		Transcriber.Reset();
+		TranscriberKey.Reset();
 		Keywords.Reset();
 		ConfigParams.Reset();
 		RejectedPhrases.Reset();
@@ -232,6 +235,46 @@ bool USpeechRecognitionSubsystem::ApplyMode()
 
 	FSpeechWorkerRequest Request;
 	FSphinxDecoderConfig& Config = Request.Config;
+
+	if (IsTranscribing())
+	{
+		// No PocketSphinx model: an engine transcribes what is said, and the voice
+		// command components match its text. There is no grammar to search and no
+		// language model to load, so only keyword mode makes sense.
+		if (Mode != ESpeechRecognitionMode::VE_KEYWORD)
+		{
+			StopListening();
+			ReportFailure(ESpeechRecognitionError::TranscriberUnavailable, FString::Printf(
+				TEXT("'%s' has no PocketSphinx model and is transcribed: use keyword mode or voice command components, not grammar or language model mode."), *LanguageCode));
+			return false;
+		}
+		FString TranscriberError;
+		if (!EnsureTranscriber(TranscriberError))
+		{
+			StopListening();
+			ReportFailure(ESpeechRecognitionError::TranscriberUnavailable, TranscriberError);
+			return false;
+		}
+		Config.Transcriber = Transcriber;
+		Config.Mode = Mode;
+		Config.Keywords = Keywords;
+		for (const TPair<TWeakObjectPtr<const UObject>, TArray<FRecognitionPhrase>>& Source : KeywordSources)
+		{
+			if (Source.Key.IsValid())
+			{
+				Config.Keywords.Append(Source.Value);
+			}
+		}
+
+		Request.Generation = ++RequestGeneration;
+		Request.bListen = true;
+		listenerThread->Request(MoveTemp(Request));
+		bModeEnabled = true;
+		State = ESpeechRecognitionState::Starting;
+		RejectedPhrases.Reset();
+		return true;
+	}
+
 	Config.AcousticModelDir = USpeechRecognitionSettings::GetAcousticModelDir(LanguageCode);
 	Config.DictionaryPath = USpeechRecognitionSettings::GetDictionaryPath(LanguageCode);
 	Config.Mode = Mode;
@@ -278,6 +321,52 @@ bool USpeechRecognitionSubsystem::ApplyMode()
 	bModeEnabled = true;
 	State = ESpeechRecognitionState::Starting;
 	RejectedPhrases.Reset();
+	return true;
+}
+
+bool USpeechRecognitionSubsystem::EnsureTranscriber(FString& OutError)
+{
+	const ESpeechTranscriptionEngine Engine = USpeechRecognitionSettings::GetTranscriptionEngine();
+	const FString GeminiModel = GetDefault<USpeechRecognitionSettings>()->GeminiModel;
+	// The local model is keyed by its folder alone, so that switching between Arabic
+	// codes that share it ("ar", "aeb") does not load it again. Gemini's prompt names
+	// the language, so it is keyed by the language too.
+	const FString Key = Engine == ESpeechTranscriptionEngine::Gemini
+		? FString::Printf(TEXT("gemini|%s|%s"), *LanguageCode, *GeminiModel)
+		: FString::Printf(TEXT("local|%s"), *USpeechRecognitionSettings::GetTranscriptionModelDir(LanguageCode));
+	if (Transcriber.IsValid() && Key == TranscriberKey)
+	{
+		return true;
+	}
+
+	Transcriber.Reset();
+	TranscriberKey.Reset();
+	if (Engine == ESpeechTranscriptionEngine::Gemini)
+	{
+		Transcriber = SpeechTranscribers::CreateGemini(LanguageCode, GeminiModel, OutError);
+	}
+	else if (USpeechRecognitionSettings::HasTranscriptionModel(LanguageCode))
+	{
+		const double Start = FPlatformTime::Seconds();
+		Transcriber = SpeechTranscribers::CreateOmnilingual(USpeechRecognitionSettings::GetTranscriptionModelDir(LanguageCode), OutError);
+		if (Transcriber.IsValid())
+		{
+			UE_LOG(SpeechRecognitionPlugin, Log, TEXT("Transcription model for '%s' loaded in %.1f s"), *LanguageCode, FPlatformTime::Seconds() - Start);
+		}
+	}
+	else
+	{
+		OutError = FString::Printf(
+			TEXT("'%s' has neither a PocketSphinx model nor a transcription model under %s. For 'any' and Arabic, Tunisian Darija included, run Tools\\Get-Models.ps1 -Language omnilingual, or start with -SpeechTranscriber=gemini (online, needs GEMINI_API_KEY)."),
+			*LanguageCode, *USpeechRecognitionSettings::GetModelRoot());
+	}
+
+	if (!Transcriber.IsValid())
+	{
+		return false;
+	}
+	TranscriberKey = Key;
+	UE_LOG(SpeechRecognitionPlugin, Log, TEXT("'%s' is transcribed by: %s"), *LanguageCode, *Transcriber->Describe());
 	return true;
 }
 
@@ -353,6 +442,16 @@ TArray<FString> USpeechRecognitionSubsystem::GetRejectedPhrases() const
 FString USpeechRecognitionSubsystem::GetLanguageCode() const
 {
 	return LanguageCode;
+}
+
+bool USpeechRecognitionSubsystem::IsTranscribing() const
+{
+	return USpeechRecognitionSettings::IsTranscribedLanguage(LanguageCode);
+}
+
+FString USpeechRecognitionSubsystem::GetTranscriberDescription() const
+{
+	return IsTranscribing() && Transcriber.IsValid() ? Transcriber->Describe() : FString();
 }
 
 TArray<FString> USpeechRecognitionSubsystem::GetInstalledLanguages()

@@ -44,6 +44,34 @@ struct FRecognisedPhraseDetail
 	 */
 	UPROPERTY(BlueprintReadOnly, Category = "Audio|SpeechRecognition")
 	int32 Score = 0;
+
+	/**
+	 * True when Phrase is what a transcribing engine wrote (languages without a
+	 * PocketSphinx model, such as Tunisian Darija), not one of the listed phrases.
+	 * Voice command components then match it against their phrases, put the phrase
+	 * that matched in Matched Phrase and the match score (0-100) in Score.
+	 */
+	UPROPERTY(BlueprintReadOnly, Category = "Audio|SpeechRecognition")
+	bool bIsTranscript = false;
+
+	/** Transcripts: the listed phrase the transcript was matched to. */
+	UPROPERTY(BlueprintReadOnly, Category = "Audio|SpeechRecognition")
+	FString MatchedPhrase;
+
+	/** Transcripts: seconds the engine took, from the end of the utterance. */
+	UPROPERTY(BlueprintReadOnly, Category = "Audio|SpeechRecognition")
+	float ProcessingSeconds = 0.f;
+
+	/**
+	 * Transcripts from an engine that scores phrases: how well each phrase being
+	 * listened for fits the audio, in nats per character (0 best, below -3 poor).
+	 */
+	UPROPERTY(BlueprintReadOnly, Category = "Audio|SpeechRecognition")
+	TMap<FString, float> PhraseScores;
+
+	/** Phrase scoring: the score of Matched Phrase, in nats per character. */
+	UPROPERTY(BlueprintReadOnly, Category = "Audio|SpeechRecognition")
+	float PhraseScore = 0.f;
 };
 
 UENUM(BlueprintType)
@@ -134,7 +162,9 @@ enum class ESpeechRecognitionError : uint8
 	/** The decoder refused the model, the grammar or the configuration. */
 	DecoderInitFailed,
 	/** The recording device could not be opened or read. */
-	AudioDeviceFailed
+	AudioDeviceFailed,
+	/** A language without a PocketSphinx model has no transcription model or service either. */
+	TranscriberUnavailable
 };
 
 USTRUCT(BlueprintType)

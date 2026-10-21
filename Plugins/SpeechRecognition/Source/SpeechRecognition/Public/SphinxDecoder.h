@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "SpeechRecognition.h"
+#include "SpeechTranscriber.h"
 #include "Templates/Function.h"
 #include "Templates/UniquePtr.h"
 
@@ -58,6 +59,13 @@ struct FSphinxDecoderConfig
 	 * start-up is the one most often missed.
 	 */
 	bool bSettleAtStartUp = true;
+
+	/**
+	 * Set for languages PocketSphinx has no model for: the worker then runs a
+	 * transcribing decoder with this engine instead, and every field above but the
+	 * mode and the key phrases is ignored.
+	 */
+	FSpeechTranscriberPtr Transcriber;
 };
 
 enum class ESphinxDecoderEvent : uint8

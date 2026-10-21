@@ -30,7 +30,12 @@ namespace UnrealBuildTool.Rules
 				new string[]
 				{
 				    // IPluginManager, to find the plugin's own ThirdParty folder
-				    "Projects"
+				    "Projects",
+				    // languages without a PocketSphinx model: a speech-to-text model run by
+				    // the Neural Network Engine, or Gemini over HTTP for development
+				    "NNE",
+				    "HTTP",
+				    "Json"
 				}
 				);
 

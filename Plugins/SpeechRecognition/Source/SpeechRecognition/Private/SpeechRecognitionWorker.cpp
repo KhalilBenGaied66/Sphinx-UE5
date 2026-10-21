@@ -1,6 +1,7 @@
 
 #include "SpeechRecognitionWorker.h"
 #include "ISpeechRecognition.h"
+#include "TranscribingDecoder.h"
 
 #include "HAL/PlatformProcess.h"
 #include "HAL/RunnableThread.h"
@@ -70,6 +71,9 @@ uint32 FSpeechRecognitionWorker::Run() {
 
 	// Everything Sphinx lives on this thread's stack: no other thread can reach it.
 	FSphinxDecoder decoder;
+	// Languages without a PocketSphinx model: the same microphone, another decoder.
+	FTranscribingDecoder transcriber;
+	bool bTranscribing = false;
 	ad_rec_t* ad = nullptr;
 	int16 adbuf[AudioBufferSamples];
 	uint32 generation = 0;
@@ -86,6 +90,8 @@ uint32 FSpeechRecognitionWorker::Run() {
 	{
 		CloseDevice();
 		decoder.Shutdown();
+		transcriber.Shutdown();
+		bTranscribing = false;
 		currentVolume.store(0, std::memory_order_relaxed);
 	};
 
@@ -121,23 +127,41 @@ uint32 FSpeechRecognitionWorker::Run() {
 				StopListening();
 			}
 			else {
-				// Another mode or another list of phrases on the same model: the
-				// decoder is kept, and the recording device stays open. Otherwise
-				// release both before starting again.
-				if (ad == nullptr || !decoder.CanReuse(request.Config)) {
-					StopListening();
-				}
-
 				ESpeechRecognitionError error = ESpeechRecognitionError::None;
 				FString message;
-				if (!decoder.Initialize(request.Config, error, message)) {
-					Fail(error, message);
-					continue;
+				const bool bWantTranscriber = request.Config.Transcriber.IsValid();
+
+				if (bWantTranscriber) {
+					// The microphone stays open across a change of phrases: the
+					// transcriber listens to everything and the phrases only matter
+					// to the components that match its text.
+					if (!bTranscribing) {
+						StopListening();
+					}
+					if (!transcriber.Initialize(request.Config, error, message)) {
+						Fail(error, message);
+						continue;
+					}
+					bTranscribing = true;
+				}
+				else {
+					// Another mode or another list of phrases on the same model: the
+					// decoder is kept, and the recording device stays open. Otherwise
+					// release both before starting again.
+					if (ad == nullptr || bTranscribing || !decoder.CanReuse(request.Config)) {
+						StopListening();
+					}
+
+					if (!decoder.Initialize(request.Config, error, message)) {
+						Fail(error, message);
+						continue;
+					}
 				}
 
 				if (ad == nullptr) {
 					// attempt to open the default recording device
-					if ((ad = ad_open_dev(nullptr, decoder.GetSampleRate())) == nullptr) {
+					const int32 sampleRate = bTranscribing ? FTranscribingDecoder::SampleRate : decoder.GetSampleRate();
+					if ((ad = ad_open_dev(nullptr, sampleRate)) == nullptr) {
 						Fail(ESpeechRecognitionError::AudioDeviceFailed, TEXT("Failed to open the default recording device. Check that a microphone is plugged in and that Windows allows desktop apps to use it."));
 						continue;
 					}
@@ -151,7 +175,9 @@ uint32 FSpeechRecognitionWorker::Run() {
 				FSpeechWorkerEvent Event;
 				Event.Type = FSpeechWorkerEvent::EType::Listening;
 				Event.Generation = generation;
-				Event.RejectedPhrases = decoder.GetRejectedPhrases();
+				if (!bTranscribing) {
+					Event.RejectedPhrases = decoder.GetRejectedPhrases();
+				}
 				Events.Enqueue(MoveTemp(Event));
 			}
 		}
@@ -177,7 +203,7 @@ uint32 FSpeechRecognitionWorker::Run() {
 		// publish the volume for the game thread
 		currentVolume.store(FSphinxDecoder::ComputeAveragePeak(adbuf, k), std::memory_order_relaxed);
 
-		decoder.ProcessAudio(adbuf, k, [&](ESphinxDecoderEvent DecoderEvent, const TArray<FRecognisedPhraseDetail>& Phrases)
+		auto OnDecoderEvent = [&](ESphinxDecoderEvent DecoderEvent, const TArray<FRecognisedPhraseDetail>& Phrases)
 		{
 			FSpeechWorkerEvent Event;
 			Event.Generation = generation;
@@ -198,7 +224,13 @@ uint32 FSpeechRecognitionWorker::Run() {
 				break;
 			}
 			Events.Enqueue(MoveTemp(Event));
-		});
+		};
+		if (bTranscribing) {
+			transcriber.ProcessAudio(adbuf, k, OnDecoderEvent);
+		}
+		else {
+			decoder.ProcessAudio(adbuf, k, OnDecoderEvent);
+		}
 	}
 
 	// normal shutdown: release the audio device and the decoder

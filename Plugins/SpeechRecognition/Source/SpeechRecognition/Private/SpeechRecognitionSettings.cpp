@@ -1,7 +1,18 @@
 #include "SpeechRecognitionSettings.h"
 
 #include "HAL/FileManager.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
+#include "SpeechTranscribers.h"
 #include "Misc/Paths.h"
+
+namespace
+{
+	bool FolderHasTranscriptionModel(const FString& Folder)
+	{
+		return !SpeechTranscribers::FindOnnxModel(Folder).IsEmpty() && IFileManager::Get().FileExists(*(Folder / TEXT("tokens.txt")));
+	}
+}
 
 FName USpeechRecognitionSettings::GetCategoryName() const
 {
@@ -56,13 +67,102 @@ TArray<FString> USpeechRecognitionSettings::FindInstalledLanguages()
 	FileManager.FindFiles(Folders, *(Root / TEXT("*")), false, true);
 	for (const FString& Folder : Folders)
 	{
-		if (FileManager.FileExists(*GetDictionaryPath(Folder)) && FileManager.FileExists(*(GetAcousticModelDir(Folder) / TEXT("mdef"))))
+		if (HasSphinxModel(Folder) || FolderHasTranscriptionModel(GetLanguageDir(Folder)))
 		{
 			Languages.Add(Folder);
 		}
 	}
 	Languages.Sort();
 	return Languages;
+}
+
+FString USpeechRecognitionSettings::GetLanguageDir(const FString& LanguageCode)
+{
+	return GetModelRoot() / LanguageCode;
+}
+
+bool USpeechRecognitionSettings::HasSphinxModel(const FString& LanguageCode)
+{
+	IFileManager& FileManager = IFileManager::Get();
+	return FileManager.FileExists(*GetDictionaryPath(LanguageCode)) && FileManager.FileExists(*(GetAcousticModelDir(LanguageCode) / TEXT("mdef")));
+}
+
+bool USpeechRecognitionSettings::IsArabicCode(const FString& LanguageCode)
+{
+	// Arabic (ISO 639-1 "ar", 639-3 macro "ara"), Modern Standard Arabic and the
+	// varieties Omnilingual ASR was trained on
+	static const TCHAR* const Codes[] = {
+		TEXT("ar"), TEXT("ara"), TEXT("arb"), TEXT("aeb"), TEXT("ary"), TEXT("arq"), TEXT("arz"), TEXT("apc"),
+		TEXT("ajp"), TEXT("apd"), TEXT("acm"), TEXT("acw"), TEXT("acx"), TEXT("aec"), TEXT("afb"), TEXT("ars"),
+		TEXT("ayl"), TEXT("ayp"), TEXT("abv"), TEXT("shu"),
+	};
+	FString Code = LanguageCode.TrimStartAndEnd().ToLower();
+	int32 Dash = INDEX_NONE;
+	if (Code.FindChar(TEXT('-'), Dash) || Code.FindChar(TEXT('_'), Dash))
+	{
+		Code = Code.Left(Dash); // ar-TN, ar_MA
+	}
+	for (const TCHAR* Known : Codes)
+	{
+		if (Code == Known)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool USpeechRecognitionSettings::IsAnyLanguageCode(const FString& LanguageCode)
+{
+	return LanguageCode.TrimStartAndEnd().Equals(TEXT("any"), ESearchCase::IgnoreCase);
+}
+
+bool USpeechRecognitionSettings::UsesSharedModel(const FString& LanguageCode)
+{
+	return IsAnyLanguageCode(LanguageCode) || IsArabicCode(LanguageCode);
+}
+
+FString USpeechRecognitionSettings::GetTranscriptionModelDir(const FString& LanguageCode)
+{
+	const FString Own = GetLanguageDir(LanguageCode);
+	if (FolderHasTranscriptionModel(Own) || !UsesSharedModel(LanguageCode))
+	{
+		return Own;
+	}
+	return GetModelRoot() / TEXT("omnilingual");
+}
+
+bool USpeechRecognitionSettings::HasTranscriptionModel(const FString& LanguageCode)
+{
+	return FolderHasTranscriptionModel(GetTranscriptionModelDir(LanguageCode));
+}
+
+ESpeechTranscriptionEngine USpeechRecognitionSettings::GetTranscriptionEngine()
+{
+	FString Override;
+	if (FParse::Value(FCommandLine::Get(), TEXT("SpeechTranscriber="), Override))
+	{
+		if (Override.Equals(TEXT("gemini"), ESearchCase::IgnoreCase))
+		{
+			return ESpeechTranscriptionEngine::Gemini;
+		}
+		if (Override.Equals(TEXT("local"), ESearchCase::IgnoreCase))
+		{
+			return ESpeechTranscriptionEngine::LocalModel;
+		}
+	}
+	return GetDefault<USpeechRecognitionSettings>()->TranscriptionEngine;
+}
+
+bool USpeechRecognitionSettings::IsTranscribedLanguage(const FString& LanguageCode)
+{
+	if (LanguageCode.IsEmpty() || HasSphinxModel(LanguageCode))
+	{
+		return false;
+	}
+	return HasTranscriptionModel(LanguageCode)
+		|| GetTranscriptionEngine() == ESpeechTranscriptionEngine::Gemini
+		|| UsesSharedModel(LanguageCode);
 }
 
 FString USpeechRecognitionSettings::GetAcousticModelDir(const FString& LanguageCode)
