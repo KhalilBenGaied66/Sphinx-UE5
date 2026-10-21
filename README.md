@@ -135,7 +135,7 @@ after it), and one said inside a sentence about 430 ms sooner.
 | ... with a person speaking | the author, Tunisian Darija, two live sessions in the sample: about 75% of commands worked with text matching, by the author's count, and "the Tunisian works" with phrase scoring. Not yet measured on recordings with known commands; MSA not yet spoken |
 | Invented words (`any`) | five made-up spell phrases, written once in Latin letters, spoken by two synthetic voices (English, French): 10 of 10 recognised, 0 wrong, 0 of 8 sentences of chat fired a spell. Nobody has spoken them yet |
 | Darija through Gemini (`-SpeechTranscriber=gemini`) | built, for development. Not yet called from Unreal: the free tier's 20 requests a day for `gemini-3.6-flash` went to the measurement |
-| Pre-built plugin (the release zip) in a Blueprint-only project, UE 5.8 | loads without compiling; the unit tests and the recorded-speech decoder test pass there. 5.5 and 5.6 zips built the same way, not opened |
+| Pre-built plugin (the release zip) in a Blueprint-only project, UE 5.8 | 2.1.0: loads without compiling; the unit tests and the live subsystem tests pass there, the second engine included (Tunisian, English, MSA and `any` on the microphone). 5.5 and 5.6 zips built the same way, not opened |
 | ... of which on the live microphone | start, switch mode, shut down, four times over: passes. The device is opened and read; nobody spoke into it |
 | Benchmark on audio files | run; 116 synthetic utterances (English, French), 31 recorded (1 English, 30 German) |
 | Sample project | builds and runs in the editor on UE 5.8; driven by the author's voice |
