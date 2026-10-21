@@ -34,6 +34,41 @@ VoiceCommands->OnVoiceCommand.AddDynamic(this, &AMyActor::HandleVoiceCommand);
 
 `Source/SphinxSample/VoiceControlledCube.cpp` is a complete example.
 
+### Any phrase: Arabic, Tunisian Darija, invented words
+
+Set **Language Code** to `any`, or to an Arabic code: `ar` (Modern Standard
+Arabic), `aeb` (Tunisian), `ary` (Moroccan), `arz` (Egyptian), `apc`
+(Levantine)... Then write each command's phrases, as they sound, in Arabic
+script, Latin letters or both. There is no dictionary, so any word can be a
+command, an invented one included:
+
+```cpp
+VoiceCommands->LanguageCode = TEXT("aeb");
+OpenDoor.Phrases = { TEXT("7ell el beb") };            // once, in Arabizi
+OpenDoor.Phrases = { TEXT("حلّ الباب"), TEXT("7ell el beb") }; // or in both scripts
+
+VoiceCommands->LanguageCode = TEXT("ar");
+OpenDoor.Phrases = { TEXT("افتح الباب") };            // Modern Standard Arabic
+
+VoiceCommands->LanguageCode = TEXT("any");
+Shield.Phrases = { TEXT("amorix valor") };            // a spell: no language at all
+```
+
+`any` and all Arabic codes share one model (`Tools\Get-Models.ps1 -Language
+omnilingual`).
+Each phrase is scored against what the model heard (**Transcript Matching** =
+Phrase Scoring, the default). The command whose best phrase scores at least
+**Phrase Score Threshold** (-2.5 nats per character; 0 means the model wrote
+exactly the phrase) and leads the next command by **Phrase Score Margin** (0.5)
+fires. **On Voice Command** then hands over the model's text as the phrase,
+**Matched Phrase** (the phrase that won), **Phrase Score**, every phrase's
+score in **Phrase Scores**, and **Processing Seconds**. With the Gemini engine,
+or Transcript Matching set to Text, the text is compared with the phrases
+instead (**Transcript Match Threshold** 80, **Transcript Match Margin** 5).
+**Tolerance** is not used. Only keyword mode works for these languages: there
+is no grammar to search. The model, the engines and their speed are in
+[models.md](models.md#arabic-and-tunisian-darija).
+
 ## The subsystem
 
 Get it with **Get World Subsystem > Speech Recognition Subsystem**, then:

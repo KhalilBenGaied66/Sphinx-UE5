@@ -68,25 +68,149 @@ Two things to check in a dictionary:
 
 ### Arabic and Tunisian Darija
 
-CMUSphinx publishes no Arabic model, so Arabic is not available today.
-Training one with SphinxTrain needs tens of hours of transcribed speech, and
-Tunisian Darija, which mixes Arabic with French and has no standard spelling,
-would need its own. The plan is a second engine instead, behind the same
-Voice Command component, so that a game changes language and nothing else.
+CMUSphinx publishes no Arabic model, and training one needs tens of hours of
+transcribed speech. Tunisian Darija mixes Arabic with French and has no
+standard spelling, so it would need its own. The plugin handles Arabic with a
+modern speech model instead, behind the same Voice Command component. A game
+sets the language code (`ar` for Modern Standard Arabic, `aeb` for Tunisian,
+`ary` Moroccan, `arz` Egyptian, `apc` Levantine...) and writes each command's
+phrases, in Arabic script or in the Latin letters people type (`حلّ الباب`,
+`7ell el beb`). There is no dictionary: any phrase can be written, as with
+PocketSphinx's English model but without the words having to be in a
+pronunciation dictionary. One spelling per phrase is enough; more help.
 
-What was looked at (October 2026, nothing of it run yet):
+How it works, for any language that has no PocketSphinx model:
 
-| Candidate | Where it runs | For Darija commands |
-|---|---|---|
-| whisper.cpp with a Whisper model fine-tuned on Tunisian speech (for example TuniSpeech-AI/whisper-tunisian-dialect, from Whisper large-v2) | offline, CPU or GPU, C/C++ under the MIT licence: embeddable in the plugin | the most likely route. The published Tunisian fine-tunes are large models; a game wants a small one, which may mean fine-tuning Whisper small on open Tunisian data |
-| Gemini (Google), through its API | online | handles Derja when the prompt names the dialect (the author's Derja voice-agent prototype uses it), but needs a network, an API key that cannot ship inside a game, and a quota. Useful as a reference to score the others, not as the engine |
-| Gemma audio models (Google, open weights, E2B and E4B) | offline | built for speech recognition in many languages; Darija quality not published; too heavy for a command recogniser running next to a game |
-| A small keyword-spotting network trained on recorded Darija commands, run with Unreal's Neural Network Engine | offline, tiny | the best fit for a fixed command list, but it needs recordings: each command, many speakers, several takes |
-| The French acoustic model with Darija words added to its dictionary in French phones | offline, possible today | a cheap experiment: French and Darija share many sounds and loanwords, but ع, ح and ق have no close French equivalent. May work for a handful of distinct commands, unmeasured |
+1. The microphone is read as for every language. An energy detector finds each
+   utterance and keeps 0.3 s from before it, so the first syllable is not cut.
+   0.45 s of silence ends the utterance.
+2. The utterance goes to a transcription engine on a background task, so the
+   microphone keeps being read meanwhile.
+3. **Phrase scoring** (the default). The model writes one character, or a
+   blank, every 20 ms. Each phrase being listened for is aligned with those
+   per-frame scores: the best path that spells exactly that phrase (CTC
+   Viterbi), compared with the model's own best path, in nats per character
+   (`FPhraseScorer`). 0 means the model wrote that very phrase. The phrase must
+   explain the whole utterance, so a sentence that merely contains a command
+   word scores low. An Arabizi phrase is also scored in Arabic script, through a
+   rough transliteration, and word breaks are optional. This is what
+   PocketSphinx does with key phrases, on a model that knows Arabic letters.
+   It does not depend on how the model spells: on one synthetic clip the model
+   wrote `беркә`, in Cyrillic letters, for بركا, and the phrase still won.
+4. The Voice Command component fires the command whose best phrase scores -2.5
+   or better and leads the next command by 0.5 (`Phrase Score Threshold`,
+   `Phrase Score Margin`).
+5. For an engine that only writes text (Gemini), or with `Transcript Matching`
+   set to Text, the component compares the text with its phrases instead
+   (`FTranscriptMatcher`). Spellings are normalised (harakat, hamza forms and
+   ڨ/ق unified, Arabizi digits to letters), and across scripts both sides are
+   reduced to a consonant skeleton (9 = ق = q = g, 7 = ح, ch = ش). The best
+   command fires at 80 out of 100 or more and 5 ahead of the next one.
 
-The first step is a measurement, not an engine: twenty Darija commands
-recorded by a few speakers, scored against each candidate, with Gemini as the
-reference.
+Two engines, chosen in Project Settings > Plugins > Speech Recognition >
+Transcription, or on the command line with `-SpeechTranscriber=local` or
+`-SpeechTranscriber=gemini`:
+
+| Engine | Runs | Size | Licence | State |
+|---|---|---|---|---|
+| Omnilingual ASR CTC 300M (Meta), int8 ONNX export by OpenVoiceOS: the default | offline, on the CPU, through Unreal's Neural Network Engine (the NNERuntimeORT plugin, part of the engine). Ships with the game. One folder, `Content/model/omnilingual`, serves the code `any` and every Arabic code; a code's own folder (`model/aeb`) takes precedence | 328 MB (`Tools/Get-Models.ps1 -Language omnilingual`) | Apache-2.0 | built; tested on synthetic Darija, invented words, and two live sessions (below) |
+| Gemini (Google), through its API | online. The key is read from the `GEMINI_API_KEY` environment variable, and a key must never ship inside a game | none | Google's API terms | built; for development and for comparing. The free tier allowed 20 requests a day for `gemini-3.6-flash` (October 2026) |
+
+Why Omnilingual first: of the candidates below, it is the only one that runs
+inside Unreal with nothing added, because ONNX runs on the engine's own NNE.
+It is also under 1 GB, licensed for commercial use, and its training corpus
+includes Tunisian Arabic (`aeb_Arab`, among about 1600 languages). Whether it
+understands Darija commands well enough has to be measured on recorded speech.
+
+Candidates looked at (October 2026; sizes from the Hugging Face API, results as
+their authors publish them):
+
+| Model | Size | Licence | Published result | Here |
+|---|---|---|---|---|
+| Omnilingual ASR CTC 300M, ONNX | 328 MB (int8) | Apache-2.0 | none for Tunisian | the default engine |
+| Gemini (online) | none | API terms | none | the reference, 20 requests a day free |
+| oddadmix/Whisperv3-tunisian-codeswitch: Whisper large-v3 for Tunisian Arabic mixed with French, 3rd in the NADI 2026 Tunisian code-switched ASR task | 6.2 GB | not stated | blind-test WER 15.2% | not downloaded: over 1 GB, licence unknown |
+| TuniSpeech-AI/whisper-tunisian-dialect: Whisper large-v2 + LoRA, 21 h of Tunisian speech | 3.1 GB | CC-BY-NC-4.0, no commercial use | none | not downloaded |
+| linagora/linto-asr-ar-tn-0.1: Kaldi TDNN for Tunisian | 0.8 GB | Apache-2.0 | WER 20.5% to 37.5% on its three test sets | not tried: needs a Kaldi runtime |
+| medfadiabaidi/whisper-small-tunisian-asr: Whisper small on TEDxTN (22 h) | 1 GB | not stated | WER 38.0% on TEDxTN | not tried |
+| Gemma 4 E2B / E4B (Google, open weights, audio input) | 10 / 16 GB (E2B 4.3 GB as 4-bit GGUF) | Apache-2.0 | no figure for Darija | not downloaded: too heavy to run next to a game |
+| Whisper base, small, large-v3-turbo (OpenAI, through faster-whisper) | 148 MB, 486 MB, 1.6 GB | MIT | none for Tunisian | measured on synthetic audio in `Tools/DarijaEval`; would need whisper.cpp inside the plugin |
+| The French PocketSphinx model with Darija words in French phones | already here | the model's | none | measured on synthetic audio: fires on every distractor |
+
+Measured inside Unreal (UE 5.8, i7-14700F, `Tools/Run-Tests.ps1 -Filter
+SpeechRecognition.Transcriber -OrtThreads <n>`), on 115 **synthetic** clips:
+Microsoft's two Tunisian neural voices reading Arabic script, and the French
+Windows voice reading Arabizi. They say how fast the engine is, not how well
+it understands a player:
+
+| ONNX Runtime threads | 1 (NNE's default in a packaged game) | 4 (the sample's game setting) | 8 (the sample's editor setting) |
+|---|---|---|---|
+| Median time per clip, model warm | 2388 ms | 716 ms | 431 ms |
+
+The model loads in 1.6 to 3.1 s, on the game thread, the first time a Darija
+mode starts. The Unreal transcripts match onnxruntime's in Python on 84 of 107
+clips. The others differ by a letter or two, plausibly int8 kernels and thread
+scheduling. Set the thread count for your game in Project Settings > Plugins >
+NNERuntimeORT, or as the sample does in `Config/DefaultEngine.ini`:
+
+```ini
+[/Script/NNERuntimeORT.NNERuntimeORTSettings]
+GameThreadingOptions=(bUseGlobalThreadPool=False,IntraOpNumThreads=4,InterOpNumThreads=1,ExecutionMode=SEQUENTIAL)
+```
+
+Scoring 143 phrases adds about 8 ms per utterance to the model's own time
+(same run, same clips). Absolute times on this machine varied by a factor of
+two between sessions, in Python and in Unreal alike, with the CPU otherwise
+idle: compare times from one run only.
+
+How each step changed recognition, on the same 89 synthetic command clips and
+18 distractors, inside Unreal (`Tools/DarijaEval`, engines `ue-nne` and
+`ue-nne-kws`):
+
+| Matching | Hit | False match | False accept |
+|---|---|---|---|
+| text, same script only (first version) | 42/89 | 1 | 0/18 |
+| text, with cross-script matching | 50/89 | 1 | 0/18 |
+| phrase scoring (the default) | **78/89** | **0** | **0/18** |
+
+The phrase scoring thresholds (-2.5, 0.5) were chosen on these clips, which
+flatters its row. With one Arabizi spelling per command instead of every
+spelling, phrase scoring in Python recognised 30 of the 38 clips that said
+that wording, against 32 of 38 with every spelling; with one Arabic spelling,
+24 of 38.
+
+The first live test (the author, 2026-10-20, Tunisian Darija into the sample):
+about 75% of commands worked by the author's count, with the first version's
+text matching. The plugin logged 54 transcripts. The first version found a
+command in 18 of them, cross-script matching in 30. The audio was not kept, so
+phrase scoring cannot be replayed on it. They also showed what the model does
+with short words (أُقف came out as `يقف`, `eqf`, `iقف`) and that it sometimes
+writes Hindi, Korean or Ethiopic letters. All of these are synthetic audio or
+unlabelled transcripts: only recordings of people with known commands can
+rank the methods. `Tools/DarijaEval/record.py` makes them.
+
+**Any phrase, no language (`any`).** Phrase scoring does not use the language
+code: it checks whether the letters of a phrase fit the sounds the model
+heard, with the letters of every script it was trained on. So the same engine
+recognises words of no language at all. Five invented spell phrases ("amorix
+valor", "corva aeterna", "sanarel vitae", "zelthar morun", "kraveth ulnar"),
+written once each in Latin letters and spoken by the English and the French
+Windows voices: 10 of 10 recognised, 0 wrong, and none of 8 sentences of chat
+fired a spell. The model's own text was never right ("ameriqs veller" for
+"amorix valor", "ça na rel vité" for "sanarel vitae"); the phrase still won by
+three nats per character or more. Spell a word the way it sounds, and give two
+spellings when unsure. Synthetic voices only: nobody has spoken them yet
+(`Tools/DarijaEval/spells_check.py` reproduces it).
+
+Modern Standard Arabic and the other Arabic codes use the same model and the
+same scoring. The sample has an MSA command set (`-SpeechLanguage=ar`, phrases
+written once each in Arabic script) and a spells set (`-SpeechLanguage=any`),
+and the live test switches between `aeb`, `en`, `ar` and `any` on the
+microphone. Nobody has spoken MSA into it yet.
+
+`Tools/DarijaEval` holds the command list (22 commands, Arabic and Arabizi
+spellings, French loanwords marked), a recording tool, and the scoring script
+that compares every engine on the same clips. Its README says what to record.
 
 ## Shipping a game
 
