@@ -1,0 +1,29 @@
+[project]
+name = "darija-commands-eval"
+version = "0.1.0"
+description = "Measure speech recognisers on recorded Tunisian Darija game commands"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "numpy",
+    "rapidfuzz",
+    "sounddevice",
+    "faster-whisper",
+    "pocketsphinx",
+    "google-genai",
+]
+
+[project.optional-dependencies]
+# Only for the Tunisian fine-tune (transformers on the GPU). torch cu128 is the
+# build that supports the RTX 50 series.
+tunisian = ["torch==2.11.0", "transformers==5.2.0"]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
