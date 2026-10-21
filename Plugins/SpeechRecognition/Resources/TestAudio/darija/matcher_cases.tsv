@@ -1,0 +1,1343 @@
+قدّام	قدام		forward	kdm
+9oddem		kudam	forward	kdm
+9odem		kudam	forward	kdm
+goddem		gudam	forward	kdm
+إمشي لقدّام	امشي لقدام		forward	mclkdm
+emchi l9oddem		amshi lkudam	forward	mclkdm
+imchi l9odem		imshi lkudam	forward	mclkdm
+لتالي	لتالي		back	ltl
+ltali		ltali	back	ltl
+lteli		ltali	back	ltl
+ارجع لتالي	ارجع لتالي		back	rjltl
+arja3 ltali		arja ltali	back	rjltl
+orja3 ltali		urja ltali	back	rjltl
+ارجع	ارجع		back	rj
+arja3		arja	back	rj
+orja3		urja	back	rj
+وخّر	وخر		back	xr
+wakhar		uakhar	back	xr
+wa5ar		uakhar	back	xr
+ou5ar		ukhar	back	xr
+على ليسار	علي ليسار		left	lsr
+3al lisar		al lisar	left	lsr
+3la lisar		ala lisar	left	lsr
+أ ڨوش	ا قوش		left	kc
+a gauche		a gausha	left	kc
+agoch		agush	left	kc
+دور ليسار	دور ليسار		left	drlsr
+dour lisar		dur lisar	left	drlsr
+dor lisar		dur lisar	left	drlsr
+على ليمين	علي ليمين		right	lmn
+3al limin		al limin	right	lmn
+3la limin		ala limin	right	lmn
+أ دروات	ا دروات		right	drt
+a droite		a druita	right	drt
+adrwat		adruat	right	drt
+دور ليمين	دور ليمين		right	drlmn
+dour limin		dur limin	right	drlmn
+dor limin		dur limin	right	drlmn
+اُنڨز	انقز		jump	nkz
+onguez		ungaz	jump	nkz
+ongez		ungaz	jump	nkz
+on9ez		unkaz	jump	nkz
+أُقف	اقف		stop	kf
+o9ef		ukaf	stop	kf
+w9ef		ukaf	stop	kf
+ou9ef		ukaf	stop	kf
+حبس	حبس		stop	hbs
+7bes		hbas	stop	hbs
+hbes		hbas	stop	hbs
+ستوب	ستوب		stop	stb
+stop		stup	stop	stb
+stob		stub	stop	stb
+بركا	بركا		stop	brk
+barka		barka	stop	brk
+berka		barka	stop	brk
+اجري	اجري		run	jr
+ajri		ajri	run	jr
+jri		jri	run	jr
+حلّ الباب	حل الباب		open_door	hlb
+7ell el beb		hal al bab	open_door	hlb
+7ell lbeb		hal lbab	open_door	hlb
+7el el bab		hal al bab	open_door	hlb
+سكّر الباب	سكر الباب		close_door	skrlb
+sakker el beb		sakar al bab	close_door	skrlb
+sakker lbeb		sakar lbab	close_door	skrlb
+sakar el bab		sakar al bab	close_door	skrlb
+تبعني	تبعني		follow_me	tbn
+tba3ni		tbani	follow_me	tbn
+teb3ni		tabani	follow_me	tbn
+إيجا معايا	ايجا معايا		follow_me	jm
+ija m3aya		ija maia	follow_me	jm
+iji m3aya		iji maia	follow_me	jm
+إيجا لهنا	ايجا لهنا		come_here	jlhn
+ija lehna		ija lahna	come_here	jlhn
+ija lhna		ija lhna	come_here	jlhn
+هجم	هجم		attack	hjm
+hjem		hjam	attack	hjm
+ehjem		ahjam	attack	hjm
+أتاك	اتاك		attack	tk
+attaque		atakua	attack	tk
+atak		atak	attack	tk
+attaki		ataki	attack	tk
+اُضرب	اضرب		shoot	drb
+odhrob		udrub	shoot	drb
+edhreb		adrab	shoot	drb
+adhreb		adrab	shoot	drb
+تيري	تيري		shoot	tr
+tiri		tiri	shoot	tr
+tirer		tirar	shoot	tr
+عمّر	عمر		reload	mr
+3ammer		amar	reload	mr
+3amer		amar	reload	mr
+ريشارجي	ريشارجي		reload	rcrj
+recharji		rasharji	reload	rcrj
+recharger		rashargar	reload	rcrkr
+أُقعد في بلاصتك	اقعد في بلاصتك		hold_position	kdfblstk
+o93od fi blastek		ukaud fi blastak	hold_position	kdfblstk
+o9o3d fi blastek		ukuad fi blastak	hold_position	kdfblstk
+ما تتحرّكش	ما تحركش		hold_position	mthrkc
+ma tet7arrekch		ma tataraksh	hold_position	mthrkc
+matet7arekch		matataraksh	hold_position	mthrkc
+استنّى	استني		wait	stn
+stanna		stana	wait	stn
+estanna		astana	wait	stn
+أُصبر	اصبر		wait	sbr
+osbor		usbur	wait	sbr
+esbor		asbur	wait	sbr
+تخبّى	تخبي		hide	txb
+tkhabba		tkhaba	hide	txb
+t5abba		tkhaba	hide	txb
+هزّها	هزها		pick_up	hzh
+hezzha		hazha	pick_up	hzh
+hezha		hazha	pick_up	hzh
+هزّو	هزو		pick_up	hz
+hezzou		hazu	pick_up	hz
+hezzo		hazu	pick_up	hz
+هزّ هاذي	هز هاذي		pick_up	hzhd
+hezz hedhi		haz hadi	pick_up	hzhd
+hez hedi		haz hadi	pick_up	hzhd
+الكارطة	الكارطه		map	lkrt
+el karta		al karta	map	lkrt
+lkarta		lkarta	map	lkrt
+بوز	بوز		pause	bz
+pause		pausa	pause	bs
+pauz		pauz	pause	bz
+وقّف اللعبة	وقف العبه		pause	kflb
+wa99ef el le3ba		uakaf al laba	pause	kflb
+wa9ef lle3ba		uakaf laba	pause	kflb
+إيه	ايه		yes	h
+ih		ih	yes	h
+iyeh		iah	yes	h
+باهي	باهي		yes	bh
+behi		bahi	yes	bh
+bahi		bahi	yes	bh
+لا	لا		no	l
+la		la	no	l
+le		la	no	l
+بطّل	بطل		no	btl
+battel		batal	no	btl
+batel		batal	no	btl
+أنولي	انولي		no	nl
+annuli		anuli	no	nl
+anouli		anuli	no	nl
+شنوّة أحوالك	شنوه احوالك		-	cnhlk
+chnowa a7walek		shnua ahualak	-	cnhlk
+الجو مزيان اليوم	الجو مزيان اليوم		-	ljmznlm
+ejjaw mezyen lyoum		ajau mazian lium	-	jmznlm
+نحب نشرب قهوة	نحب نشرب قهوه		-	nhbncrbkh
+n7eb nochrob 9ahwa		nhab nushrub kahua	-	nhbncrbkh
+وين المفاتح	وين المفاتح		-	nlmfth
+win el mfete7		uin al mfatah	-	nlmfth
+ما فهمتش	ما فهمتش		-	mfhmtc
+ma fhemtech		ma fhamtash	-	mfhmtc
+(صمت)	صمت		-	smt
+(say nothing)		sai nuting	-	sntnk
+اشتركوا في القناة	اشتركوا في القناه		-	ctrkflkn
+شكرا على المشاهدة	شكرا علي المشاهده		-	ckrlmchd
+ترجمة نانسي قنقر	ترجمه نانسي قنقر		-	trjmnsknkr
+موسيقى	موسيقي		-	msk
+Thank you for watching		tank iu fur uatshing	-	tnkfrtcnk
+قدام	قدام		forward	kdm
+إمشي الكدام	امشي الكدام		forward	mclkdm
+الطالي	الطالي		back	ltl
+عرجا هل تالي	عرجا هل تالي		back	rjhltl
+أرجع	ارجع		back	rj
+ويل لزار	ويل لزار		-	lzr
+أجوش	اجوش		-	jc
+دور لزار	دور لزار		left	drlzr
+إيه الليما	ايه اليما		yes	hlm
+أدوات	ادوات		right	dt
+دور لما	دور لما		right	drlm
+أمكي	امكي		-	mk
+أشب	اشب		-	cb
+أصدق	اصدق		-	sdk
+باقع	باقع		-	bk
+أجي أيري	اجي ايري		run	jr
+لالبي	لالبي		back	lb
+ساكي البيبي	ساكي البيبي		close_door	sklb
+تبني	تبني		follow_me	tbn
+إيشا مائيا	ايشا مايا		follow_me	cm
+إيجة لنو	ايجه لنو		-	jln
+جمع	جمع		-	jm
+أتك؟	اتك		attack	tk
+هل تغلب؟	هل تغلب		-	hltxlb
+أمور	امور		-	mr
+رشارجي	رشارجي		reload	rcrj
+وقعت في بلاستق	وقعت في بلاستق		hold_position	ktfblstk
+مَتِطَ رَيَكْسَا	متط ريكسا		-	mtrks
+ستنى	ستني		wait	stn
+أسبو	اسبو		-	sb
+تكابر	تكابر		-	tkbr
+ايزا	ايزا		-	z
+ادعو	ادعو		-	d
+السجي	السجي		-	lsj
+الكرطة	الكرطه		map	lkrt
+وَكَفَلْ لَبَار	وكفل لبار		pause	kflbr
+ايهيش	ايهيش		-	hc
+بي	بي		-	b
+اللو	الو		-	l
+باتيلة	باتيله		no	btl
+أنيولي	انيولي		no	nl
+شنوة عوالق	شنوه عوالق		-	cnlk
+ايشا ومزيان ليوم	ايشا ومزيان ليوم		-	cmznlm
+نبنك ربك هو	نبنك ربك هو		-	nbnkrbkh
+وين المي افتي	وين المي افتي		-	nlmft
+ما فهم تش؟	ما فهم تش		-	mfhmtc
+امشي لقدم	امشي لقدم		forward	mclkdm
+قدمة	قدمه		forward	kdm
+أرجع لتالي	ارجع لتالي		back	rjltl
+ارجى	ارجي		-	rj
+دوروا ليسر	دوروا ليسر		left	drlsr
+دوروا ليمين	دوروا ليمين		right	drlmn
+أنكس	انكس		-	nks
+عوكفة	عوكفه		-	kf
+برقى	برقي		stop	brk
+يجب أن يجب أن يجب أن يجب أن يجب أن يجب أن يجب	يجب ان يجب ان يجب ان يجب ان يجب ان يجب ان يجب		-	jbnjbnjbnjbnjbnjbnjb
+طرب	طرب		-	trb
+أقعد في بلساتك	اقعد في بلساتك		hold_position	kdfblstk
+اتكي	اتكي		-	tk
+اجمو	اجمو		-	jm
+حل البيبي	حل البيبي		open_door	hlb
+سكر البيب	سكر البيب		close_door	skrlb
+حزو حذي	حزو حذي		pick_up	hzhd
+ريشي	ريشي		-	rc
+عمرو	عمرو		-	mr
+إبه	ابه		-	bh
+بطلا	بطلا		no	btl
+نولي	نولي		no	nl
+شنوة أحوالك اليوم	شنوه احوالك اليوم		-	cnhlklm
+نخبو نشر بقه	نخبو نشر بقه		-	nxbncrbkh
+الماء شمتع البارح كان مزين	الما شمتع البارح كان مزين		-	lmcmtlbrhknmzn
+مَعَنْ دِي شُوَكْ تَطَوَة	معن دي شوك تطوه		-	mndckt
+رويا يرد مفيطونس	رويا يرد مفيطونس		-	rdmftns
+الدنيا سخو نتليو	الدنيا سخو نتليو		-	ldnsxntl
+امشي في قدام	امشي في قدام		forward	mcfkdm
+قدما	قدما		forward	kdm
+دوروا ليس أرى	دوروا ليس اري		left	drlsr
+دور عندي مينة	دور عندي مينه		-	drndmn
+أمكز	امكز		-	mkz
+ألتفر	التفر		-	ltfr
+مرحة	مرحه		-	mrh
+تربع	تربع		-	trb
+تبيني	تبيني		follow_me	tbn
+أقعد في بلسطكة	اقعد في بلسطكه		hold_position	kdfblstk
+أجمع	اجمع		-	jm
+حلو and baby	حلو	and babi	-	hlndb
+سكرو البابي	سكرو البابي		close_door	skrlb
+هزو هذي	هزو هذي		pick_up	hzhd
+ريشة	ريشه		-	rc
+إبهة	ابه		-	bh
+بطل	بطل		no	btl
+شنوة أخوالك اليومة	شنوه اخوالك اليومه		-	cnxlklm
+نفب نشرب القهوة	نفب نشرب القهوه		-	nfbncrblkh
+الماء شمتع البارح كان مزيان	الما شمتع البارح كان مزيان		-	lmcmtlbrhknmzn
+ما عندي شوك تطور.	ما عندي شوك تطور		-	mndcktr
+خوية يخدي مفيطونس	خويه يخدي مفيطونس		-	xdmftns
+الدنيا سوخنت اليومي	الدنيا سوخنت اليومي		-	ldnsxntlm
+قدّام،	قدام		forward	kdm
+إيه، إيه، إيه، إيه، إيه، لا.	ايه ايه ايه ايه ايه لا		-	hl
+لتالي،	لتالي		back	ltl
+عرجة، هل تالي؟	عرجه هل تالي		back	rjhltl
+أرجع.	ارجع		back	rj
+إيه، ليسار.	ايه ليسار		-	hlsr
+أجوش؟	اجوش		-	jc
+دور ليسار،	دور ليسار		left	drlsr
+إيه، ليما.	ايه ليما		yes	hlm
+عدرات،	عدرات		right	drt
+دور لما.	دور لما		right	drlm
+تنجي.	تنجي		-	tnj
+أشب.	اشب		-	cb
+استعب؟	استعب		stop	stb
+باكّر؟	باكر		-	bkr
+هجي، عري.	هجي عري		-	hjr
+لالبي.	لالبي		back	lb
+ساكّر الباب؟	ساكر الباب		close_door	skrlb
+تبعني،	تبعني		follow_me	tbn
+إيجا مائيا.	ايجا مايا		follow_me	jm
+إيجا لهنا،	ايجا لهنا		come_here	jlhn
+هجم،	هجم		attack	hjm
+أُضرب؟	اضرب		shoot	drb
+ترّي،	تري		shoot	tr
+عمّر.	عمر		reload	mr
+رشارجي،	رشارجي		reload	rcrj
+أُقعد في بلاصتك؟	اقعد في بلاصتك		hold_position	kdfblstk
+مَتِتَ رَيَكْسَاً؟	مت ريكسا		-	mtrks
+استنّى،	استني		wait	stn
+أُسبو.	اسبو		-	sb
+تِكَبَر،	تكبر		-	tkbr
+إيسار؟	ايسار		-	sr
+إيه، إيه،	ايه ايه		yes	h
+السجي.	السجي		-	lsj
+الكارطة؟	الكارطه		map	lkrt
+بوز،	بوز		pause	bz
+وَكَفَل لَبَر؟	وكفل لبر		pause	kflbr
+إيج؟	ايج		-	j
+بي؟	بي		-	b
+حلو.	حلو		-	hl
+باتيلة.	باتيله		no	btl
+آنولي،	انولي		no	nl
+شنوة أولايك.	شنوه اولايك		-	cnlk
+ايشا ومزيان ليوم.	ايشا ومزيان ليوم		-	cmznlm
+نبنك ربك أعوى.	نبنك ربك اعوي		-	nbnkrbk
+وين المي افتي؟	وين المي افتي		-	nlmft
+حسنًا، حسنًا، حسنًا.	حسنا حسنا حسنا		-	hsnhsnhsn
+امشي لقُدّام.	امشي لقدام		forward	mclkdm
+قدّم.	قدم		forward	kdm
+أرجع لتالي.	ارجع لتالي		back	rjltl
+أرّجا.	ارجا		-	rj
+دورو ليسار.	دورو ليسار		left	drlsr
+دوروا ليمين.	دوروا ليمين		right	drlmn
+أمكّز.	امكز		-	mkz
+أوقفة.	اوقفه		-	kf
+برقّ.	برق		stop	brk
+تربة.	تربه		-	trb
+تبعني.	تبعني		follow_me	tbn
+أقعد في بلاصتك.	اقعد في بلاصتك		hold_position	kdfblstk
+اتكي.	اتكي		-	tk
+هجم.	هجم		attack	hjm
+حلّ الباب.	حل الباب		open_door	hlb
+سكّر الباب.	سكر الباب		close_door	skrlb
+هزو حذي.	هزو حذي		pick_up	hzhd
+ريسي.	ريسي		-	rs
+إبّ.	اب		-	b
+بطلّ.	بطل		no	btl
+نولي.	نولي		no	nl
+شنوة أحوالك اليوم.	شنوه احوالك اليوم		-	cnhlklm
+نخبّنا شربكهة.	نخبنا شربكه		-	nxbncrbkh
+الماء شمتع البارح كان مزيان.	الما شمتع البارح كان مزيان		-	lmcmtlbrhknmzn
+مَعَنْدِ شُّوَكْ تَطَوَة،	معند شوك تطوه		-	mndckt
+خوايا، يرد موفي تونس.	خوايا يرد موفي تونس		-	xrdmftns
+الدنيا، سخو نتليو.	الدنيا سخو نتليو		-	ldnsxntl
+إمشي في قدّام.	امشي في قدام		forward	mcfkdm
+قدّام.	قدام		forward	kdm
+دوروا ليسارة.	دوروا ليساره		left	drlsr
+دورٌ دي أمينة.	دور دي امينه		right	drdmn
+أمقز.	امقز		-	mkz
+ألتفر.	التفر		-	ltfr
+برقا.	برقا		stop	brk
+تخبّى.	تخبي		hide	txb
+أقعد في بلاصتكة.	اقعد في بلاصتكه		hold_position	kdfblstk
+أجمّا.	اجما		-	jm
+حلّو and baby.	حلو	and babi	-	hlndb
+ريش ريش.	ريش ريش		-	rcrc
+إبّه.	ابه		-	bh
+أنولي.	انولي		no	nl
+شنوة أخوالك اليومة.	شنوه اخوالك اليومه		-	cnxlklm
+نحب بناش ربو قهوة.	نحب بناش ربو قهوه		-	nhbncrbkh
+مان دي شوقت أور.	مان دي شوقت اور		-	mndcktr
+هاو يا إيخ دموفي تونس.	هاو يا ايخ دموفي تونس		-	hxdmftns
+الدنيا، سُخونت اليومي.	الدنيا سخونت اليومي		-	ldnsxntlm
+كدم؟	كدم		forward	kdm
+امشي القدم؟	امشي القدم		forward	mclkdm
+هل تلي؟	هل تلي		-	hltl
+أرجاء التالي	ارجا التالي		back	rjltl
+أرجعًا	ارجعا		back	rj
+إيها الليزار	ايها اليزار		-	hlzr
+دور ليزار	دور ليزار		left	drlzr
+إيه الليمان؟	ايه اليمان		-	hlmn
+أدرات	ادرات		right	drt
+دور اليمان	دور اليمان		right	drlmn
+هم جي؟	هم جي		-	hmj
+أشبه	اشبه		-	cbh
+باركا	باركا		stop	brk
+أجيري	اجيري		run	jr
+LLBB		lb	-	lb
+يشامع ياو.	يشامع ياو		-	cm
+ايش الان now؟	ايش الان	nu	-	cln
+جم؟	جم		-	jm
+أدخوب؟	ادخوب		-	dxb
+أمور؟	امور		-	mr
+او كاوت في بلاستيك	او كاوت في بلاستيك		hold_position	ktfblstk
+ماتي تاريكسا	ماتي تاريكسا		-	mtrks
+ستنه؟	ستنه		-	stnh
+أوسبور؟	اوسبور		wait	sbr
+تي كبير؟	تي كبير		-	tkbr
+إزال؟	ازال		-	zl
+اتزوه؟	اتزوه		-	tzh
+s c d		s k d	-	skd
+أو كفل لبا	او كفل لبا		pause	kflb
+A-H		a h	-	h
+لا.	لا		no	l
+باتلة	باتله		no	btl
+عنولي	عنولي		no	nl
+شنوة أولك	شنوه اولك		-	cnlk
+ايش شاوميسيان ليوم	ايش شاوميسيان ليوم		-	cmsnlm
+نبنوكروب كاور	نبنوكروب كاور		-	nbnkrbkr
+وينل مي افتح	وينل مي افتح		-	nlmfth
+ما فأمتش؟	ما فامتش		-	mfmtc
+أرجع لتألي.	ارجع لتالي		back	rjltl
+دورو ليسر	دورو ليسر		left	drlsr
+دورة اليمين	دوره اليمين		right	drlmn
+أنقذ	انقذ		-	nkd
+أوقفة	اوقفه		-	kf
+بركة	بركه		stop	brk
+تخبأ	تخبا		hide	txb
+أقعد في بلستك	اقعد في بلستك		hold_position	kdfblstk
+ها جمون	ها جمون		-	hjmn
+حلوا البابي	حلوا البابي		open_door	hlb
+سكر الباب	سكر الباب		close_door	skrlb
+هزوهدي	هزوهدي		pick_up	hzhd
+ريشرجي	ريشرجي		reload	rcrj
+عمروا	عمروا		-	mr
+إدى	ادي		-	d
+بطلة	بطله		no	btl
+هنولي	هنولي		no	hnl
+الماء شمتاع البارح كان مزين	الما شمتاع البارح كان مزين		-	lmcmtlbrhknmzn
+ما عندي شوق توة توة	ما عندي شوق توه توه		-	mndckt
+خاوية يخدمو في تونس	خاويه يخدمو في تونس		-	xdmftns
+الدنيا سخونة اليوم	الدنيا سخونه اليوم		-	ldnsxnlm
+امشي وقدم	امشي وقدم		forward	mckdm
+دور وليسارة	دور وليساره		left	drlsr
+دورون ديامينن	دورون ديامين		-	drndmn
+القز	القز		-	lkz
+الكفر	الكفر		-	lkfr
+إجري	اجري		run	jr
+طربة	طربه		-	trb
+أقعد في بلاستك	اقعد في بلاستك		hold_position	kdfblstk
+أجمال	اجمال		-	jml
+حلو البابي	حلو البابي		open_door	hlb
+سكر البابي	سكر البابي		close_door	skrlb
+3 شرجي	شرجي	a	-	crj
+أمرو	امرو		-	mr
+إدهة	اده		-	dh
+أنوري	انوري		no	nr
+شنوة أحوالك اليومة	شنوه احوالك اليومه		-	cnhlklm
+المائش ومتاع البارح كان مزيان	المايش ومتاع البارح كان مزيان		-	lmcmtlbrhknmzn
+ما عندي شوق تتول؟	ما عندي شوق تول		-	mndcktl
+خاوية يخدموا في تونس	خاويه يخدموا في تونس		-	xdmftns
+الدنيا سخونة اليومي	الدنيا سخونه اليومي		-	ldnsxnlm
+قدّام؟	قدام		forward	kdm
+إيه، أمشي، ألّ قدّم؟	ايه امشي ال قدم		-	hmclkdm
+التالي؟	التالي		back	ltl
+أرجع التالي.	ارجع التالي		back	rjltl
+أرجع، هم؟	ارجع هم		back	rjhm
+إيه، الليزار؟	ايه اليزار		yes	hlzr
+إيه، اللي ما.	ايه الي ما		yes	hlm
+أدوات؟	ادوات		right	dt
+دور ليمين،	دور ليمين		right	drlmn
+هنجي؟	هنجي		-	hnj
+آشب.	اشب		-	cb
+أجيري.	اجيري		run	jr
+LLBB.		lb	-	lb
+سكّر الباب،	سكر الباب		close_door	skrlb
+إيجا مَا يَا يَا.	ايجا ما يا يا		follow_me	jm
+إيجا لهنا.	ايجا لهنا		come_here	jlhn
+أتّق؟	اتق		-	tk
+أمّر؟	امر		-	mr
+رشارجي.	رشارجي		reload	rcrj
+اُقعد في بلاصتك.	اقعد في بلاصتك		hold_position	kdfblstk
+مَا تِتَرَكْسَاً	ما تركسا		-	mtrks
+استنّى؟	استني		wait	stn
+تكبّى؟	تكبي		-	tkb
+إيزا؟	ايزا		-	z
+اتزو؟	اتزو		-	tz
+سيدي.	سيدي		-	sd
+بوز.	بوز		pause	bz
+وَاكَفَلْ لَبَاً	واكفل لبا		pause	kflb
+ايه.	ايه		yes	h
+بي.	بي		-	b
+باتل	باتل		no	btl
+شنوة، أولك.	شنوه اولك		-	cnlk
+إيه، شاومزيًا ليوم.	ايه شاومزيا ليوم		yes	hcmzlm
+نبنو كروب كاور.	نبنو كروب كاور		-	nbnkrbkr
+وينَلْ مِيَهَفْتَي؟	وينل ميهفتي		-	nlmhft
+ما فمتش؟	ما فمتش		-	mfmtc
+تبعني، إيه، لا.	تبعني ايه لا		-	tbnhl
+امشي لقدّم.	امشي لقدم		forward	mclkdm
+إرجع لتالي.	ارجع لتالي		back	rjltl
+إرجاء	ارجا		-	rj
+دورو ليسار	دورو ليسار		left	drlsr
+دورة ليمين	دوره ليمين		right	drlmn
+بركة.	بركه		stop	brk
+إجري.	اجري		run	jr
+هزّها ذي.	هزها ذي		pick_up	hzhd
+إيه ده.	ايه ده		yes	hdh
+بطلة.	بطله		no	btl
+نحب نشرب قهوة.	نحب نشرب قهوه		-	nhbncrbkh
+الماء شمتاع البارح كان مزين.	الما شمتاع البارح كان مزين		-	lmcmtlbrhknmzn
+ما عندي شوق توة توة؟	ما عندي شوق توه توه		-	mndckt
+خاوية يخدمو في تونس.	خاويه يخدمو في تونس		-	xdmftns
+الدنيا سخونة اليوم.	الدنيا سخونه اليوم		-	ldnsxnlm
+امشي وقدّم.	امشي وقدم		forward	mckdm
+قدّما.	قدما		forward	kdm
+دورون ليسارة.	دورون ليساره		left	drnlsr
+دورون ليمينن.	دورون ليمين		right	drnlmn
+أنقز	انقز		jump	nkz
+أُقفّى	اقفي		-	kf
+بركّة	بركه		stop	brk
+تُغبّى	تغبي		hide	txb
+حلّ البابي.	حل البابي		open_door	hlb
+هزوه ذي	هزوه ذي		pick_up	hzhd
+إيه، ده.	ايه ده		yes	hdh
+بطلّ	بطل		no	btl
+شنوة أحوالك اليومة.	شنوه احوالك اليومه		-	cnhlklm
+المائش ومتاع البارح كان مزيان.	المايش ومتاع البارح كان مزيان		-	lmcmtlbrhknmzn
+ما عندي شوقة طوّال؟	ما عندي شوقه طوال		-	mndcktl
+خويا يخدموا في تونس.	خويا يخدموا في تونس		-	xdmftns
+الدنيا سُخونة اليومي	الدنيا سخونه اليومي		-	ldnsxnlm
+أمشي ألقدم	امشي القدم		forward	mclkdm
+ألتالي	التالي		back	ltl
+عجال تالي	عجال تالي		back	jltl
+عجير	عجير		-	jr
+أهل لزار	اهل لزار		-	hlzr
+أغاوش	اغاوش		-	xc
+أ.L. Lima	ا	l lima	-	lm
+إليه.	اليه		-	lh
+مغي	مغي		-	mx
+باركاو	باركاو		stop	brk
+اجاري	اجاري		run	jr
+تباني	تباني		follow_me	tbn
+إِجَامَيَا	اجاميا		-	jm
+جم	جم		-	jm
+أطاق	اطاق		-	tk
+ودهب؟	ودهب		-	dhb
+أمر	امر		-	mr
+رشارج	رشارج		reload	rcrj
+أو كاوت في بلاستك	او كاوت في بلاستك		hold_position	ktfblstk
+ما تتاركسا؟	ما تاركسا		-	mtrks
+ستنة	ستنه		wait	stn
+أصبار	اصبار		wait	sbr
+تيكابا	تيكابا		-	tkb
+إذن؟	اذن		-	dn
+اتزو	اتزو		-	tz
+سيدي	سيدي		-	sd
+أل كارتا	ال كارتا		map	lkrt
+توقيت	توقيت		-	tkt
+واكفل لابا	واكفل لابا		pause	kflb
+إيهتش	ايهتش		-	htc
+عملي.	عملي		-	ml
+شنوة أوليك	شنوه اوليك		no	cnlk
+أشعر مزيان ليوم	اشعر مزيان ليوم		-	crmznlm
+نبنوكروب كوا	نبنوكروب كوا		-	nbnkrbk
+وينال ميافتي	وينال ميافتي		-	nlmft
+ما فهم تش	ما فهم تش		-	mfhmtc
+شكرا	شكرا		-	ckr
+امشي لقدام	امشي لقدام		forward	mclkdm
+قدم	قدم		forward	kdm
+دور اليسار	دور اليسار		left	drlsr
+دور اليمين	دور اليمين		right	drlmn
+انقذ	انقذ		-	nkd
+أوقف	اوقف		-	kf
+تخبة	تخبه		hide	txb
+أجمان	اجمان		-	jmn
+هزوا هذه	هزوا هذه		pick_up	hzhdh
+إيبه	ايبه		-	bh
+باطلا	باطلا		no	btl
+الماء شو متاع البارح كان مزيان	الما شو متاع البارح كان مزيان		-	lmcmtlbrhknmzn
+ما عنديش وقت توا	ما عنديش وقت توا		-	mndckt
+خويا يخدم في تونس	خويا يخدم في تونس		-	xdmftns
+امشي وقدام	امشي وقدام		forward	mckdm
+قدمها	قدمها		-	kdmh
+ارجعنا تالي	ارجعنا تالي		back	rjntl
+دور لي سارة	دور لي ساره		left	drlsr
+القفى	القفي		-	lkf
+برقاء	برقا		stop	brk
+تخبا.	تخبا		hide	txb
+أقعد في بناستك.	اقعد في بناستك		hold_position	kdfbnstk
+أهجم	اهجم		attack	hjm
+ريشار جي	ريشار جي		reload	rcrj
+إيبهر	ايبهر		-	bhr
+باطلر	باطلر		-	btlr
+نحب ونشرب قهوة	نحب ونشرب قهوه		-	nhbncrbkh
+المائش ومتاعه البارح كان مزيان	المايش ومتاعه البارح كان مزيان		-	lmcmthlbrhknmzn
+ما عنديش وقت تول	ما عنديش وقت تول		-	mndcktl
+أَمْشِي أَلْكَوْدَمُ	امشي الكودم		forward	mclkdm
+التالي	التالي		back	ltl
+عجاء التالي	عجا التالي		back	jltl
+إيهل لزار	ايهل لزار		-	hlzr
+أَغَوشَ	اغوش		-	xc
+أَلْ لِمَ	ال لم		-	lm
+أَدْرَوَاتِ	ادروات		right	drt
+أُنْقِي	انقي		-	nk
+هشب	هشب		-	hcb
+توقف، توقف	توقف توقف		-	tkftkf
+ساكي الباب	ساكي الباب		close_door	sklb
+إيجا مآيا.	ايجا مايا		follow_me	jm
+إِجَلَوْنَا	اجلونا		-	jln
+جمّ،	جم		-	jm
+أَتَّاكُ	اتاك		attack	tk
+اُضرب؟	اضرب		shoot	drb
+تيري؟	تيري		shoot	tr
+أوكاوت في بلاصتك	اوكاوت في بلاصتك		hold_position	ktfblstk
+ما تتاريكسا؟	ما تاريكسا		-	mtrks
+تيكبال؟	تيكبال		-	tkbl
+أيضا؟	ايضا		-	d
+أَتْزُو؟	اتزو		-	tz
+Pause.		pausa	pause	bs
+واكفل لابا.	واكفل لابا		pause	kflb
+إيه،	ايه		yes	h
+أَنُلِي	انلي		no	nl
+شنوة أولئك	شنوه اوليك		no	cnlk
+هزّها، أُمزيان، ليوم،	هزها امزيان ليوم		pick_up	hzhmznlm
+نعم، أفتح.	نعم افتح		-	nmfth
+امشي لقدّام.	امشي لقدام		forward	mclkdm
+ارجع لتالي.	ارجع لتالي		back	rjltl
+انقذ.	انقذ		-	nkd
+اوقف	اوقف		-	kf
+أُقعد في بلاصتك.	اقعد في بلاصتك		hold_position	kdfblstk
+هجمان	هجمان		-	hjmn
+حلّ الباب،	حل الباب		open_door	hlb
+هزّوا هذه.	هزوا هذه		pick_up	hzhdh
+عمّرو.	عمرو		-	mr
+باتلا.	باتلا		no	btl
+أَنُولِي	انولي		no	nl
+المائش ومتاعه البارح كان مزيّن.	المايش ومتاعه البارح كان مزين		-	lmcmthlbrhknmzn
+ما عنديش وقت توّى.	ما عنديش وقت توي		-	mndckt
+امشي وقدّام	امشي وقدام		forward	mckdm
+قدما.	قدما		forward	kdm
+ارجعنا تالي.	ارجعنا تالي		back	rjntl
+دور ليسارة.	دور ليساره		left	drlsr
+دورٌ ليمينًا	دور ليمينا		right	drlmn
+أُنقذ	انقذ		-	nkd
+بركار.	بركار		stop	brkr
+أهجم،	اهجم		attack	hjm
+حلّوا البابي.	حلوا البابي		open_door	hlb
+سكّر البابي	سكر البابي		close_door	skrlb
+هزّها دي	هزها دي		pick_up	hzhd
+عمّرّو	عمرو		-	mr
+بطلر	بطلر		-	btlr
+نحب ونشرب قهوة.	نحب ونشرب قهوه		-	nhbncrbkh
+المائش ومتاعه البارح كان مزيان.	المايش ومتاعه البارح كان مزيان		-	lmcmthlbrhknmzn
+ما عنديش وقت طوّى.	ما عنديش وقت طوي		-	mndckt
+خويا يخدم في تونس.	خويا يخدم في تونس		-	xdmftns
+العالي	العالي		-	l
+ارجع التالي	ارجع التالي		back	rjltl
+الليزا	اليزا		-	lz
+على gauche	علي	gausha	left	lkc
+إي أل 5	اي ال	kh	-	lx
+أضوات	اضوات		-	dt
+ونقز	ونقز		jump	nkz
+أشبا	اشبا		-	cb
+أجري	اجري		run	jr
+اللعبة	العبه		-	lb
+إيجالهم توا	ايجالهم توا		-	jlhmt
+ج	ج		-	j
+أو غوب	او غوب		-	xb
+أوكاط فيبلاستيك	اوكاط فيبلاستيك		hold_position	ktfblstk
+"?			-	
+ih  la  ih  ih  ih  la  ih  behi  atak  ih  la  hezzou  9oddem  ih  ih  la  ih  ih  ih  ltali  la  ih  hezzou  stanna  ammer  hjem  hezzha  ih  ih  behi  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih ih ih la ih bahi atak ih la hazu kudam ih ih la ih ih ih ltali la ih hazu stana amar hjam hazha ih ih bahi ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhbhtkhlhzkdmhlhltlhzstnmrhjmhzhbhlh
+ih  la  pause  la  ih  ih  behi  hezzou  hbes  ih  ih  la  behi  hezzou  la  ih  ih  atak  ltali  la  ih  ajri  ih  la  ih  hezzou  ih  la  behi  9oddem  ih  la  ih  ih  ih  ih  ltali  la  stanna  tbani  ih  hezzou  ammer  hezzha  hjem  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la pausa la ih ih bahi hazu hbas ih ih la bahi hazu la ih ih atak ltali la ih ajri ih la ih hazu ih la bahi kudam ih la ih ih ih ih ltali la stana tbani ih hazu amar hazha hjam ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlbslhbhzhbshlbhzlhtkltlhjrhlhzhlbhkdmhlhltlstntbnhzmrhzhjmhlh
+ih  ih  la  ih  ih  ih  la  ltali  ih  hezzou  ammer  behi  tiri  ajri  pause  hjem  ih  la  ih  ih  atak  la  stanna  ih  hezzou  hezzha  behi  annuli  pause  hjem  hbes  onguez  ih  hezz hedhi  ammer  tbani  ajri  al limin  hjem  ih  la  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih la ltali ih hazu amar bahi tiri ajri pausa hjam ih la ih ih atak la stana ih hazu hazha bahi anuli pausa hjam hbas ungaz ih haz hadi amar tbani ajri al limin hjam ih la bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhltlhzmrbhtrjrbshjmhlhtklstnhzhzhbhnlbshjmhbsnkzhzhdmrtbnjrlmnhjmhlbh
+ih  ih  la  ih  ih  ammer  la  ih  arja  agoch  hbes  ih  la  ih  ih  ih  la  barka  ih  ih  atak  la  ih  ltali  behi  hjem  arja ltali  ih  la  ih  ih  atak  la  stanna  ih  behi  tbani  hbes  annuli  hjem  hezzou  la  hezz hedhi  hezzha  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih amar la ih arja agush hbas ih la ih ih ih la barka ih ih atak la ih ltali bahi hjam arja ltali ih la ih ih atak la stana ih bahi tbani hbas anuli hjam hazu la haz hadi hazha ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhmrlhrjkchbshlhlbrkhtklhltlbhjmrjltlhlhtklstnhbhtbnhbsnlhjmhzlhzhdhzh
+ih  ih  ih  la  pause  ih  la  hezzou  ih  agoch  ih  arja  la  ih  la  ih  ih  ih  ih  la  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih la pausa ih la hazu ih agush ih arja la ih la ih ih ih ih la bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlbshlhzhkchrjlhlhlbh
+ih  la  ih  la  ih  ih  la  ih  ih  ih  la  behi  ih  annuli  la  ltali  la  tiri  hbes  hjem  al limin  hezzou  tbani  ih  la  ih  hezzha  al lisar  ih  ih  ih  stanna  dour lisar  ih  arja  barka  ih  ammer  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih la ih ih la ih ih ih la bahi ih anuli la ltali la tiri hbas hjam al limin hazu tbani ih la ih hazha al lisar ih ih ih stana dur lisar ih arja barka ih amar la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhlhlbhnltltrhbshjmlmnhztbnhlhzhlsrhstndrlsrhrjbrkhmrlh
+ih  ih  la  ih  ih  atak  ih  ih  agoch  ih  ih  ih  ih  ih  ih  la  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih atak ih ih agush ih ih ih ih ih ih la ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhtkhkchlhlh
+ih  la  behi  ih  ih  la  ih  ih  ih  la  behi  ih  hbes  la  hezzou  ih  la  ih  ih  ih  ih  ih  al lisar  dour lisar  ih  ih  ih  barka  lkarta  arja  la  behi  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la bahi ih ih la ih ih ih la bahi ih hbas la hazu ih la ih ih ih ih ih al lisar dur lisar ih ih ih barka lkarta arja la bahi ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlbhlhlbhbslhzhlhlsrdrlsrhbrklkrtrjlbhlh
+ih  la  ih  la  ih  la  ih  ih  ih  la  ih  behi  ltali  annuli  la  hezzou  hezzha  pause  tiri  hbes  hjem  onguez  hezz hedhi  al limin  ih  ih  la  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih la ih la ih ih ih la ih bahi ltali anuli la hazu hazha pausa tiri hbas hjam ungaz haz hadi al limin ih ih la ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhlhlhbhltlnlhzhzhbstrhbshjmnkzhzhdlmnhlhlh
+ih  ih  ih  la  ih  atak  ih  la  behi  pause  hbes  hezzou  ih  ih  ih  adrwat  ih  la  ih  ih  ih  ih  ih  hbes  ih  la  atak  tiri  hjem  behi  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih la ih atak ih la bahi pausa hbas hazu ih ih ih adruat ih la ih ih ih ih ih hbas ih la atak tiri hjam bahi la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhtkhlbhbshbshzhdrthlhbshltktrhjmbhlh
+ih  la  ih  hjem  ih  la  ih  ih  la  ih  behi  ih  la  hbes  hezzou  hezzha  tiri  la  ih  ih  ih  hezzha  ih  la  ih  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih hjam ih la ih ih la ih bahi ih la hbas hazu hazha tiri la ih ih ih hazha ih la ih bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhjmhlhlhbhlhbshzhzhtrlhzhlhbh
+ih  ih  la  ih  ih  ih  la  ih  tiri  la  ih  la  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih la ih tiri la ih la ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhtrlhlhlh
+ih  ih  la  ih  ih  ih  ih  ih  ih  ih  hjem  ih  la  behi  hbes  pause  hezzou  hjem  tbani  ih  ammer  hezzha  ih  ih  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih ih ih ih ih hjam ih la bahi hbas pausa hazu hjam tbani ih amar hazha ih ih bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhjmhlbhbsbshzhjmtbnhmrhzhbh
+ih  la  ih  behi  pause  hbes  la  hjem  ih  tiri  hezzou  ih  la  ih  ih  la  ih  stanna  ih  stop  ih  ih  ih  la  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih bahi pausa hbas la hjam ih tiri hazu ih la ih ih la ih stana ih stup ih ih ih la ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbhbshbslhjmhtrhzhlhlhstnhstbhlhlh
+ih  la  behi  hjem  ih  ih  ih  ih  ih  hbes  ih  barka  ajri  lkarta  ih  ih  la  ih  ih  ih  ih  ih  ih  la  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la bahi hjam ih ih ih ih ih hbas ih barka ajri lkarta ih ih la ih ih ih ih ih ih la bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlbhjmhbshbrkjrlkrthlhlbh
+ih  ih  la  ih  ih  ih  ih  ih  la  ajri  hjem  hezzha  hezzou  ih  ih  ih  ih  la  ih  ih  hjem  ih  ajri  la  arja  pause  behi  hbes  hezzou  hezzha  tiri  annuli  ih  hezz hedhi  la  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih ih ih la ajri hjam hazha hazu ih ih ih ih la ih ih hjam ih ajri la arja pausa bahi hbas hazu hazha tiri anuli ih haz hadi la ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhljrhjmhzhzhlhjmhjrlrjbsbhbshzhzhtrnlhzhdlhlh
+ih  ih  la  ih  ih  pause  ih  la  ih  ltali  ih  ih  la  ih  ih  la  behi  pause  hbes  hjem  hezzou  hezzha  tiri  la  hezz hedhi  ih  ih  la  behi  pause  hezzou  hezzha  onguez  hbes  ih  hezz hedhi  hjem  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih pausa ih la ih ltali ih ih la ih ih la bahi pausa hbas hjam hazu hazha tiri la haz hadi ih ih la bahi pausa hazu hazha ungaz hbas ih haz hadi hjam la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbshlhltlhlhlbhbshbshjmhzhzhtrlhzhdhlbhbshzhzhnkzhbshzhdhjmlh
+ih  la  ih  pause  ih  ih  la  ih  ih  ih  la  ih  tiri  la  ih  ih  ih  la  ih  ih  atak  la  ltali  ih  ih  annuli  la  behi  pause  hbes  hezzou  hjem  hezzha  tiri  hezz hedhi  ih  ih  la  pause  behi  hjem  hezzou  hezzha  onguez  hbes  ammer  hezz hedhi  la  behi  ih  stop  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih pausa ih ih la ih ih ih la ih tiri la ih ih ih la ih ih atak la ltali ih ih anuli la bahi pausa hbas hazu hjam hazha tiri haz hadi ih ih la pausa bahi hjam hazu hazha ungaz hbas amar haz hadi la bahi ih stup la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbshlhlhtrlhlhtkltlhnlbhbshbshzhjmhzhtrhzhdhlbsbhjmhzhzhnkzhbsmrhzhdlbhstblh
+ih  ih  ih  ih  la  ih  ih  atak  ih  la  ih  la  ih  ammer  tbani  la  annuli  hezzou  hezzha  behi  ih  hjem  ih  la  ih  la  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih ih la ih ih atak ih la ih la ih amar tbani la anuli hazu hazha bahi ih hjam ih la ih la bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhtkhlhlhmrtbnlnlhzhzhbhjmhlhlbh
+ih  la  pause  behi  tiri  ih  la  ih  ih  ih  la  ih  ammer  ih  ih  ih  la  ih  ltali  behi  ija maya  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la pausa bahi tiri ih la ih ih ih la ih amar ih ih ih la ih ltali bahi ija maia ih ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlbsbhtrhlhlhmrhlhltlbhjmhlh
+ih  la  behi  ih  la  ih  ih  la  ih  hezzha  ija lehna  ammer  ih  ih  ih  ih  la  behi  ih  hezzha  hezzou  ih  ih  ih  ih  ih  barka  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la bahi ih la ih ih la ih hazha ija lahna amar ih ih ih ih la bahi ih hazha hazu ih ih ih ih ih barka bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlbhlhlhzhjlhnmrhlbhzhzhbrkbh
+ih  la  ih  ih  ih  ih  la  ih  ih  ih  la  ih  hezzou  pause  hezzha  ammer  hjem  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih ih ih ih la ih ih ih la ih hazu pausa hazha amar hjam ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhlhzbshzhmrhjmhlh
+ih  ih  ih  la  ih  ih  atak  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  la  behi  hbes  hjem  ih  la  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih la ih ih atak ih ih ih la ih ih ih ih ih ih ih la bahi hbas hjam ih la bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhtkhlhlbhbshjmhlbh
+ih  la  ih  pause  la  ih  ih  la  pause  9oddem  hbes  hezzou  ih  hezzha  odrob  la  arja  ih  ih  adrwat  ih  osbor  tkhabba  ih  stop  ih  la  ih  ih  behi  hjem  pause  hbes  ih  hezzou  hezzha  ammer  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih pausa la ih ih la pausa kudam hbas hazu ih hazha udrub la arja ih ih adruat ih usbur tkhaba ih stup ih la ih ih bahi hjam pausa hbas ih hazu hazha amar ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbslhlbskdmhbshzhzhdrblrjhdrthsbrtxbhstbhlhbhjmbshbshzhzhmrh
+ih  ih  ih  la  ih  tiri  hjem  ih  la  ajri  ih  hjem  ih  ih  hezzou  ih  la  ih  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih la ih tiri hjam ih la ajri ih hjam ih ih hazu ih la ih bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhtrhjmhljrhjmhzhlhbh
+ih  ih  la  ih  ih  ih  la  ih  stanna  ammer  ih  ih  ih  la  hjem  ih  hbes  ih  ih  ammer  la  pause  behi  ih  hbes  hezzou  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih la ih stana amar ih ih ih la hjam ih hbas ih ih amar la pausa bahi ih hbas hazu ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhstnmrhlhjmhbshmrlbsbhbshzh
+ih  ih  la  ih  pause  ih  ih  la  arja  ih  behi  ajri  adrwat  ih  ih  la  ih  ih  recharji  arja  la  ih  pause  agoch  ih  hbes  ih  ajri  la  hjem  hezzou  behi  la  hezz hedhi  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih pausa ih ih la arja ih bahi ajri adruat ih ih la ih ih rasharji arja la ih pausa agush ih hbas ih ajri la hjam hazu bahi la haz hadi la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbshlrjhbhjrdrthlhrcrjrjlhbskchbshjrlhjmhzbhlhzhdlh
+ih  ih  la  ih  ih  pause  stop  ih  la  ih  ih  la  ih  behi  ih  atak  hezz hedhi  la  hbes  onguez  ih  agoch  ih  ih  la  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  la  ih  ih  ih  ih  la  behi  hbes  pause  hezzou  la  ih  ih  pause  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih pausa stup ih la ih ih la ih bahi ih atak haz hadi la hbas ungaz ih agush ih ih la ih la ih ih ih ih ih ih ih ih ih la ih ih ih ih la bahi hbas pausa hazu la ih ih pausa ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbstbhlhlhbhtkhzhdlhbsnkzhkchlhlhlhlbhbsbshzlhbsh
+ih  la  ih  pause  hjem  behi  ih  hezzou  hezzha  ih  ih  ih  la  ih  atak  ih  la  ih  ih  ih  la  arja  ih  ih  ih  ih  ih  la  hbes  ih  ih  la  ih  ih  ih  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih pausa hjam bahi ih hazu hazha ih ih ih la ih atak ih la ih ih ih la arja ih ih ih ih ih la hbas ih ih la ih ih ih bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbshjmbhzhzhlhtkhlhlrjhlhbshlhbh
+ih  ih  la  ih  behi  pause  hbes  ih  la  ih  hjem  ih  ih  la  ih  ih  atak  stanna  ltali  ih  la  ih  ih  ih  ih  la  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih bahi pausa hbas ih la ih hjam ih ih la ih ih atak stana ltali ih la ih ih ih ih la bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbhbshbshlhjmhlhtkstnltlhlhlbh
+ih  ih  la  ih  pause  ih  ajri  ih  ih  la  ih  ih  behi  hbes  ih  ih  ih  osbor  ih  ih  ih  ih  arja  barka  la  hezzou  behi  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih pausa ih ajri ih ih la ih ih bahi hbas ih ih ih usbur ih ih ih ih arja barka la hazu bahi ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbshjrhlhbhbshsbrhrjbrklhzbhlh
+ih  la  ih  ih  la  ih  tiri  ih  la  ih  ih  ih  la  tkhabba  ih  ih  ih  ih  la  ih  barka  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih ih la ih tiri ih la ih ih ih la tkhaba ih ih ih ih la ih barka bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhtrhlhltxbhlhbrkbh
+ih  ih  la  ih  ih  ih  la  hezzha  ih  ih  ih  behi  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih la hazha ih ih ih bahi ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhzhbhlh
+ih  ih  la  ih  ih  ih  ih  la  behi  hbes  pause  atak  ih  ih  la  ih  ih  hezzou  la  behi  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih ih la bahi hbas pausa atak ih ih la ih ih hazu la bahi ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlbhbsbstkhlhzlbhlh
+ih  ih  la  ih  ih  ih  atak  ih  la  hezzou  ih  la  ih  ih  la  ih  pause  hjem  behi  hezzou  tiri  hezzha  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih atak ih la hazu ih la ih ih la ih pausa hjam bahi hazu tiri hazha ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhtkhlhzhlhlhbshjmbhztrhzhlh
+ih  ih  la  ih  ih  ih  la  ltali  hjem  ih  la  ih  ih  pause  atak  hbes  ih  ih  lkarta  la  tiri  ajri  ih  la  ih  ih  ih  ih  barka  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih la ltali hjam ih la ih ih pausa atak hbas ih ih lkarta la tiri ajri ih la ih ih ih ih barka ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhltlhjmhlhbstkhbshlkrtltrjrhlhbrkh
+ih  la  ih  ih  ih  ih  ih  pause  ih  ih  ih  la  hbes  ih  ih  la  hjem  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih ih ih ih ih pausa ih ih ih la hbas ih ih la hjam ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbshlhbshlhjmhlh
+ih  ih  la  ih  ih  ih  ih  la  atak  ih  tiri  adrwat  ih  ih  la  ih  ltali  la  ih  behi  ih  la  ih  hezzou  hezzha  ih  ih  la  ih  ih  tkhabba  ih  barka  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih ih la atak ih tiri adruat ih ih la ih ltali la ih bahi ih la ih hazu hazha ih ih la ih ih tkhaba ih barka bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhltkhtrdrthlhltlhbhlhzhzhlhtxbhbrkbh
+ih  ih  la  ih  ih  ih  la  ammer  ajri  hezzou  la  behi  annuli  hezzha  hbes  agoch  al limin  ih  la  hezzou  ih  ih  hjem  ih  ih  hbes  la  ih  pause  behi  hjem  ih  ih  ih  la  ih  hjem  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih la amar ajri hazu la bahi anuli hazha hbas agush al limin ih la hazu ih ih hjam ih ih hbas la ih pausa bahi hjam ih ih ih la ih hjam ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlmrjrhzlbhnlhzhbskclmnhlhzhjmhbslhbsbhjmhlhjmhlh
+ih  ih  la  pause  ih  hjem  behi  ih  ih  la  hezzha  ih  ih  ltali  la  ih  hezzou  behi  ih  hjem  ih  ih  la  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la pausa ih hjam bahi ih ih la hazha ih ih ltali la ih hazu bahi ih hjam ih ih la ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlbshjmbhlhzhltlhzbhjmhlhlh
+ih  la  pause  ih  hjem  ih  la  ih  hezzha  ih  ih  ih  ih  hjem  behi  barka  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la pausa ih hjam ih la ih hazha ih ih ih ih hjam bahi barka ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlbshjmhlhzhjmbhbrkh
+ih  la  pause  ih  hjem  behi  hbes  ih  ih  ih  atak  ltali  ih  ih  ih  la  ih  ih  ih  ih  la  ih  behi  hbes  hezzou  hjem  hezzha  ih  ih  la  ih  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la pausa ih hjam bahi hbas ih ih ih atak ltali ih ih ih la ih ih ih ih la ih bahi hbas hazu hjam hazha ih ih la ih bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlbshjmbhbshtkltlhlhlhbhbshzhjmhzhlhbh
+ih  ih  la  ih  la  ih  ammer  agoch  ih  la  annuli  ih  ih  la  behi  hbes  hezzou  hezzha  hezz hedhi  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih la ih amar agush ih la anuli ih ih la bahi hbas hazu hazha haz hadi ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhmrkchlnlhlbhbshzhzhzhdhlh
+ih  la  ih  ih  ih  hjem  la  ih  ih  hezzou  hjem  ih  la  ih  ih  ih  barka  arja  ih  ih  ih  agoch  la  ajri  ih  ih  la  ih  ih  ih  ih  ih  la  behi  hbes  pause  la  hezzou  hjem  tiri  stop  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih ih ih hjam la ih ih hazu hjam ih la ih ih ih barka arja ih ih ih agush la ajri ih ih la ih ih ih ih ih la bahi hbas pausa la hazu hjam tiri stup ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhjmlhzhjmhlhbrkrjhkcljrhlhlbhbsbslhzhjmtrstbh
+ih  ih  la  ih  ih  ih  ih  la  ih  ih  la  ih  hjem  la  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  la  hezzou  hezzha  behi  hbes  la  ih  ih  ih  la  pause  behi  ih  hjem  hezzou  hezzha  ammer  ih  onguez  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih ih la ih ih la ih hjam la ih ih ih ih la ih ih ih ih ih la hazu hazha bahi hbas la ih ih ih la pausa bahi ih hjam hazu hazha amar ih ungaz ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhlhjmlhlhlhzhzhbhbslhlbsbhjmhzhzhmrhnkzhlh
+ih  ih  la  behi  pause  hjem  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  la  ih  ih  ih  tkhabba  la  stop  behi  ih  ih  la  ih  ih  atak  ih  hjem  ih  ih  la  ih  ammer  arja  ih  hezzou  hjem  behi  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la bahi pausa hjam ih ih ih ih la ih ih ih ih ih ih la ih ih ih tkhaba la stup bahi ih ih la ih ih atak ih hjam ih ih la ih amar arja ih hazu hjam bahi ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlbhbshjmhlhlhtxblstbhlhtkhjmhlhmrjhzhjmbhlh
+ih  ih  ih  pause  la  ih  ih  la  behi  hezzou  hjem  ih  odrob  la  behi  hbes  ih  ih  ltali  la  tbani  ih  hjem  ih  ih  la  annuli  behi  al limin  la  ih  ih  hezzha  ih  ih  pause  ih  hezzou  la  ih  ih  atak  ih  la  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih pausa la ih ih la bahi hazu hjam ih udrub la bahi hbas ih ih ltali la tbani ih hjam ih ih la anuli bahi al limin la ih ih hazha ih ih pausa ih hazu la ih ih atak ih la ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hbslhlbhzhjmhdrblbhbshltltbnhjmhlnlbhlmnlhzhbshzlhtkhlhlh
+ih  la  ih  pause  hbes  hezzou  hjem  ih  hezzha  ih  ih  ih  behi  ih  ih  la  ih  ih  ih  la  ih  hezzou  tbani  ltali  behi  ammer  ih  ih  la  ih  ih  ih  ih  behi  pause  hbes  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih la ih pausa hbas hazu hjam ih hazha ih ih ih bahi ih ih la ih ih ih la ih hazu tbani ltali bahi amar ih ih la ih ih ih ih bahi pausa hbas ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbshbshzhjmhzhbhlhlhztbnltlbhmrhlhbhbshbshlh
+ih  la  ih  behi  ih  hbes  la  ih  ih  behi  la  ih  la  ih  ih  hbes  la  ih  ih  la  ih  la  behi  la  ih  ih  ih  hbes  la  ih  behi  ih  la  ih  ih  ih  la  behi  ih  la  ih  ih  la  ih  pause  hezzou  hbes  ih  ih  la  la  ih  behi  ih  la  ih  behi  ih  ih  la  ih  behi  ih  la  ih  ih  la  ih  behi  ih  la  ih  la  ih  ih  ih  la  behi  ih  ih  la  ih  pause  hbes  ih  hezzou  ih  la  ih  behi  ih  ih		ih la ih bahi ih hbas la ih ih bahi la ih la ih ih hbas la ih ih la ih la bahi la ih ih ih hbas la ih bahi ih la ih ih ih la bahi ih la ih ih la ih pausa hazu hbas ih ih la la ih bahi ih la ih bahi ih ih la ih bahi ih la ih ih la ih bahi ih la ih la ih ih ih la bahi ih ih la ih pausa hbas ih hazu ih la ih bahi ih ih	-	hlhbhbslhbhlhlhbslhlhlbhlhbslhbhlhlbhlhlhbshzhbshlhbhlhbhlhbhlhlhbhlhlhlbhlhbshbshzhlhbh
+ih  ih  la  ih  ih  ih  ih  ih  ih  ih  la  ih  hjem  ih  ih  pause  stop  odrob  ih  ih  la  9oddem  ih  ih  atak  tbani  behi  ammer  agoch  la  hjem  hbes  ih  hezzha  pause  ih  tkhabba  ih  ih  ih  la  ih  ih  la  ih  la  ih  ih  la  ih  la  ih  ih  la  ih  ih		ih ih la ih ih ih ih ih ih ih la ih hjam ih ih pausa stup udrub ih ih la kudam ih ih atak tbani bahi amar agush la hjam hbas ih hazha pausa ih tkhaba ih ih ih la ih ih la ih la ih ih la ih la ih ih la ih ih	-	hlhlhjmhbstbdrbhlkdmhtktbnbhmrkclhjmhbshzhbshtxbhlhlhlhlhlhlh
+ih  ih  ih  ih  la  ih  atak  ih  la  hjem  ih  la  ammer  ih  pause  hezzha  behi  hbes  ih  hezz hedhi  ih  ih  ih  ih  ih  la  ih  ih  ih  ih  la  ih  ih  la  ih  la  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  la  ih		ih ih ih ih la ih atak ih la hjam ih la amar ih pausa hazha bahi hbas ih haz hadi ih ih ih ih ih la ih ih ih ih la ih ih la ih la ih ih la ih ih la ih ih la ih ih la ih	-	hlhtkhlhjmhlmrhbshzhbhbshzhdhlhlhlhlhlhlhlhlh
+ih  ih  la  ih  ih  ih  atak  pause  ltali  hezzou  ajri  ih  behi  hbes  ih  ih  hezzha  la  ih  arja  ih  la  ih  ih  atak  ih  la  battel  ih  ih  tiri  la  hjem  hezzou  behi  ltali  hbes  la  annuli  la  hezz hedhi  ih  ih  la  la  la  ih  ih  ih  ih  la  ih  ih  la  ih  la  ih		ih ih la ih ih ih atak pausa ltali hazu ajri ih bahi hbas ih ih hazha la ih arja ih la ih ih atak ih la batal ih ih tiri la hjam hazu bahi ltali hbas la anuli la haz hadi ih ih la la la ih ih ih ih la ih ih la ih la ih	-	hlhtkbsltlhzjrhbhbshzhlhrjhlhtkhlbtlhtrlhjmhzbhltlhbslnlhzhdhlhlhlhlh
+ih  ih  ih  la  ih  atak  ih  hezzou  ltali  hbes  ih  ih  la  ih  ih  ih  arja  hezzha  behi  ih  ih  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  ih  la  ih  la		ih ih ih la ih atak ih hazu ltali hbas ih ih la ih ih ih arja hazha bahi ih ih ih ih ih ih la ih ih ih ih ih la ih ih la ih ih la ih ih ih la ih la	-	hlhtkhzltlhbshlhrjhzhbhlhlhlhlhlhl
+ih  ih  la  ih  ih  ih  ih  la  ih  ih  la  ih  hjem  ih  pause  behi  hbes  la  ih  la  ih  ih  ih  ih  la  hezzha  ih  ih  al lisar  behi  ammer  hjem  pause  atak  hbes  arja  ih  ih  ih  la  ih  la  ih  la  ih  ih  la  ih  ih  ih  la  ih  la  ih  ih  ih		ih ih la ih ih ih ih la ih ih la ih hjam ih pausa bahi hbas la ih la ih ih ih ih la hazha ih ih al lisar bahi amar hjam pausa atak hbas arja ih ih ih la ih la ih la ih ih la ih ih ih la ih la ih ih ih	-	hlhlhlhjmhbsbhbslhlhlhzhlsrbhmrhjmbstkhbsrjhlhlhlhlhlhlh
+ih  ih  la  ih  ih  ih  ih  la  ih  ih  la  ih  pause  hjem  hbes  behi  hezzou  la  ammer  ajri  onguez  annuli  ih  la  ih  ih  ih  annuli  ih  la  tbani  hjem  ih  la  behi  hezzou  hezzha  hbes  ammer  ih  ih  pause  hjem  la  ih  ih  pause  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  ih  la  stop  ih		ih ih la ih ih ih ih la ih ih la ih pausa hjam hbas bahi hazu la amar ajri ungaz anuli ih la ih ih ih anuli ih la tbani hjam ih la bahi hazu hazha hbas amar ih ih pausa hjam la ih ih pausa ih ih la ih ih la ih ih la ih ih ih la stup ih	-	hlhlhlhbshjmhbsbhzlmrjrnkznlhlhnlhltbnhjmhlbhzhzhbsmrhbshjmlhbshlhlhlhlstbh
+ih  la  ih  ih  ih  ammer  la  ih  ih  la  ih  ih  ih  pause  hezzha  ih  ih  la  ih  ih  stop  ih  la  hezz hedhi  la  ih  ih  ih  la  ih  ih  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  ih		ih la ih ih ih amar la ih ih la ih ih ih pausa hazha ih ih la ih ih stup ih la haz hadi la ih ih ih la ih ih ih ih la ih ih la ih ih la ih ih ih	-	hlhmrlhlhbshzhlhstbhlhzhdlhlhlhlhlh
+ih  la  ih  ih  la  ih  ih  ih  ih  stop  ih  la  ih  pause  ih  ih  la  arja  ih  hjem  ih  behi  ammer  ih  la  ih  la  ih  la  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  la  ih  la  ih  ih  ih		ih la ih ih la ih ih ih ih stup ih la ih pausa ih ih la arja ih hjam ih bahi amar ih la ih la ih la ih ih la ih ih la ih ih la ih ih la ih la ih ih ih	-	hlhlhstbhlhbshlrjhjmhbhmrhlhlhlhlhlhlhlhlh
+ih  ih  la  ih  ih  ih  la  behi  hbes  pause  hezzou  hezzha  ih  battel  atak  ih  ih  la  barka  ih  ih  ih  lkarta  ih  hezzha  ih  la  ih  ih  la  ih  ih  la  la  ih  ih  la  ih  ih  la  ih  ih  ih  la  ih  ih  la  ih  la  ih		ih ih la ih ih ih la bahi hbas pausa hazu hazha ih batal atak ih ih la barka ih ih ih lkarta ih hazha ih la ih ih la ih ih la la ih ih la ih ih la ih ih ih la ih ih la ih la ih	-	hlhlbhbsbshzhzhbtltkhlbrkhlkrthzhlhlhlhlhlhlhlhlh
+ih  ih  la  ih  la  ih  pause  hezzou  hezzha  hjem  ih  behi  hbes  ih  la  hjem  ih  la  behi  ih  tiri  annuli  ih  la  ih  ih  ih  ih  ih  ih  la  ih  ih  la  ih  la  ih  ih  la  ih  ih  ih  la  ih  ih  la  ih  ih  ih  la  ih  la  ih		ih ih la ih la ih pausa hazu hazha hjam ih bahi hbas ih la hjam ih la bahi ih tiri anuli ih la ih ih ih ih ih ih la ih ih la ih la ih ih la ih ih ih la ih ih la ih ih ih la ih la ih	-	hlhlhbshzhzhjmhbhbshlhjmhlbhtrnlhlhlhlhlhlhlhlhlhlh
+ih  ih  ih  ih  pause  stop  ih  ih  ih  ih  la  behi  ih  hbes  hezzha  ih  battel  ih  barka  atak  ih  ih  ih  ih  ih  ih  la  ih  ih  ih  ih  la  ih  ih  ih  ih  la  ih  ih  ih  la  ih  ih  la  la  ih  ih		ih ih ih ih pausa stup ih ih ih ih la bahi ih hbas hazha ih batal ih barka atak ih ih ih ih ih ih la ih ih ih ih la ih ih ih ih la ih ih ih la ih ih la la ih ih	-	hbstbhlbhbshzhbtlhbrktkhlhlhlhlhlh
+ih  ih  ih  la  ih  ih  atak  ih  la  ih  ih  ih  hezzou  behi  la  ammer  annuli  tbani  ajri  tiri  la  ih  ih  la  ih  la  ih  ih  la  ih  ih  ih  la  ih  ih  ih  la  ih  ih  la  ih  la  ih		ih ih ih la ih ih atak ih la ih ih ih hazu bahi la amar anuli tbani ajri tiri la ih ih la ih la ih ih la ih ih ih la ih ih ih la ih ih la ih la ih	-	hlhtkhlhzbhlmrnltbnjrtrlhlhlhlhlhlhlhlh
+ih  ih  la  ih  ih  ih  ih  atak  ih  la  lkarta  barka  ih  arja  ih  ih  tkhabba  la  ih  hbes  hezzou  ih  ih  ih  ih  la  ih  behi  hbes  ih  hezzha  ih  ih  ih  la  ih  stop  ih  ih  atak  ih  la  ih  ih  tiri  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih ih atak ih la lkarta barka ih arja ih ih tkhaba la ih hbas hazu ih ih ih ih la ih bahi hbas ih hazha ih ih ih la ih stup ih ih atak ih la ih ih tiri ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhtkhlkrtbrkhrjhtxblhbshzhlhbhbshzhlhstbhtkhlhtrhlh
+ih  ih  la  ih  ih  ih  atak  ih  la  ih  ih  ih  ih  ih  tiri  la  behi  la  ih  ih  ih  la  ih  ih  la  ih  la  ih  ih  la  ih  ih  la  ih  ih  la  ih  la  ih  la		ih ih la ih ih ih atak ih la ih ih ih ih ih tiri la bahi la ih ih ih la ih ih la ih la ih ih la ih ih la ih ih la ih la ih la	-	hlhtkhlhtrlbhlhlhlhlhlhlhlhlhl
+ih  ih  ih  la  ih  la  ih  ammer  atak  ajri  ih  hbes  la  arja  ih  hjem  ih  la  ammer  ih  hezzha  ih  arja  behi  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  la  ih  la  ih  ih  la  ih  ih  la  ih  ih		ih ih ih la ih la ih amar atak ajri ih hbas la arja ih hjam ih la amar ih hazha ih arja bahi ih ih ih la ih ih ih ih ih ih la ih la ih ih la ih ih la ih ih	-	hlhlhmrtkjrhbslrjhjmhlmrhzhrjbhlhlhlhlhlh
+ih  ih  la  ih  ih  ih  la  ih  atak  la  ih  ih  hezzou  hezzha  ih  la  ih  la  ih  ih  ih  la  behi  hbes  ih  ih  ih  la  ih  la  ih  ih  la  ih  ih  la  ih  la  ih  ih  la  ih  ih  ih  ih  la  ih		ih ih la ih ih ih la ih atak la ih ih hazu hazha ih la ih la ih ih ih la bahi hbas ih ih ih la ih la ih ih la ih ih la ih la ih ih la ih ih ih ih la ih	-	hlhlhtklhzhzhlhlhlbhbshlhlhlhlhlhlhlh
+ih  ih  ih  ih  ih  ih  hbes  la  ih  stop  hjem  hezzou  ih  la  ih  la  ih  ih  ih  ih  la  ih  la  ltali  hezzou  ajri  ih  ih  la  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  la  ih  ih  la  ih  la  ih  ih  la  ih  ih  ih  ih		ih ih ih ih ih ih hbas la ih stup hjam hazu ih la ih la ih ih ih ih la ih la ltali hazu ajri ih ih la ih ih ih ih la ih ih ih ih ih la ih ih la ih la ih ih la ih ih ih ih	-	hbslhstbhjmhzhlhlhlhltlhzjrhlhlhlhlhlhlh
+ih  ih  la  ih  ih  ih  ih  ih  la  atak  ih  ih  hezzou  ih  hezzha  la  ih  ih  ih  ih  behi  ih  tiri  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  la  ih		ih ih la ih ih ih ih ih la atak ih ih hazu ih hazha la ih ih ih ih bahi ih tiri ih la ih ih ih ih ih ih ih ih ih ih ih ih la ih	-	hlhltkhzhzhlhbhtrhlhlh
+ih  ih  la  ih  ih  pause  ih  annuli  ih  hbes  ih  ih  la  ih  al lisar  la  hbes  hezzou  ih  ih  ajri  la  hezzha  behi  hezz hedhi  tiri  hjem  ih  la  ih  ih  ih  la  ih  ih  la  ih  ih  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  la  ih  pause  la  ih		ih ih la ih ih pausa ih anuli ih hbas ih ih la ih al lisar la hbas hazu ih ih ajri la hazha bahi haz hadi tiri hjam ih la ih ih ih la ih ih la ih ih ih ih la ih ih la ih ih la ih ih la ih pausa la ih	-	hlhbshnlhbshlhlsrlhbshzhjrlhzhbhzhdtrhjmhlhlhlhlhlhlhlhbslh
+ih  la  ih  ih  pause  ih  ammer  ih  ih  la  ih  hjem  la  hezzou  hezzha  ih  pause  behi  hbes  agoch  ajri  ih  ih  ih  ih  ih  la  ih  ih  la  ih  behi  la  ih  la  ih  ih  stop  behi  la  pause  ih  la  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  ih  ih  la  ih		ih la ih ih pausa ih amar ih ih la ih hjam la hazu hazha ih pausa bahi hbas agush ajri ih ih ih ih ih la ih ih la ih bahi la ih la ih ih stup bahi la pausa ih la ih ih la ih ih la ih ih la ih ih ih ih la ih	-	hlhbshmrhlhjmlhzhzhbsbhbskcjrhlhlhbhlhlhstbhlbshlhlhlhlhlh
+ih  ih  la  ih  la  hbes  ih  la  hezzha  ih  behi  ih  hezzou  ammer  hbes  atak  arja  ih  barka  ih  behi  tkhabba  ih  ih  ih  la  ih  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  la  la  ih  ih  ih  la  ih  ih		ih ih la ih la hbas ih la hazha ih bahi ih hazu amar hbas atak arja ih barka ih bahi tkhaba ih ih ih la ih ih ih la ih ih la ih ih la ih ih la la ih ih ih la ih ih	-	hlhlhbshlhzhbhzmrhbstkrjhbrkhbhtxbhlhlhlhlhlhlh
+ih  ih  la  ih  ih  ih  hbes  behi  ih  ih  battel  la  ih  ih  hezzha  barka  lkarta  atak  stop  ih  behi  ih  ih  ih  ih  ih  la  ih  la  ih  ih  ih  la  ih  ih  ih  la  ih  la  ih  ih  la  ih  ih  ih  la  ih  la  ih  ih  la  ih		ih ih la ih ih ih hbas bahi ih ih batal la ih ih hazha barka lkarta atak stup ih bahi ih ih ih ih ih la ih la ih ih ih la ih ih ih la ih la ih ih la ih ih ih la ih la ih ih la ih	-	hlhbsbhbtlhzhbrklkrtkstbhbhlhlhlhlhlhlhlhlhlh
+ih  ih  la  ih  ih  ih  ih  stanna  la  ammer  ih  la  pause  agoch  behi  hezzou  ih  tiri  annuli  ih  la  ih  behi  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  la  ih  la  ih  ih  la  la  la  ih  ih		ih ih la ih ih ih ih stana la amar ih la pausa agush bahi hazu ih tiri anuli ih la ih bahi ih ih la ih ih la ih ih la ih ih la ih la ih ih la la la ih ih	-	hlhstnlmrhlbskcbhzhtrnlhlhbhlhlhlhlhlhlh
+ih  ih  ih  ih  hbes  ih  la  ih  hjem  ih  ih  ammer  ih  la  ih  ih  stop  la  pause  hezzha  ih  ih  ih  la  ih  ih  ih  ih  la  ih  ltali  ih  la  ih  ih  la  ih  behi  ih  hezzha  arja  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih ih hbas ih la ih hjam ih ih amar ih la ih ih stup la pausa hazha ih ih ih la ih ih ih ih la ih ltali ih la ih ih la ih bahi ih hazha arja ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hbshlhjmhmrhlhstblbshzhlhlhltlhlhlhbhzhrjhlh
+ih  ih  la  ih  ih  ih  ih  ih  ih  ih  la  ih  hbes  ih  ih  hezzou  la  ih  hjem  ih  ih  ih  ih  ih  la  ih  ih  arja  ih  hezzou  ih  ih  adrwat  la  ih  ih  atak  ih  ih  la  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih ih ih ih ih la ih hbas ih ih hazu la ih hjam ih ih ih ih ih la ih ih arja ih hazu ih ih adruat la ih ih atak ih ih la ih ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhbshzlhjmhlhrjhzhdrtlhtkhlhlh
+ih  ih  la  ih  ih  pause  ltali  la  ih  la  ih  stanna  behi  ih  ih  hezzha  ih  pause  atak  behi  hbes  ih  ih  ih  hjem  ih  la  ih  ih  ih  la  battel  ih  atak  ih  ih  la  ih  la  ih  la  hezzha  barka  arja  ih  pause  ammer  atak  ih  la  ajri  ih  la  ih  ih  tiri  la  ih  stanna  ih  la  ih  hbes  behi  ih  ammer  onguez  ih  ih  hezzha  la  ih  tiri  hezzou  behi  hjem  la  ih  pause  ammer  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih pausa ltali la ih la ih stana bahi ih ih hazha ih pausa atak bahi hbas ih ih ih hjam ih la ih ih ih la batal ih atak ih ih la ih la ih la hazha barka arja ih pausa amar atak ih la ajri ih la ih ih tiri la ih stana ih la ih hbas bahi ih amar ungaz ih ih hazha la ih tiri hazu bahi hjam la ih pausa amar ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbsltlhlhstnbhzhbstkbhbshjmhlhlbtlhtkhlhlhlhzhbrkrjhbsmrtkhljrhlhtrlhstnhlhbsbhmrnkzhzhlhtrhzbhjmlhbsmrh
+ih  ih  la  ih  ih  ih  ih  ih  ih  behi  ih  ih  ih  ih  ih  ih  la  ih  ih  la  pause  ih  ih  la  stop  ih  atak  ih  la  ih  ih  ih  la  ih  ih  hezzha  ih  la  ih  ih  la  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih ih ih ih bahi ih ih ih ih ih ih la ih ih la pausa ih ih la stup ih atak ih la ih ih ih la ih ih hazha ih la ih ih la ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbhlhlbshlstbhtkhlhlhzhlhlhlh
+ih  ih  ih  la  ih  pause  hbes  ih  la  ih  tkhabba  ih  la  ih  ih  ih  la  ih  tiri  ih  ih  hjem  ih  ih  ih  ih  ih  ih  ih  ih  la  ih  behi  ih  hbes  onguez  hezzou  hezzha  ih  ih  ih  la  ih  ih  behi  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih la ih pausa hbas ih la ih tkhaba ih la ih ih ih la ih tiri ih ih hjam ih ih ih ih ih ih ih ih la ih bahi ih hbas ungaz hazu hazha ih ih ih la ih ih bahi ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbshbshlhtxbhlhlhtrhjmhlhbhbsnkzhzhzhlhbhlh
+ih  ih  la  ih  ih  ih  atak  ih  ih  ih  ih  battel  ih  ih  la  ih  onguez  ih  ih  hezzou  ih  ih  ih  ih  la  ih  ih  la  battel  ih  atak  hjem  ltali  behi  la  ih  la  ih  ih  pause  behi  stop  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih ih ih atak ih ih ih ih batal ih ih la ih ungaz ih ih hazu ih ih ih ih la ih ih la batal ih atak hjam ltali bahi la ih la ih ih pausa bahi stup ih ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhtkhbtlhlhnkzhzhlhlbtlhtkhjmltlbhlhlhbsbhstbhlh
+ih  ih  ih  la  ih  ih  hbes  ih  ih  la  ih  la  hezzha  ih  ih  la  ih  pause  stop  hezzou  ih  ih  la  ih  ih  ih  ih  ltali  9oddem  la  hezzou  ammer  behi  ih  la  ih  ih  ih  ih  ih  ih  ih  la  ih  ih  ih  la  ih  ih  la  ih  ih  ih		ih ih ih la ih ih hbas ih ih la ih la hazha ih ih la ih pausa stup hazu ih ih la ih ih ih ih ltali kudam la hazu amar bahi ih la ih ih ih ih ih ih ih la ih ih ih la ih ih la ih ih ih	-	hlhbshlhlhzhlhbstbhzhlhltlkdmlhzmrbhlhlhlhlh
+ih  ih  ih  la  ih  atak  ih  la  ih  hjem  ih  la  stanna  ammer  ih  ih  ih  ih  la  behi  ih  ih  ih  ih  ih  ih  ih  la  ih  ih  la  ih  ih  ih  la  ih  ih  ih  la  ih  ih  la  ih		ih ih ih la ih atak ih la ih hjam ih la stana amar ih ih ih ih la bahi ih ih ih ih ih ih ih la ih ih la ih ih ih la ih ih ih la ih ih la ih	-	hlhtkhlhjmhlstnmrhlbhlhlhlhlhlh
+ih  ih  ih  ih  la  ih  ltali  pause  ih  hezzou  ih  la  hezzha  arja  ih  ih  la  ih  stanna  ih  atak  ih  ih  la  ih  battel  tiri  ih  ih  ltali  la  hezzou  behi  hjem  hbes  pause  tiri  la  ih  hezz hedhi  hbes  hjem  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  la  ih  ih  la  ih		ih ih ih ih la ih ltali pausa ih hazu ih la hazha arja ih ih la ih stana ih atak ih ih la ih batal tiri ih ih ltali la hazu bahi hjam hbas pausa tiri la ih haz hadi hbas hjam ih la ih ih ih ih ih ih ih ih la ih ih la ih	-	hlhltlbshzhlhzhrjhlhstnhtkhlhbtltrhltlhzbhjmhbsbstrlhzhdhbshjmhlhlhlh
+ih  ih  ih  la  ih  pause  ih  ltali  ih  hbes  ih  la  hezzha  ih  ih  ih  ih  ih  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  la  ih  ih  ih  ih  la  ih  ih  ih		ih ih ih la ih pausa ih ltali ih hbas ih la hazha ih ih ih ih ih ih ih ih ih la ih ih ih ih ih ih ih ih ih ih ih la ih ih ih ih la ih ih ih	-	hlhbshltlhbshlhzhlhlhlh
+ih  ih  ih  ih  la  ih  ih  ih  hjem  la  ih  arja  behi  ammer  hbes  ih  pause  ajri  recharji  la  hezzou  onguez  hjem  la  ih  ih  ih  la  ih  ih  ih  ih  ih  ammer  atak  hjem  ih  ih  ih  behi  ih  barka  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih ih la ih ih ih hjam la ih arja bahi amar hbas ih pausa ajri rasharji la hazu ungaz hjam la ih ih ih la ih ih ih ih ih amar atak hjam ih ih ih bahi ih barka ih ih ih la ih ih ih ih ih ih ih ih ih ih ih	-	hlhjmlhrjbhmrhbshbsjrcrjlhznkzhjmlhlhmrtkhjmhbhbrkhlh
+ih  ih  ih  la  pause  ih  ih  ih  hjem  la  arja  ih  ammer  ih  la  ih  behi  la  ajri  onguez  hjem  tiri  annuli  hezzou  la  ih  ih  la  ih  ih  hezzou  la  ih  hjem  ih  hezzha  behi  ih  ih  ih  behi  ltali  la  ih  ih  ih  ih  la  ih  la  ih  ih  ih  la  ih  ih  la  ih  ih  ih  ih  ih  ih		ih ih ih la pausa ih ih ih hjam la arja ih amar ih la ih bahi la ajri ungaz hjam tiri anuli hazu la ih ih la ih ih hazu la ih hjam ih hazha bahi ih ih ih bahi ltali la ih ih ih ih la ih la ih ih ih la ih ih la ih ih ih ih ih ih	-	hlbshjmlrjhmrhlhbhljrnkzhjmtrnlhzlhlhzlhjmhzhbhbhltlhlhlhlhlh
+ih  ih  ih  la  ih  ih  ih  ammer  ih  ih  la  ih  ih  atak  ltali  ih  la  ih  ih  la  ih  ih  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  la  ih  ih  ih		ih ih ih la ih ih ih amar ih ih la ih ih atak ltali ih la ih ih la ih ih ih ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih la ih ih ih	-	hlhmrhlhtkltlhlhlhlhlh
+ih  ih  ih  la  ih  ih  pause  stop  ih  la  ih  ih  ih  la  ih  ih  ih  ih  la  behi  ih  atak  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih la ih ih pausa stup ih la ih ih ih la ih ih ih ih la bahi ih atak ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbstbhlhlhlbhtkhlh
+ih  la  ih  ih  ih  behi  hbes  ltali  tbani  hezzou  ajri  ih  ih  la  barka  ih  ih  ih  ih  behi  la  ih  ih  ih  ih  la  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  la  ih  ih  ih  la  ih  la  ih		ih la ih ih ih bahi hbas ltali tbani hazu ajri ih ih la barka ih ih ih ih bahi la ih ih ih ih la ih ih ih la ih ih ih ih ih ih ih ih ih ih la ih ih ih la ih la ih	-	hlhbhbsltltbnhzjrhlbrkhbhlhlhlhlhlhlh
+ih  ih  la  ih  pause  ih  hezzou  hezzha  la  ih  hjem  pause  hbes  ajri  la  tiri  arja  ih  behi  ih  ih  la  hezzou  la  ih  ih  ih  ih  ih  la  ih  ih  la  ih  la  ih  ih  la  ih  la  ih  ih  la  ih  la  ih  ih  ih  la  ih  ih  la  ih		ih ih la ih pausa ih hazu hazha la ih hjam pausa hbas ajri la tiri arja ih bahi ih ih la hazu la ih ih ih ih ih la ih ih la ih la ih ih la ih la ih ih la ih la ih ih ih la ih ih la ih	-	hlhbshzhzhlhjmbshbsjrltrjhbhlhzlhlhlhlhlhlhlhlhlhlh
+ih  ih  ih  ih  la  ih  pause  atak  hjem  ih  ajri  ih  la  ih  pause  ih  ih  ltali  9oddem  hjem  behi  ih  hbes  ammer  barka  la  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih ih la ih pausa atak hjam ih ajri ih la ih pausa ih ih ltali kudam hjam bahi ih hbas amar barka la ih ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbstkhjmhjrhlhbshltlkdmhjmbhbsmrbrklhlh
+ih  ih  ih  ih  la  ih  atak  ih  la  tkhabba  ih  hbes  ih  ih  ih  ih  la  tbani  ltali  annuli  la  behi  ih  hezzou  al limin  ih  la  ih  behi  ih  ih  ih  ih  la  ih  ih  ih  la  ih  ih  la  ih  ih  ih  la  ih  ih  la  ih  la  ih		ih ih ih ih la ih atak ih la tkhaba ih hbas ih ih ih ih la tbani ltali anuli la bahi ih hazu al limin ih la ih bahi ih ih ih ih la ih ih ih la ih ih la ih ih ih la ih ih la ih la ih	-	hlhtkhltxbhbshltbnltlnlbhzlmnhlhbhlhlhlhlhlhlh
+ih  ih  ih  ih  la  ih  ih  pause  ih  la  ih  atak  la  ih  ih  ih  la  tkhabba  ih  atak  hbes  ih  la  ih  ih  la  ih  ih  la  ltali  ih  hezzha  stanna  ih  ih  ih  la  hezzha  ih  ih  atak  ih  ih  la  ih  tiri  ih  hjem  behi  atak  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih ih la ih ih pausa ih la ih atak la ih ih ih la tkhaba ih atak hbas ih la ih ih la ih ih la ltali ih hazha stana ih ih ih la hazha ih ih atak ih ih la ih tiri ih hjam bahi atak ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbshlhtklhltxbhtkhbshlhlhltlhzhstnhlhzhtkhlhtrhjmbhtkh
+ih  ih  la  ih  ih  la  ih  pause  atak  ih  la  ih  ih  ih  la  ih  hjem  tiri  hezzou  behi  ih  ih  la  stop  behi  ih  pause  ih  la  ih  la  ih  ih  ih  la  ih  ih  la  ih  ih  ih  la  ih  ih  ih  la  ih  ih  ih  ih  la  ih  ih		ih ih la ih ih la ih pausa atak ih la ih ih ih la ih hjam tiri hazu bahi ih ih la stup bahi ih pausa ih la ih la ih ih ih la ih ih la ih ih ih la ih ih ih la ih ih ih ih la ih ih	-	hlhlhbstkhlhlhjmtrhzbhlstbhbshlhlhlhlhlhlhlh
+ih  ih  ih  la  ih  ih  pause  la  ih  behi  ajri  hbes  ih  ih  hezzha  la  arja  ih  ih  la  ammer  ih  ih  ih  la  behi  ih  hbes  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  la  ih  ih		ih ih ih la ih ih pausa la ih bahi ajri hbas ih ih hazha la arja ih ih la amar ih ih ih la bahi ih hbas ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih la ih ih	-	hlhbslhbhjrhbshzhlrjhlmrhlbhbshlhlh
+ih  ih  la  ih  ih  ih  la  ih  ih  la  ltali  stanna  tbani  ih  ammer  hjem  ih  hezzha  tkhabba  pause  ih  behi  hjem  hbes  hezzha  atak  ih  ltali  la  ih  hezzou  ih  la  ih  behi  onguez  ih  ih  ih  ih  behi  la  tiri  ih  ih  behi  la  ih  ih  ih  ih  la  ih  la  ih  la  ih  la  ih  la  ih  ih		ih ih la ih ih ih la ih ih la ltali stana tbani ih amar hjam ih hazha tkhaba pausa ih bahi hjam hbas hazha atak ih ltali la ih hazu ih la ih bahi ungaz ih ih ih ih bahi la tiri ih ih bahi la ih ih ih ih la ih la ih la ih la ih la ih ih	-	hlhlhltlstntbnhmrhjmhzhtxbshbhjmhbshzhtkhltlhzhlhbhnkzhbhltrhbhlhlhlhlhlhlh
+ih  ih  ih  la  ih  ih  la  hezzha  ih  stop  stanna  ih  ih  la  atak  pause  ih  ih  hjem  ih  tkhabba  ammer  ih  la  ih  pause  adrwat  ajri  ih  atak  la  ltali  ih  ih  la  ih  behi  ih  ih  ih  ih  ih  tiri  la  behi  ih  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  ih  ih  ih  ih  ih		ih ih ih la ih ih la hazha ih stup stana ih ih la atak pausa ih ih hjam ih tkhaba amar ih la ih pausa adruat ajri ih atak la ltali ih ih la ih bahi ih ih ih ih ih tiri la bahi ih ih ih la ih ih la ih ih la ih ih ih ih ih ih ih	-	hlhlhzhstbstnhltkbshjmhtxbmrhlhbsdrtjrhtkltlhlhbhtrlbhlhlhlh
+ih  ih  ih  ih  la  ih  pause  ih  ih  hezzha  la  ih  hjem  atak  ih  hezzou  la  arja  ih  ih  ih  ih  ih  hezzou  la  ih  pause  behi  hjem  ih  hezzou  ih  la  ih  ih  la  ih  ih  ih  ih  ih  la  ih  ih  ih  la  ih  ih  ih  ih  la  ih  ih  la  ih  ih  ih		ih ih ih ih la ih pausa ih ih hazha la ih hjam atak ih hazu la arja ih ih ih ih ih hazu la ih pausa bahi hjam ih hazu ih la ih ih la ih ih ih ih ih la ih ih ih la ih ih ih ih la ih ih la ih ih ih	-	hlhbshzhlhjmtkhzlrjhzlhbsbhjmhzhlhlhlhlhlhlh
+ih  ih  ih  ih  la  ih  pause  atak  tiri  ammer  behi  hbes  ih  ajri  ih  ih  la  hezzha  al lisar  ih  hbes  ih  hezzou  pause  ih  hezzha  ih  la  hjem  arja  ajri  ih  la  ih  ih  hezzou  onguez  la  behi  ih  ih  ih  ih  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  ih  ih  ih  ih  la  ih		ih ih ih ih la ih pausa atak tiri amar bahi hbas ih ajri ih ih la hazha al lisar ih hbas ih hazu pausa ih hazha ih la hjam arja ajri ih la ih ih hazu ungaz la bahi ih ih ih ih ih ih la ih ih la ih ih la ih ih ih ih ih ih la ih	-	hlhbstktrmrbhbshjrhlhzhlsrhbshzbshzhlhjmrjrhlhznkzlbhlhlhlhlh
+ih  ih  ih  la  ih  ih  ammer  ih  ih  la  ih  hjem  ajri  behi  hezzou  hezzha  ih  ih  ih  behi  la  ih  ih  ih  ih  ih  ih  la  ih  ih  la  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  la  ih  la  ih  la  ih		ih ih ih la ih ih amar ih ih la ih hjam ajri bahi hazu hazha ih ih ih bahi la ih ih ih ih ih ih la ih ih la ih ih ih ih la ih ih ih ih ih la ih la ih la ih	-	hlhmrhlhjmjrbhzhzhbhlhlhlhlhlhlhlh
+ih  ih  la  la  ih  la  behi  ih  hbes  ih  la  ih  hezzou  ih  ammer  behi  ih  ih  la  ih  behi  ih  ih  behi  ih  ih  ih  ih  la  ih  ih  la  ih  ih  la  ih  la  ih  ih  ih  ih  la  ih  ih  la  ih  ih  ih  la  ih  la  ih		ih ih la la ih la bahi ih hbas ih la ih hazu ih amar bahi ih ih la ih bahi ih ih bahi ih ih ih ih la ih ih la ih ih la ih la ih ih ih ih la ih ih la ih ih ih la ih la ih	-	hlhlbhbshlhzhmrbhlhbhbhlhlhlhlhlhlhlhlh
+ih  ih  la  ih  hbes  ih  ih  barka  battel  ih  la  ih  ih  ih  ih  ih  behi  hbes  ih  ih  ih  la  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih		ih ih la ih hbas ih ih barka batal ih la ih ih ih ih ih bahi hbas ih ih ih la ih la ih ih ih ih ih ih ih ih ih ih ih la ih ih ih ih ih ih ih ih	-	hlhbshbrkbtlhlhbhbshlhlhlh
+ih  ih  ih  ih  la  ih  ih  la  ih  stanna  ih  ammer  la  behi  ih  hbes  hezzou  la  hezzha  ih  hjem  ajri  onguez  tiri  ih  la  ih  hezzou  behi  ih  ih  la  ih  ih  la  ih  ih  la  ih  la  ih  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  la  ih  ih  la  ih  la  ih  ih		ih ih ih ih la ih ih la ih stana ih amar la bahi ih hbas hazu la hazha ih hjam ajri ungaz tiri ih la ih hazu bahi ih ih la ih ih la ih ih la ih la ih ih ih la ih ih la ih ih la ih ih la ih ih la ih la ih ih	-	hlhlhstnhmrlbhbshzlhzhjmjrnkztrhlhzbhlhlhlhlhlhlhlhlhlhlh
+ih  ih  ih  hbes  ih  ih  la  ih  tiri  hjem  ih  ih  stanna  la  ih  ih  la  ih  ih  la  ih  atak  stanna  ih  pause  ih  ih  ih  la  ih  la  ih  ih  ih  la  ih  ih  ltali  la  ih  ih  hjem  la  ih  ih  ammer  ih  ih  la  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih hbas ih ih la ih tiri hjam ih ih stana la ih ih la ih ih la ih atak stana ih pausa ih ih ih la ih la ih ih ih la ih ih ltali la ih ih hjam la ih ih amar ih ih la bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hbshlhtrhjmhstnlhlhlhtkstnhbshlhlhlhltlhjmlhmrhlbh
+ih  ih  ih  la  behi  ih  ih  ih  ih  la  ajri  hjem  ih  ih  pause  la  ih  ih  ih  ih  la  hjem  ih  hezzha  ih  ih  la  ih  hjem  ih  la  ih  pause  ih  ih  ih  la  ih  ih  ammer  ih  behi  ajri  atak  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih la bahi ih ih ih ih la ajri hjam ih ih pausa la ih ih ih ih la hjam ih hazha ih ih la ih hjam ih la ih pausa ih ih ih la ih ih amar ih bahi ajri atak la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlbhljrhjmhbslhlhjmhzhlhjmhlhbshlhmrhbhjrtklh
+ih  ih  ih  la  ih  pause  hezzou  ltali  la  ih  hjem  la  ih  ammer  stanna  behi  annuli  ih  la  atak  hbes  ih  hezzou  hezzha  hjem  ih  tiri  pause  ih  ih  la  ih  hjem  ajri  ih  la  ih  ih  la  ih  ih  ih  hezzha  ih  ih  ih  la  la  ih  ih  ih  la  ih  ih  la  ajri  agoch  ih  la  barka  ih  ih  atak  la  ih  stanna  ih  la  ih  ammer  ih  hezzou  hezzha  hbes  onguez  ih  ih  la  ih  ih  behi  hezzou  hezzha  ih  ih  hjem  la  ih  behi  hbes  hezz hedhi  hezzha  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih la ih pausa hazu ltali la ih hjam la ih amar stana bahi anuli ih la atak hbas ih hazu hazha hjam ih tiri pausa ih ih la ih hjam ajri ih la ih ih la ih ih ih hazha ih ih ih la la ih ih ih la ih ih la ajri agush ih la barka ih ih atak la ih stana ih la ih amar ih hazu hazha hbas ungaz ih ih la ih ih bahi hazu hazha ih ih hjam la ih bahi hbas haz hadi hazha ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbshzltlhjmlhmrstnbhnlhltkhbshzhzhjmhtrbshlhjmjrhlhlhzhlhlhljrkchlbrkhtklhstnhlhmrhzhzhbsnkzhlhbhzhzhjmlhbhbshzhdhzh
+ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  la  ih  ih  la  ih  tiri  ih  ih  ih  la  ih  la  ih  ih  la  barka  ih  pause  atak  stop  tiri  hjem  stanna  ih  la  lkarta  ih  ih  ih  la  hezzou  hezzha  behi  hjem  ih  ammer  ih  annuli  hezz hedhi  la  hbes  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih la ih ih ih ih ih ih ih ih la ih ih la ih tiri ih ih ih la ih la ih ih la barka ih pausa atak stup tiri hjam stana ih la lkarta ih ih ih la hazu hazha bahi hjam ih amar ih anuli haz hadi la hbas ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhlhtrhlhlhlbrkhbstkstbtrhjmstnhlkrthlhzhzhbhjmhmrhnlhzhdlhbsh
+ih  ih  ih  la  ih  ih  la  ih  ih  ih  la  ih  ih  ih  la  ih  ih  ih  ih  behi  la  hjem  ih  la  hezzou  ih  ammer  agoch  ih  ih  la  ih  ih  la  ih  hjem  stop  ih  la  ih  hezzou  onguez  ih  ih  ih  la  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih la ih ih la ih ih ih la ih ih ih la ih ih ih ih bahi la hjam ih la hazu ih amar agush ih ih la ih ih la ih hjam stup ih la ih hazu ungaz ih ih ih la ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhlhlhlhbhlhjmhlhzhmrkchlhlhjmstbhlhznkzhlh
+ih  ih  ih  ih  la  ih  ih  pause  atak  ltali  ih  ih  la  ih  ih  hjem  ih  tbani  la  ih  ih  ih  la  ih  hjem  ih  hbes  ih  ih  la  ih  ih  la  ih  atak  pause  hjem  ltali  la  hezzou  tiri  ih  ih  ih  ih  hjem  la  ih  ammer  behi  ih  ih  la  behi  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih  ih		ih ih ih ih la ih ih pausa atak ltali ih ih la ih ih hjam ih tbani la ih ih ih la ih hjam ih hbas ih ih la ih ih la ih atak pausa hjam ltali la hazu tiri ih ih ih ih hjam la ih amar bahi ih ih la bahi ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih ih	-	hlhbstkltlhlhjmhtbnlhlhjmhbshlhlhtkbshjmltlhztrhjmlhmrbhlbh
+arja ltali		arja ltali	back	rjltl
+arja		arja	back	rj
+ija maya		ija maia	follow_me	jm
+al limin		al limin	right	lmn
+tbani		tbani	follow_me	tbn
+odrob		udrub	shoot	drb
+ammer		amar	reload	mr
+okod fi blastek		ukud fi blastak	hold_position	kdfblstk
+ma tetarekch		ma tataraksh	hold_position	mtrkc
+al lisar		al lisar	left	lsr
+sakker		sakar	-	skr
+wakkef lleba		uakaf laba	pause	kflb
+ija		ija	-	j
+and she elbowed them.		and sha albuad tam	-	ndclbdtm
+عرجا هل تلي	عرجا هل تلي		back	rjhltl
+دور لزر	دور لزر		left	drlzr
+عدرات	عدرات		right	drt
+أشياء	اشيا		-	c
+عجي عيري	عجي عيري		-	jr
+إيشا مايا	ايشا مايا		follow_me	cm
+يجعلون	يجعلون		-	jln
+أسبار	اسبار		wait	sbr
+إذا؟	اذا		-	d
+الهو	الهو		-	lh
+أن يلي؟	ان يلي		-	nl
+الجالة تلي	الجاله تلي		back	ljltl
+دورًا ليمين	دورا ليمين		right	drlmn
+انقز	انقز		jump	nkz
+برق	برق		stop	brk
+يجب أن يجب أن يجب أن يجب أن يجب أن يجب	يجب ان يجب ان يجب ان يجب ان يجب ان يجب		-	jbnjbnjbnjbnjbnjb
+تربة	تربه		-	trb
+أجم	اجم		-	jm
+حل الباب	حل الباب		open_door	hlb
+حزو حادي	حزو حادي		pick_up	hzhd
+يبقى	يبقي		-	bk
+ما عندي شوق طوى	ما عندي شوق طوي		-	mndckt
+دورٌ ليس آرا	دور ليس ارا		left	drlsr
+دور عندي أمينة	دور عندي امينه		-	drndmn
+حلو ان بابي	حلو ان بابي		-	hlnb
+حزو هذي	حزو هذي		pick_up	hzhd
+ريش ريش	ريش ريش		-	rcrc
+عاملو	عاملو		-	ml
+امشي القدم	امشي القدم		forward	mclkdm
+هل تالي؟	هل تالي		back	hltl
+إيه الليزار؟	ايه اليزار		yes	hlzr
+أقوش؟	اقوش		left	kc
+يشامع ياو	يشامع ياو		-	cm
+أدخب؟	ادخب		-	dxb
+أمر؟	امر		-	mr
+اوكاوت في بلاستيك	اوكاوت في بلاستيك		hold_position	ktfblstk
+هل أنت؟	هل انت		-	hlnt
+تيك باو؟	تيك باو		-	tkb
+وا كفل لبا	وا كفل لبا		pause	kflb
+IH		ih	yes	h
+باتلا	باتلا		no	btl
+اي شاوم زيان ليوم	اي شاوم زيان ليوم		-	cmznlm
+نبنو كروب كاور	نبنو كروب كاور		-	nbnkrbkr
+وينلمي افتح	وينلمي افتح		-	nlmfth
+ما فامتش؟	ما فامتش		-	mfmtc
+أو قفة	او قفه		-	kf
+اجدري	اجدري		run	jdr
+تبيرني	تبيرني		shoot	tbrn
+هزوهدي.	هزوهدي		pick_up	hzhd
+معندي شوق توة	معندي شوق توه		-	mndckt
+خاوية يردمو في تونس	خاويه يردمو في تونس		-	xrdmftns
+دورو ليا سارا	دورو ليا سارا		left	drlsr
+دورون اليمينن.	دورون اليمين		right	drnlmn
+ألقفة	القفه		-	lkf
+خاوية يخدموا في تونس.	خاويه يخدموا في تونس		-	xdmftns
+قد ام	قد ام		forward	kdm
+إ.l. Lima	ا	l lima	-	lm
+دورلمان	دورلمان		right	drlmn
+Stop.		stup	stop	stb
+إِجَمَعَيَا	اجمعيا		-	jm
+إجالنا	اجالنا		come_here	jln
+أو دروب.	او دروب		shoot	drb
+ما تتاركسا	ما تاركسا		-	mtrks
+ستنا	ستنا		wait	stn
+تكبال	تكبال		-	tkbl
+عملي	عملي		-	ml
+أشعو مزيان ليوم	اشعو مزيان ليوم		-	cmznlm
+وي نلمي افتي	وي نلمي افتي		-	nlmft
+أتيكي	اتيكي		-	tk
+هزوا هذي	هزوا هذي		pick_up	hzhd
+ما عندش وقت توا	ما عندش وقت توا		-	mndckt
+ارجعنا تاري	ارجعنا تاري		back	rjntr
+إرجاع	ارجاع		back	rj
+دور دي أمين	دور دي امين		right	drdmn
+تبيعني	تبيعني		follow_me	tbn
+عمرو.	عمرو		-	mr
+إدارة	اداره		-	dr
+إمشي لقدام	امشي لقدام		forward	mclkdm
+إرج على تالي	ارج علي تالي		back	rjltl
+إرجا	ارجا		-	rj
+دور اليسارة	دور اليساره		left	drlsr
+أنقس	انقس		-	nks
+беркә			-	
+eجri	ج	a ri	-	jr
+tocbe		tukba	-	tkb
+ateki		ataki	attack	tk
+آجما	اجما		-	jm
+حل البابي	حل البابي		open_door	hlb
+هز هذي	هز هذي		pick_up	hzhd
+drie sergie		dria sargia	left	drsrk
+amro		amru	-	mr
+إباة	اباه		-	b
+الماءش متاع البارح كان مزيان	الماش متاع البارح كان مزيان		-	lmcmtlbrhknmzn
+ما عنديش وقت توه	ما عنديش وقت توه		-	mndckth
+خوي يخدم في تونس	خوي يخدم في تونس		-	xdmftns
+إمشي بقدام	امشي بقدام		forward	mcbkdm
+kadima		kadima	forward	kdm
+إرجع ل تالي	ارجع ل تالي		back	rjltl
+eلجا	لجا	a	-	lj
+دور ليسارة	دور ليساره		left	drlsr
+دور ليمينا	دور ليمينا		right	drlmn
+brke		brka	stop	brk
+tucbe		tukba	-	tkb
+أtkي	ا ي	tk	-	tk
+أهجما	اهجما		attack	hjm
+هزو هذه	هزو هذه		pick_up	hzhdh
+ricarji		rikarji	-	rkrj
+آmro	ا	mru	-	mr
+ibeha		ibaha	-	bh
+بتلا	بتلا		no	btl
+الماشو متاع البارح كان مزيان	الماشو متاع البارح كان مزيان		-	lmcmtlbrhknmzn
+kodemo		kudamu	forward	kdm
+emc lkoddem		amk lkudam	forward	mklkdm
+eلتلي	لتلي	a	back	ltl
+rjltli		rjltli	back	rjltl
+rجا	جا	r	-	rj
+e ellizar		a alizar	-	lzr
+à gauche		a gausha	left	kc
+durlizar		durlizar	left	drlzr
+يي ألمة	ي المه		-	lm
+أدغات	ادغات		-	dxt
+dourliman		durliman	right	drlmn
+ng		ng	-	nk
+आشb	ش	b	-	cb
+باخکا	باخکا		-	bx
+اشيغي	اشيغي		-	cx
+الل ببي	ال بي		-	lb
+ساكي لbb	ساكي ل	b	close_door	sklb
+tevani		tavani	follow_me	tfn
+你جميا	جميا		-	jm
+in jalonna		in jaluna	-	njln
+veme		vama	-	fm
+اتaك	ات ك	a	-	tk
+ودغب	ودغب		-	dxb
+ameur		amaur	reload	mr
+okot فiblاstek	ف ا	ukut ibl stak	hold_position	ktfblstk
+مa ttareكsa	م ك	a tara sa	-	mtrks
+sتaنa	ت ن	s a a	wait	stn
+osbog		usbug	wait	sbk
+تكبا	تكبا		-	tkb
+esa		asa	-	s
+edzu		adzu	-	dz
+esdi		asdi	-	sd
+elكrta	ك	al rta	map	lkrt
+pोस		p	-	b
+وكف اللبا	وكف البا		pause	kflb
+ac		ak	-	k
+ve		va	-	f
+vatela		vatala	-	ftl
+anuli		anuli	no	nl
+snúa a welig		snua a ualig	-	snlk
+ecamesi an lium		akamasi an lium	-	kmsnlm
+nebno krop kawan		nabnu krup kauan	-	nbnkrbkn
+winlmft		uinlmft	-	nlmft
+مفم تش	مفم تش		-	mfmtc
+eجrي	ج ي	a r	-	jr
+tebعnي	ع ي	tab n	follow_me	tbn
+eteki		ataki	attack	tk
+آجمة	اجمه		-	jm
+tri شergî	ش	tri argi	shoot	trcrk
+أtكي	ا كي	t	-	tk
+هزو هذ	هزو هذ		pick_up	hzhd
+بtلا	ب لا	t	no	btl
+الماأشو متاع البارح كان مزيان	الماشو متاع البارح كان مزيان		-	lmcmtlbrhknmzn
+kudem		kudam	forward	kdm
+emc elkoddem		amk alkudam	forward	mklkdm
+لتلي	لتلي		back	ltl
+rjltlي	ي	rjltl	back	rjltl
+rج	ج	r	-	rj
+eellizar		alizar	-	lzr
+aشb	ش	a b	-	cb
+ألل بب	ال ب		-	lb
+جmايا	ج ايا	m	-	jm
+ma ttareksa		ma taraksa	hold_position	mtrks
+sتana	ت	s ana	wait	stn
+وكف للبا	وكف لبا		pause	kflb
+nebno krop kawa		nabnu krup kaua	-	nbnkrbk
+مفمتش	مفمتش		-	mfmtc
+إمشي لقدام  [forward 0.00 via إمشي لقدام; next -5.61]	امشي لقدام امشي لقدام	furuard via naxt kh	forward	mclkdmfrdfmclkdmnxtx
+قدم  [forward -1.74 via قدام; next -5.66]	قدم قدام	furuard h via naxt kh	forward	kdmfrdhfkdmnxtx
+إرج على تالي  [back -0.41 via ارجعلتالي; next -3.67]	ارج علي تالي ارجعلتالي	bak via naxt a h	back	rjltlbkfrjltlnxth
+إرجا  [back -1.01 via ارجع; next -3.41]	ارجا ارجع	bak via naxt a	back	rjbkfrjnxt
+دور اليسارة  [left -0.48 via دور ليسار; next -2.95]	دور اليساره دور ليسار	laft via naxt kh	left	drlsrlftxfdrlsrnxtkx
+دور اليمين  [right -0.16 via دور ليمين; next -2.79]	دور اليمين دور ليمين	right via naxt hk	right	drlmnrxtfdrlmnxthk
+أنقس  [jump -1.10 via انقز; next -3.71]	انقس انقز	jump via naxt a h	jump	nksjmbfnkznxth
+أوقف  [stop -1.78 via أقف; next -5.64]	اوقف اقف	stup h via naxt kh	stop	kfstbhxfkfnxtx
+беркә  [stop -5.09 via berka; next -8.28]		stup kh k via barka naxt	stop	stbxkfbrknxtx
+eجri  [run -0.33 via جري; next -2.84]	ج جري	a ri run a via naxt	run	jrnfjrnxtx
+tocbe  [hide -1.52 via تخبا; next -3.67]	تخبا	tukba hida kh via naxt a h	hide	tkbhdxftxbnxth
+تبعني  [follow_me 0.00 via تبعني; next -2.95]	تبعني تبعني	fulu ma via naxt kh	follow_me	tbnflmftbnxtkx
+أقعد في بلاستك  [hold_position -0.38 via أقعد في بلاصتك; next -7.66]	اقعد في بلاستك اقعد في بلاصتك	huld pusitiun a via naxt h	hold_position	kdfblstkhldbstnxfkdfblstknxth
+ateki  [attack -0.96 via atak; next -2.88]		ataki atak k via atak naxt	attack	tktkftknxtx
+آجما  [attack -2.40 via هجم; next -3.32]	اجما هجم	atak via naxt a a	attack	jmtkfhjmnxt
+حل البابي  [open_door -0.19 via حل الباب; next -2.91]	حل البابي حل الباب	upan dur k via naxt k	open_door	hlbndrkfhlbnxtk
+سكر البيب  [close_door -0.06 via سكر الباب; next -2.64]	سكر البيب سكر الباب	klusa dur via naxt	close_door	skrlbklsdrfskrlbnxt
+هز هذي  [pick_up -0.05 via هز هاذي; next -5.10]	هز هذي هز هاذي	pik up kh via naxt kh	pick_up	hzhdbkbxfhzhdnxtx
+drie sergie  [reload -1.39 via recharji; next -4.35]		dria sargia raluad ak via rasharji naxt akh	reload	drsrkrldkfrcrjnxtx
+amro  [reload -0.41 via amer; next -3.29]		amru raluad via amar naxt a k	reload	mrldfmrnxtk
+إباة  [yes -2.81 via إيه; next -3.66]	اباه ايه	ias via naxt a	yes	bsxfhnxt
+بطلة  [no -0.67 via بطل; next -3.24]	بطله بطل	nu h via naxt a	no	btlnhfbtlnxt
+أنولي  [no 0.00 via أنولي; next -3.80]	انولي انولي	nu via naxt a	no	nlnfnlnxtx
+شنوة أحوالك اليوم  [pause -8.93 via واقف ال لعبا; next -8.99]	شنوه احوالك اليوم واقف ال لعبا	pausa ka via naxt k	pause	cnhlklmbsxkfkflbnxtxk
+نحب نشرب قهوة  [forward -7.66 via امشي لقودم; next -7.89]	نحب نشرب قهوه امشي لقودم	furuard h via naxt h k	forward	nhbncrbkhfrdhfmclkdmnxthxk
+الماءش متاع البارح كان مزيان  [close_door -8.30 via ساكار ال باب; next -9.12]	الماش متاع البارح كان مزيان ساكار ال باب	klusa dur a via naxt k	close_door	lmcmtlbrhknmznklsdrxfskrlbnxtk
+ما عنديش وقت توه  [hold_position -6.60 via اقعود في بلاستك; next -7.75]	ما عنديش وقت توه اقعود في بلاستك	huld pusitiun via naxt h hkh	hold_position	mndckthldbstnfkdfblstknxthx
+خوي يخدم في تونس  [hold_position -6.38 via اقوعد في بلاستك; next -8.40]	خوي يخدم في تونس اقوعد في بلاستك	huld pusitiun a via naxt	hold_position	xdmftnshldbstnxfkdfblstknxtx
+الدنيا سخونة اليوم  [back -9.79 via ارجاع لتالي; next -10.02]	الدنيا سخونه اليوم ارجاع لتالي	bak k hk via naxt	back	ldnsxnlmbkhkfrjltlnxt
+إمشي بقدام  [forward -0.24 via إمشي لقدام; next -5.33]	امشي بقدام امشي لقدام	furuard via naxt kh a	forward	mcbkdmfrdfmclkdmnxtx
+kadima  [forward -1.99 via qodem; next -3.17]		kadima furuard k via kudam naxt a h	forward	kdmfrdkfkdmnxth
+إرجع ل تالي  [back -0.06 via ارجع لتالي; next -3.52]	ارجع ل تالي ارجع لتالي	bak via naxt a kh	back	rjltlbkfrjltlnxtx
+eلجا  [back -1.22 via ارجع; next -2.59]	لجا ارجع	a bak via naxt khk	back	ljbkfrjnxtxk
+دور ليسارة  [left -0.40 via دور ليسار; next -2.85]	دور ليساره دور ليسار	laft via naxt kh	left	drlsrlftfdrlsrnxtx
+دور ليمينا  [right -0.18 via دور ليمين; next -2.36]	دور ليمينا دور ليمين	right via naxt a	right	drlmnrxtxfdrlmnxt
+أنقز  [jump -0.75 via انقز; next -4.81]	انقز انقز	jump hkh via naxt	jump	nkzjmbhxfnkznxtx
+أوقف  [stop -1.72 via أقف; next -5.18]	اوقف اقف	stup h via naxt kh	stop	kfstbhfkfnxtx
+brke  [stop -0.41 via berka; next -3.48]		brka stup via barka naxt a	stop	brkstbfbrknxtx
+إجري  [run -0.20 via اجري; next -3.33]	اجري اجري	run via naxt a a	run	jrnfjrnxt
+tucbe  [hide -2.76 via tabba; next -3.42]		tukba hida h via taba naxt a	-	tkbhdhftbnxt
+تبيعني  [follow_me -0.05 via تبعني; next -3.84]	تبيعني تبعني	fulu ma kh via naxt a	follow_me	tbnflmxftbnxtx
+أقعد في بلاستك  [hold_position -0.48 via أقعد في بلاصتك; next -7.34]	اقعد في بلاستك اقعد في بلاصتك	huld pusitiun via naxt h a	hold_position	kdfblstkhldbstnxfkdfblstknxth
+أtkي  [attack -0.41 via اتكي; next -2.64]	ا ي اتكي	tk atak via naxt	attack	tktkftknxt
+أهجما  [attack -0.87 via اهجم; next -3.34]	اهجما اهجم	atak h via naxt a a	attack	hjmtkxhfhjmnxt
+حلو البابي  [open_door -0.50 via حل الباب; next -3.06]	حلو البابي حل الباب	upan dur kh via naxt a	open_door	hlbndrxfhlbnxt
+سكر البابي  [close_door -0.25 via سكر الباب; next -3.21]	سكر البابي سكر الباب	klusa dur kh via naxt a	close_door	skrlbklsdrxfskrlbnxt
+هزو هذه  [pick_up -0.32 via هز هاذي; next -4.17]	هزو هذه هز هاذي	pik up a via naxt h	pick_up	hzhdhbkbfhzhdnxth
+ricarji  [reload -0.39 via recharji; next -4.89]		rikarji raluad ak via rasharji naxt k	reload	rkrjrldkfrcrjnxtxk
+آmro  [reload -1.33 via amer; next -3.67]	ا	mru raluad a via amar naxt a h	reload	mrldfmrnxth
+ibeha  [yes -2.22 via iyeh; next -2.83]		ibaha ias via iah naxt a	yes	bhsfhnxtx
+بتلا  [no -0.36 via بتل; next -1.88]	بتلا بتل	nu a via naxt	no	btlnfbtlnxtx
+أنولي  [no 0.00 via أنولي; next -2.96]	انولي انولي	nu via naxt k	no	nlnfnlnxtk
+شنوة أحوالك اليوم  [close_door -8.33 via ساكار ال باب; next -8.69]	شنوه احوالك اليوم ساكار ال باب	klusa dur a via naxt k	close_door	cnhlklmklsdrxfskrlbnxtxk
+نحب نشرب قهوة  [forward -7.57 via امشي لقودم; next -7.74]	نحب نشرب قهوه امشي لقودم	furuard h kh via naxt h h	forward	nhbncrbkhfrdhxhfmclkdmnxth
+الماشو متاع البارح كان مزيان  [close_door -7.69 via ساكار ال باب; next -8.60]	الماشو متاع البارح كان مزيان ساكار ال باب	klusa dur h k via naxt	close_door	lmcmtlbrhknmznklsdrhkfskrlbnxtx
+ما عنديش وقت توا  [hold_position -6.09 via اقعود في بلاستك; next -6.82]	ما عنديش وقت توا اقعود في بلاستك	huld pusitiun k via naxt	hold_position	mndckthldbstnkfkdfblstknxtx
+خوي يخدم في تونس  [hold_position -6.51 via اقوعد في بلاستك; next -8.53]	خوي يخدم في تونس اقوعد في بلاستك	huld pusitiun kh via naxt kha	hold_position	xdmftnshldbstnxfkdfblstknxtx
+الدنيا سخونة اليوم  [back -9.25 via ارجاع لتالي; next -9.38]	الدنيا سخونه اليوم ارجاع لتالي	bak k kh via naxt k a	back	ldnsxnlmbkxfrjltlnxtkx
+kodemo  [forward -0.38 via qoddem; next -2.44]		kudamu furuard a via kudam naxt	forward	kdmfrdxfkdmnxt
+emc lkoddem  [forward -0.54 via emchi lqoddem; next -3.38]		amk lkudam furuard kh via amshi lkudam naxt a a	forward	mklkdmfrdxfmclkdmnxtx
+eلتلي  [back -0.02 via لتلي; next -2.42]	لتلي لتلي	a bak via naxt	back	ltlbkfltlnxt
+rjltli  [back -0.23 via arjaltali; next -2.66]		rjltli bak a via arjaltali naxt	back	rjltlbkfrjltlnxt
+rجا  [back -0.26 via arja; next -1.30]	جا	r bak via arja naxt a	back	rjbkfrjnxt
+e ellizar  [left -0.50 via al lisar; next -2.75]		a alizar laft kh via al lisar naxt hkh	left	lzrlftxflsrnxthx
+à gauche  [left -0.08 via a gauche; next -4.76]		a gausha laft via a gausha naxt h	left	kclftxfkcnxth
+durlizar  [left -0.15 via dour lisar; next -2.30]		durlizar laft kh via dur lisar naxt a	left	drlzrlftxfdrlsrnxt
+يي ألمة  [right -2.39 via عل ليمين; next -2.67]	ي المه عل ليمين	right ak via naxt h	right	lmrxtkflmnxth
+أدغات  [right -0.73 via أدروات; next -3.17]	ادغات ادروات	right ha via naxt a h	right	dxtrxthfdrtnxth
+dourliman  [right -0.31 via dourlimin; next -1.57]		durliman right a via durlimin naxt kh	right	drlmnrxtfdrlmnxtxh
+ng  [jump -2.45 via ongez; next -2.95]		ng jump kh via ungaz naxt kh	jump	nkjmbxfnkznxtkx
+आشb  [hide -3.11 via tabba; next -3.44]	ش	b hida a via taba naxt a	-	cbhdftbnxt
+stop  [stop 0.00 via stop; next -5.39]		stup stup via stup naxt kh ak	stop	stbstbfstbnxtxk
+باخکا  [stop -0.38 via باركا; next -2.52]	باخکا باركا	stup a via naxt kh	stop	bxstbxfbrknxtx
+اشيغي  [run -1.00 via اجري; next -1.93]	اشيغي اجري	run via naxt ka	run	cxrnfjrnxtk
+الل ببي  [open_door -1.46 via حل ال باب; next -2.64]	ال بي حل ال باب	upan dur via naxt	open_door	lbndrfhlbnxt
+ساكي لbb  [close_door -1.32 via ساكر ال ب; next -2.64]	ساكي ل ساكر ال ب	b klusa dur a via naxt	close_door	sklbklsdrfskrlbnxt
+tevani  [follow_me -0.43 via tebani; next -3.12]		tavani fulu ma a via tabani naxt a	follow_me	tfnflmftbnxt
+你جميا  [follow_me -0.66 via اجامعيا; next -1.63]	جميا اجامعيا	fulu ma via naxt a	follow_me	jmflmfjmnxt
+in jalonna  [come_here -2.49 via ijalehna; next -4.24]		in jaluna kuma hara k via ijalahna naxt	come_here	njlnkmhrkfjlhnxt
+veme  [attack -1.47 via hjem; next -2.10]		vama atak h via hjam naxt	attack	fmtkhfhjmnxt
+اتaك  [attack -0.03 via اتاك; next -4.10]	ات ك اتاك	a atak a via naxt	attack	tktkftknxt
+ودغب  [shoot -1.93 via اضروب; next -2.13]	ودغب اضروب	shut ka via naxt a	shoot	dxbctkfdrbnxt
+tiri  [shoot 0.00 via tiri; next -2.81]		tiri shut via tiri naxt	shoot	trctftrnxtx
+ameur  [reload -0.03 via amer; next -4.02]		amaur raluad a via amar naxt	reload	mrldfmrnxt
+recharger  [reload 0.00 via recharger; next -5.76]		rashargar raluad via rashargar naxt kh h	reload	rcrkrldfrcrkrnxtxh
+okot فiblاstek  [hold_position -0.40 via oqaod fi blastek; next -4.42]	ف ا	ukut ibl stak huld pusitiun via ukaud fi blastak naxt	hold_position	ktfblstkhldbstnfkdfblstknxt
+مa ttareكsa  [hold_position -1.00 via matetarekch; next -2.13]	م ك	a tara sa huld pusitiun via matataraksh naxt a	hold_position	mtrkshldbstnfmtrkcnxt
+sتaنa  [wait -0.28 via ستنا; next -2.80]	ت ن ستنا	s a a uait via naxt	wait	stntxfstnxtx
+osbog  [wait -0.32 via osbor; next -3.50]		usbug uait a via usbur naxt a kh	wait	sbktfsbrnxtx
+تكبا  [hide -1.50 via تخابا; next -3.23]	تكبا تخابا	hida kh via naxt a a	hide	tkbhdxftxbnxt
+esa  [pick_up -2.12 via hezha; next -3.27]		asa pik up via hazha naxt a h	pick_up	sbkbfhzhnxth
+edzu  [pick_up -0.80 via hezzo; next -2.33]		adzu pik up via hazu naxt a	pick_up	dzbkbxfhznxt
+esdi  [pick_up -1.65 via hezhedi; next -1.97]		asdi pik up kh via hazhadi naxt kh	pick_up	sdbkbxfhzhdnxtkh
+elكrta  [map -0.16 via elkarta; next -3.76]	ك	al rta map via alkarta naxt a h	map	lkrtmbflkrtnxth
+pोस  [pause -1.56 via pause; next -1.67]		p pausa kh via pausa naxt h	pause	bsxfbsnxth
+وكف اللبا  [pause -1.12 via وقف اللعبة; next -2.21]	وكف البا وقف العبه	pausa via naxt	pause	kflbsfkflbnxt
+ac  [yes -2.01 via iyeh; next -2.31]		ak ias via iah naxt a	yes	ksfhnxt
+ve  [yes -1.08 via behi; next -2.03]		va ias via bahi naxt a	yes	fsxfbhnxt
+لا  [no 0.00 via لا; next -2.68]	لا لا	nu via naxt	no	lnflnxtx
+vatela  [no -0.51 via batel; next -2.81]		vatala nu kh via batal naxt	no	ftlnxfbtlnxtx
+anuli  [no -0.17 via annuli; next -4.50]		anuli nu h via anuli naxt kh	no	nlnhfnlnxtx
+snúa a welig  [close_door -3.96 via sakar el bab; next -4.39]		snua a ualig klusa dur a k via sakar al bab naxt ak	close_door	snlklsdrkfskrlbnxtk
+ecamesi an lium  [back -2.81 via arja ltali; next -3.05]		akamasi an lium bak via arja ltali naxt a kh	back	kmsnlmbkxfrjltlnxtx
+nebno krop kawan  [hold_position -3.57 via ma tetarrekch; next -4.13]		nabnu krup kauan huld pusitiun a kh via ma tataraksh naxt a	hold_position	nbnkrbknhldbstnxhfmtrkcnxt
+winlmft  [open_door -2.72 via hel el bab; next -2.96]		uinlmft upan dur h via hal al bab naxt k	open_door	nlmftbndrhfhlbnxtk
+مفم تش  [no -3.36 via battel; next -3.67]	مفم تش	nu a a via batal naxt a h	no	mfmtcnfbtlnxth
+[forward -1.50 via odem; next -1.60]		furuard kh via udam naxt	forward	frdxfdmnxt
+إمشي لقدام  [no 0.00 via ل; next 0.00]	امشي لقدام ل	nu via naxt	forward	mclkdmnflnxt
+قدم  [forward -1.74 via قدام; next -4.84]	قدم قدام	furuard h via naxt	forward	kdmfrdhfkdmnxtx
+إرج على تالي  [no 0.00 via ل; next -0.41]	ارج علي تالي ل	nu via naxt	back	rjltlnflnxt
+إرجا  [back -1.01 via ارجع; next -2.87]	ارجا ارجع	bak via naxt h	back	rjbkfrjnxtxh
+دور اليسارة  [no 0.00 via ل; next -0.22]	دور اليساره ل	nu via naxt	left	drlsrnflnxt
+دور اليمين  [no 0.00 via ل; next -0.16]	دور اليمين ل	nu via naxt	right	drlmnflnxt
+أوقف  [stop 0.00 via وقف; next -4.96]	اوقف وقف	stup via naxt k	stop	kfstbfkfnxtk
+беркә  [stop -5.09 via berka; next -7.29]		stup kh k via barka naxt h k	stop	stbxkfbrknxthk
+eجri  [run -0.23 via جري; next -2.30]	ج جري	a ri run a via naxt a	run	jrnfjrnxt
+tocbe  [hide -1.52 via تخبا; next -2.37]	تخبا	tukba hida kh via naxt ah	hide	tkbhdxftxbnxth
+تبعني  [follow_me 0.00 via تبعني; next -2.27]	تبعني تبعني	fulu ma via naxt h	follow_me	tbnflmftbnxth
+أقعد في بلاستك  [no 0.00 via لا; next -0.38]	اقعد في بلاستك لا	nu via naxt a	-	kdfblstknflnxtx
+ateki  [attack -0.40 via atak; next -2.55]		ataki atak via atak naxt khkh	attack	tktkftknxtx
+آجما  [attack -2.03 via هجم; next -3.29]	اجما هجم	atak a via naxt a k	attack	jmtkfhjmnxtk
+حل البابي  [open_door 0.00 via حل الباب; next 0.00]	حل البابي حل الباب	upan dur via naxt	open_door	hlbndrfhlbnxt
+سكر البيب  [no 0.00 via ل; next -0.06]	سكر البيب ل	nu via naxt	close_door	skrlbnflnxt
+هز هذي  [pick_up -0.05 via هز هاذي; next -2.98]	هز هذي هز هاذي	pik up kh via naxt k	pick_up	hzhdbkbxfhzhdnxtkx
+drie sergie  [reload -1.09 via recharji; next -1.88]		dria sargia raluad k via rasharji naxt	reload	drsrkrldkfrcrjnxtx
+amro  [reload -0.14 via amer; next -3.05]		amru raluad via amar naxt a kh	reload	mrldfmrnxtx
+إباة  [yes -1.25 via اه; next -2.96]	اباه اه	ias kh via naxt k	-	bsxfhnxtk
+بطلة  [no 0.00 via بطل; next -3.24]	بطله بطل	nu via naxt a	no	btlnfbtlnxt
+أنولي  [no 0.00 via أنولي; next -3.05]	انولي انولي	nu via naxt a kh	no	nlnfnlnxtx
+شنوة أحوالك اليوم  [no 0.00 via ل; next -3.22]	شنوه احوالك اليوم ل	nu via naxt a	right	cnhlklmnflnxt
+نحب نشرب قهوة  [yes -1.60 via اه; next -3.11]	نحب نشرب قهوه اه	ias via naxt a	-	nhbncrbkhsfhnxt
+الماءش متاع البارح كان مزيان  [no 0.00 via ل; next -2.66]	الماش متاع البارح كان مزيان ل	nu via naxt	-	lmcmtlbrhknmznflnxt
+ما عنديش وقت توه  [yes -2.03 via اه; next -2.94]	ما عنديش وقت توه اه	ias a via naxt k	-	mndckthsfhnxtk
+خوي يخدم في تونس  [forward -3.14 via قدام; next -4.47]	خوي يخدم في تونس قدام	furuard a via naxt h	forward	xdmftnsfrdfkdmnxth
+الدنيا سخونة اليوم  [no 0.00 via ل; next -4.10]	الدنيا سخونه اليوم ل	nu via naxt	right	ldnsxnlmnflnxt
+إمشي بقدام  [forward 0.00 via قدام; next -2.44]	امشي بقدام قدام	furuard via naxt	forward	mcbkdmfrdfkdmnxt
+kadima  [forward -1.43 via odem; next -2.73]		kadima furuard a via udam naxt ha	forward	kdmfrdfdmnxth
+إرجع ل تالي  [no 0.00 via ل; next -0.00]	ارجع ل تالي ل	nu via naxt	back	rjltlnflnxt
+eلجا  [no 0.00 via ل; next -1.22]	لجا ل	a nu via naxt	-	ljnflnxt
+دور ليسارة  [no 0.00 via ل; next 0.00]	دور ليساره ل	nu via naxt	left	drlsrnflnxt
+دور ليمينا  [right 0.00 via دور ليمين; next 0.00]	دور ليمينا دور ليمين	right via naxt	right	drlmnrxtfdrlmnxt
+أنقز  [jump -0.75 via انقز; next -1.97]	انقز انقز	jump hkh via naxt kh	jump	nkzjmbhxfnkznxtkh
+أوقف  [stop 0.00 via وقف; next -4.14]	اوقف وقف	stup via naxt	stop	kfstbfkfnxt
+brke  [stop -0.41 via berka; next -3.35]		brka stup via barka naxt a akh	stop	brkstbfbrknxtx
+إجري  [run 0.00 via جري; next -3.33]	اجري جري	run via naxt a a	run	jrnfjrnxt
+tucbe  [stop -2.31 via hbes; next -2.76]		tukba stup a via hbas naxt h	stop	tkbstbfhbsnxth
+تبيعني  [follow_me -0.05 via تبعني; next -2.48]	تبيعني تبعني	fulu ma kh via naxt	follow_me	tbnflmxftbnxtx
+أقعد في بلاستك  [no 0.00 via لا; next -0.48]	اقعد في بلاستك لا	nu via naxt	-	kdfblstknflnxtx
+أtkي  [attack -0.39 via أتاك; next -2.25]	ا ي اتاك	tk atak ak via naxt kh	attack	tktkftknxtx
+أهجما  [attack 0.00 via هجم; next -0.58]	اهجما هجم	atak via naxt kh	attack	hjmtkfhjmnxtx
+حلو البابي  [no 0.00 via ل; next -0.02]	حلو البابي ل	nu via naxt	open_door	hlbnflnxt
+سكر البابي  [no 0.00 via ل; next 0.00]	سكر البابي ل	nu via naxt	close_door	skrlbnflnxt
+هزو هذه  [pick_up 0.00 via هزو; next -2.30]	هزو هذه هزو	pik up via naxt a	pick_up	hzhdhbkbfhznxt
+ricarji  [reload -0.39 via recharji; next -1.58]		rikarji raluad ak via rasharji naxt kh	reload	rkrjrldkfrcrjnxtx
+آmro  [reload -0.92 via amer; next -3.25]	ا	mru raluad k via amar naxt a kh	reload	mrldkfmrnxtx
+ibeha  [yes -1.44 via behi; next -2.17]		ibaha ias via bahi naxt h	yes	bhsfbhnxth
+بتلا  [no 0.00 via لا; next -1.88]	بتلا لا	nu via naxt	no	btlnflnxtx
+شنوة أحوالك اليوم  [no 0.00 via ل; next -2.82]	شنوه احوالك اليوم ل	nu via naxt	right	cnhlklmnflnxtx
+نحب نشرب قهوة  [yes -1.94 via اه; next -2.99]	نحب نشرب قهوه اه	ias k via naxt k	-	nhbncrbkhskfhnxtk
+الماشو متاع البارح كان مزيان  [no 0.00 via ل; next -1.46]	الماشو متاع البارح كان مزيان ل	nu via naxt	-	lmcmtlbrhknmznflnxt
+ما عنديش وقت توا  [no -0.57 via ل; next -0.78]	ما عنديش وقت توا ل	nu kh via naxt h	-	mndcktnxhflnxthx
+خوي يخدم في تونس  [forward -3.99 via قدام; next -4.35]	خوي يخدم في تونس قدام	furuard a k via naxt akh	forward	xdmftnsfrdkfkdmnxtx
+الدنيا سخونة اليوم  [no 0.00 via ل; next -3.87]	الدنيا سخونه اليوم ل	nu via naxt a h	right	ldnsxnlmnflnxtxh
+kodemo  [forward 0.00 via odem; next -2.39]		kudamu furuard via udam naxt ak	forward	kdmfrdfdmnxtk
+emc lkoddem  [forward 0.00 via oddem; next -1.73]		amk lkudam furuard via udam naxt ha	forward	mklkdmfrdfdmnxth
+eلتلي  [no 0.00 via ل; next 0.00]	لتلي ل	a nu via naxt	back	ltlnflnxt
+rjltli  [back -0.10 via ltali; next -0.17]		rjltli bak via ltali naxt h	back	rjltlbkfltlnxth
+rجا  [back -0.26 via arja; next -1.22]	جا	r bak via arja naxt	back	rjbkfrjnxt
+e ellizar  [left -0.23 via allisar; next -1.31]		a alizar laft a via alisar naxt a	left	lzrlftflsrnxt
+à gauche  [left -0.08 via a gauche; next -3.57]		a gausha laft via a gausha naxt a kh	left	kclftxfkcnxtxh
+durlizar  [left -0.15 via dour lisar; next -1.69]		durlizar laft kh via dur lisar naxt k	left	drlzrlftxfdrlsrnxtk
+يي ألمة  [no 0.00 via ل; next -1.77]	ي المه ل	nu via naxt h	right	lmnflnxth
+أدغات  [right -0.73 via أدروات; next -2.59]	ادغات ادروات	right ha via naxt khk	right	dxtrxthfdrtnxtxk
+आشb  [hide -3.11 via tabba; next -3.39]	ش	b hida a via taba naxt a ak	-	cbhdftbnxtk
+stop  [stop 0.00 via stop; next -5.02]		stup stup via stup naxt kh	stop	stbstbfstbnxtx
+باخکا  [stop -0.38 via باركا; next -0.79]	باخکا باركا	stup a via naxt hk	stop	bxstbxfbrknxthk
+اشيغي  [run -1.00 via اجري; next -1.51]	اشيغي اجري	run via naxt kh	run	cxrnfjrnxtx
+الل ببي  [no 0.00 via ل; next -1.09]	ال بي ل	nu via naxt k	-	lbnflnxtk
+ساكي لbb  [no 0.00 via ل; next -0.88]	ساكي ل ل	b nu via naxt	close_door	sklbnflnxtx
+tevani  [follow_me -0.43 via tebani; next -2.87]		tavani fulu ma a via tabani naxt h	follow_me	tfnflmftbnxtxh
+你جميا  [no -0.52 via لا; next -0.66]	جميا لا	nu kh via naxt	no	jmnxflnxt
+in jalonna  [no -1.59 via la; next -2.49]		in jaluna nu khk via la naxt k	no	njlnxkflnxtk
+veme  [attack -1.21 via hjem; next -1.45]		vama atak via hjam naxt kh	attack	fmtkfhjmnxtx
+اتaك  [attack -0.03 via اتاك; next -3.30]	ات ك اتاك	a atak a via naxt a a	attack	tktkftknxt
+ودغب  [forward -1.86 via قودم; next -1.93]	ودغب قودم	furuard via naxt ka	forward	dxbfrdxfkdmnxtk
+tiri  [shoot 0.00 via tiri; next -2.65]		tiri shut via tiri naxt kh	shoot	trctftrnxtx
+ameur  [reload -0.03 via amer; next -3.02]		amaur raluad a via amar naxt a	reload	mrldfmrnxt
+recharger  [reload 0.00 via recharger; next -3.99]		rashargar raluad via rashargar naxt a k	reload	rcrkrldfrcrkrnxtk
+okot فiblاstek  [no -0.19 via la; next -0.31]	ف ا	ukut ibl stak nu k via la naxt a	no	ktfblstknkflnxt
+مa ttareكsa  [hold_position -0.90 via matetarekch; next -1.48]	م ك	a tara sa huld pusitiun k via matataraksh naxt	hold_position	mtrkshldbstnkfmtrkcnxtx
+sتaنa  [wait -0.28 via ستنا; next -1.09]	ت ن ستنا	s a a uait via naxt k	wait	stntxfstnxtk
+osbog  [wait -0.32 via osbor; next -2.32]		usbug uait a via usbur naxt a	wait	sbktfsbrnxt
+تكبا  [hide -1.50 via تخابا; next -2.19]	تكبا تخابا	hida kh via naxt k	hide	tkbhdxftxbnxtk
+esa  [no -1.93 via la; next -2.12]		asa nu ka via la naxt	no	snkflnxt
+edzu  [pick_up -0.80 via hezzo; next -1.97]		adzu pik up via hazu naxt kh	pick_up	dzbkbxfhznxtkh
+esdi  [no -1.62 via le; next -1.65]		asdi nu via la naxt kh	no	sdnflnxtx
+elكrta  [map -0.16 via elkarta; next -0.43]	ك	al rta map via alkarta naxt a	map	lkrtmbflkrtnxt
+وكف اللبا  [no 0.00 via ل; next -1.12]	وكف البا ل	nu via naxt	pause	kflbnflnxt
+ac  [no -1.88 via le; next -2.01]		ak nu via la naxt	no	knxflnxt
+لا  [no 0.00 via لا; next -2.42]	لا لا	nu via naxt	no	lnflnxt
+vatela  [no 0.00 via la; next -2.17]		vatala nu via la naxt h	no	ftlnflnxth
+anuli  [no -0.17 via annuli; next -3.68]		anuli nu h via anuli naxt a	no	nlnhfnlnxtx
+snúa a welig  [no -0.38 via le; next -1.82]		snua a ualig nu a via la naxt	no	snlknxflnxtx
+ecamesi an lium  [jump -0.99 via onez; next -1.18]		akamasi an lium jump k via unaz naxt	jump	kmsnlmjmbkfnznxtx
+nebno krop kawan  [back -1.22 via ouar; next -1.34]		nabnu krup kauan bak via uar naxt a	-	nbnkrbknbkfrnxt
+winlmft  [no -0.68 via ل; next -2.40]	ل	uinlmft nu via naxt	-	nlmftnxflnxt
+مفم تش  [shoot -2.36 via تير; next -2.86]	مفم تش تير	shut a via naxt	shoot	mfmtctftrnxtx
+إمشي لقدام  [left -6.25 via عال ليسار; next -6.27]	امشي لقدام عال ليسار	laft kh via naxt h	-	mclkdmlftxflsrnxth
+قدم  [forward -2.28 via قودم; next -5.91]	قدم قودم	furuard via naxt kh k	forward	kdmfrdxfkdmnxtxk
+إرج على تالي  [back -3.04 via لتالي; next -3.88]	ارج علي تالي لتالي	bak a via naxt a	back	rjltlbkfltlnxtx
+إرجا  [run -4.47 via اجري; next -4.56]	ارجا اجري	run h via naxt kh	run	rjrnhfjrnxtx
+دور اليسارة  [left -3.34 via عال ليسار; next -5.81]	دور اليساره عال ليسار	laft a a via naxt kh	left	drlsrlftflsrnxtx
+دور اليمين  [right -3.11 via عال ليمين; next -5.74]	دور اليمين عال ليمين	right a via naxt kh h	right	drlmnrxtflmnxtxh
+أنقس  [jump -2.69 via انقوز; next -4.98]	انقس انقوز	jump k via naxt k	jump	nksjmbkfnkznxtkx
+أوقف  [stop -3.02 via اقف; next -6.35]	اوقف اقف	stup a via naxt akh	stop	kfstbfkfnxtx
+беркә  [map -8.28 via el karta; next -8.90]		map via al karta naxt k	map	mbxflkrtnxtxk
+eجri  [run -0.49 via اجري; next -4.14]	ج اجري	a ri run k via naxt	run	jrnkfjrnxt
+tocbe  [hide -1.52 via تخبا; next -4.33]	تخبا	tukba hida kh via naxt a	hide	tkbhdxftxbnxt
+تبعني  [follow_me 0.00 via تبعني; next -3.26]	تبعني تبعني	fulu ma via naxt a	follow_me	tbnflmftbnxt
+أقعد في بلاستك  [hold_position -0.85 via اقعود في بلاستك; next -9.52]	اقعد في بلاستك اقعود في بلاستك	huld pusitiun kh via naxt k kh	hold_position	kdfblstkhldbstnxfkdfblstknxtkx
+ateki  [back -3.48 via ltali; next -4.61]		ataki bak a via ltali naxt	-	tkbkxfltlnxt
+آجما  [attack -2.40 via هجم; next -3.46]	اجما هجم	atak via naxt a	attack	jmtkfhjmnxt
+حل البابي  [open_door -2.37 via حل ال ب; next -4.69]	حل البابي حل ال ب	upan dur ah via naxt k	open_door	hlbndrhfhlbnxtk
+سكر البيب  [close_door -1.27 via سكر ال ب; next -4.40]	سكر البيب سكر ال ب	klusa dur h via naxt	close_door	skrlbklsdrhfskrlbnxt
+هز هذي  [pick_up -3.00 via هزها; next -5.10]	هز هذي هزها	pik up a via naxt kh	pick_up	hzhdbkbfhzhnxtx
+drie sergie  [map -5.23 via el karta; next -5.75]		dria sargia map kh a via al karta naxt kh hkh	map	drsrkmbxflkrtnxtxhx
+amro  [reload -1.07 via ammer; next -3.29]		amru raluad h via amar naxt a k	reload	mrldhfmrnxtk
+إباة  [hide -4.18 via تخابا; next -4.49]	اباه تخابا	hida via naxt k	hide	bhdxftxbnxtk
+بطلة  [back -3.24 via لتلي; next -4.34]	بطله لتلي	bak a via naxt a	-	btlbkfltlnxt
+أنولي  [back -3.80 via لتالي; next -4.10]	انولي لتالي	bak a via naxt	-	nlbkxfltlnxt
+شنوة أحوالك اليوم  [hold_position -9.00 via اقعود في بلاستك; next -10.60]	شنوه احوالك اليوم اقعود في بلاستك	huld pusitiun k via naxt	hold_position	cnhlklmhldbstnkfkdfblstknxt
+نحب نشرب قهوة  [hold_position -7.92 via اقعود في بلاستك; next -9.62]	نحب نشرب قهوه اقعود في بلاستك	huld pusitiun h k via naxt k	hold_position	nhbncrbkhldbstnhkfkdfblstknxtk
+الماءش متاع البارح كان مزيان  [hold_position -9.18 via اقعود في بلاستك; next -10.02]	الماش متاع البارح كان مزيان اقعود في بلاستك	huld pusitiun k via naxt	hold_position	lmcmtlbrhknmznhldbstnkxfkdfblstknxt
+ما عنديش وقت توه  [hold_position -6.60 via اقعود في بلاستك; next -9.55]	ما عنديش وقت توه اقعود في بلاستك	huld pusitiun via naxt k khkh	hold_position	mndckthldbstnfkdfblstknxtkx
+خوي يخدم في تونس  [hold_position -7.01 via اقعود في بلاستك; next -10.58]	خوي يخدم في تونس اقعود في بلاستك	huld pusitiun h via naxt kh	hold_position	xdmftnshldbstnhfkdfblstknxtx
+الدنيا سخونة اليوم  [hold_position -10.04 via اقعود في بلستك; next -12.12]	الدنيا سخونه اليوم اقعود في بلستك	huld pusitiun via naxt	hold_position	ldnsxnlmhldbstnfkdfblstknxt
+إمشي بقدام  [left -6.17 via عال ليسار; next -6.17]	امشي بقدام عال ليسار	laft h via naxt h	left	mcbkdmlfthflsrnxth
+kadima  [forward -2.30 via qoddem; next -3.93]		kadima furuard a via kudam naxt a ka	forward	kdmfrdfkdmnxtk
+إرجع ل تالي  [back -3.61 via لتالي; next -3.65]	ارجع ل تالي لتالي	bak a via naxt a kh	back	rjltlbkfltlnxtx
+eلجا  [no -2.59 via لا; next -3.61]	لجا لا	a nu khk via naxt a	no	ljnxkflnxt
+دور ليسارة  [left -3.26 via عال ليسار; next -5.55]	دور ليساره عال ليسار	laft a via naxt kh khkh	left	drlsrlftflsrnxtx
+دور ليمينا  [right -2.76 via عال ليمين; next -4.94]	دور ليمينا عال ليمين	right h via naxt k	right	drlmnrxthflmnxtk
+أنقز  [jump -2.52 via انقوز; next -4.97]	انقز انقوز	jump kh via naxt kh	jump	nkzjmbxfnkznxtkh
+أوقف  [stop -2.76 via اقف; next -5.18]	اوقف اقف	stup h via naxt kh	stop	kfstbhfkfnxtx
+brke  [map -4.29 via el karta; next -5.14]		brka map k via al karta naxt kh	-	brkmbkflkrtnxtx
+إجري  [run -0.20 via اجري; next -4.92]	اجري اجري	run via naxt k	run	jrnfjrnxtk
+tucbe  [hide -3.29 via tkhabba; next -3.89]		tukba hida a k via tkhaba naxt a k	hide	tkbhdkftxbnxtxk
+تبيعني  [follow_me -0.05 via تبعني; next -4.03]	تبيعني تبعني	fulu ma kh via naxt a	follow_me	tbnflmxftbnxt
+أقعد في بلاستك  [hold_position -0.85 via اقعود في بلاستك; next -9.22]	اقعد في بلاستك اقعود في بلاستك	huld pusitiun kh via naxt k	hold_position	kdfblstkhldbstnxfkdfblstknxtk
+أtkي  [back -2.97 via لتالي; next -3.87]	ا ي لتالي	tk bak kh via naxt a h	back	tkbkhfltlnxtxh
+أهجما  [attack -1.82 via هجم; next -3.36]	اهجما هجم	atak via naxt a a	attack	hjmtkxfhjmnxt
+حلو البابي  [open_door -2.64 via حل ال ب; next -4.26]	حلو البابي حل ال ب	upan dur via naxt	open_door	hlbndrfhlbnxt
+سكر البابي  [close_door -2.16 via سكر ال ب; next -5.82]	سكر البابي سكر ال ب	klusa dur via naxt kh	close_door	skrlbklsdrfskrlbnxtx
+هزو هذه  [pick_up -2.33 via هزها; next -4.27]	هزو هذه هزها	pik up a via naxt h	pick_up	hzhdhbkbfhzhnxth
+ricarji  [map -5.04 via el karta; next -5.32]		rikarji map kh via al karta naxt kh a	map	rkrjmbxflkrtnxtx
+آmro  [reload -1.78 via عمر; next -3.75]	ا عمر	mru raluad h via naxt a hkh	reload	mrldhxfmrnxthx
+ibeha  [yes -4.03 via ih; next -4.37]		ibaha ias a via ih naxt ah	yes	bhsfhnxth
+بتلا  [back -1.88 via لتلي; next -3.19]	بتلا لتلي	bak via naxt a k	-	btlbkxfltlnxtk
+أنولي  [run -2.96 via اجري; next -3.68]	انولي اجري	run k via naxt a	-	nlrnkfjrnxtx
+شنوة أحوالك اليوم  [hold_position -8.69 via اقعود في بلاستك; next -10.16]	شنوه احوالك اليوم اقعود في بلاستك	huld pusitiun k via naxt	hold_position	cnhlklmhldbstnxkfkdfblstknxt
+نحب نشرب قهوة  [hold_position -7.93 via اقعود في بلاستك; next -9.39]	نحب نشرب قهوه اقعود في بلاستك	huld pusitiun h ka via naxt k ak	hold_position	nhbncrbkhldbstnhkfkdfblstknxtk
+الماشو متاع البارح كان مزيان  [hold_position -8.64 via اقعود في بلاستك; next -9.05]	الماشو متاع البارح كان مزيان اقعود في بلاستك	huld pusitiun via naxt k kh	hold_position	lmcmtlbrhknmznhldbstnxfkdfblstknxtkx
+ما عنديش وقت توا  [hold_position -6.09 via اقعود في بلاستك; next -8.66]	ما عنديش وقت توا اقعود في بلاستك	huld pusitiun k via naxt	hold_position	mndckthldbstnkfkdfblstknxtx
+خوي يخدم في تونس  [hold_position -6.87 via اقعود في بلاستك; next -10.03]	خوي يخدم في تونس اقعود في بلاستك	huld pusitiun h via naxt a	hold_position	xdmftnshldbstnxhfkdfblstknxt
+الدنيا سخونة اليوم  [hold_position -9.49 via اقعود في بلاستك; next -11.24]	الدنيا سخونه اليوم اقعود في بلاستك	huld pusitiun k k via naxt	hold_position	ldnsxnlmhldbstnkfkdfblstknxt
+emc lkoddem  [open_door -3.38 via ell el beb; next -3.42]		amk lkudam upan dur a a via al al bab naxt a	-	mklkdmbndrxflbnxt
+eلتلي  [back -0.02 via لتلي; next -3.12]	لتلي لتلي	a bak via naxt a	back	ltlbkfltlnxt
+rjltli  [back -0.88 via ltali; next -2.66]		rjltli bak via ltali naxt	back	rjltlbkxfltlnxt
+rجا  [run -1.30 via اجري; next -2.19]	جا اجري	r run a via naxt k	run	rjrnfjrnxtk
+à gauche  [pause -4.76 via pause; next -6.94]		a gausha pausa h via pausa naxt k	-	kcbshfbsnxtk
+durlizar  [left -2.38 via al lisar; next -5.07]		durlizar laft a via al lisar naxt kh h	left	drlzrlftxflsrnxtxh
+يي ألمة  [right -2.39 via عل ليمين; next -3.04]	ي المه عل ليمين	right ak via naxt a	right	lmrxtkflmnxt
+أدغات  [map -3.23 via الكارتا; next -3.46]	ادغات الكارتا	map a a via naxt a	map	dxtmbflkrtnxt
+dourliman  [right -3.08 via al limin; next -4.54]		durliman right a via al limin naxt kh	right	drlmnrxtxflmnxtx
+ng  [jump -2.49 via onguez; next -2.97]		ng jump k via ungaz naxt kh	jump	nkjmbkfnkznxtkh
+आشb  [pause -3.57 via pause; next -3.81]	ش	b pausa a kh via pausa naxt a	pause	cbsxhfbsnxtx
+stop  [wait -6.07 via ستنا; next -6.33]	ستنا	stup uait h via naxt a	-	stbthfstnxt
+باخکا  [map -3.80 via ال كارتا; next -3.98]	باخکا ال كارتا	map a via naxt a k	map	bxmbxflkrtnxtkx
+اشيغي  [run -1.00 via اجري; next -2.71]	اشيغي اجري	run via naxt h	run	cxrnfjrnxth
+الل ببي  [open_door -1.57 via ell el beb; next -2.87]	ال بي	upan dur kh via al al bab naxt h	open_door	lbndrxhflbnxtxh
+ساكي لbb  [close_door -1.32 via ساكر ال ب; next -2.98]	ساكي ل ساكر ال ب	b klusa dur a via naxt k	close_door	sklbklsdrfskrlbnxtkx
+tevani  [follow_me -0.97 via tbani; next -3.12]		tavani fulu ma kh via tbani naxt a	follow_me	tfnflmkhftbnxt
+你جميا  [run -1.63 via اجري; next -2.05]	جميا اجري	run a via naxt kh	run	jmrnfjrnxtx
+in jalonna  [come_here -2.49 via ijalehna; next -5.31]		in jaluna kuma hara k via ijalahna naxt kh a	come_here	njlnkmhrkfjlhnxtx
+veme  [attack -1.47 via hjem; next -2.74]		vama atak h via hjam naxt h	attack	fmtkhfhjmnxth
+اتaك  [back -4.64 via لتالي; next -4.93]	ات ك لتالي	a bak via naxt ka	back	tkbkfltlnxtk
+tiri  [run -4.37 via ajri; next -4.64]		tiri run ah via ajri naxt	-	trnhfjrnxt
+ameur  [reload -0.91 via ammer; next -4.98]		amaur raluad k via amar naxt k	reload	mrldkfmrnxtkx
+recharger  [map -6.65 via elkarta; next -7.30]		rashargar map kh via alkarta naxt h a	-	rcrkrmbxflkrtnxth
+okot فiblاstek  [hold_position -0.40 via oqaod fi blastek; next -4.65]	ف ا	ukut ibl stak huld pusitiun via ukaud fi blastak naxt kh	hold_position	ktfblstkhldbstnfkdfblstknxtx
+مa ttareكsa  [map -3.33 via el karta; next -3.66]	م ك	a tara sa map a a via al karta naxt a	map	mtrksmbflkrtnxt
+osbog  [hold_position -4.64 via ood fi blastek; next -4.92]		usbug huld pusitiun via ud fi blastak naxt k	hold_position	sbkhldbstnfdfblstknxtk
+تكبا  [hide -1.50 via تخابا; next -3.27]	تكبا تخابا	hida kh via naxt a h	hide	tkbhdxftxbnxth
+esa  [pick_up -2.43 via hezzha; next -3.52]		asa pik up a via hazha naxt a kh	pick_up	sbkbfhzhnxtx
+edzu  [pick_up -2.28 via hezzha; next -3.27]		adzu pik up via hazha naxt a h	pick_up	dzbkbxfhzhnxth
+esdi  [back -2.26 via ltali; next -2.53]		asdi bak via ltali naxt kha	back	sdbkfltlnxtx
+elكrta  [map -0.16 via elkarta; next -4.14]	ك	al rta map via alkarta naxt	map	lkrtmbflkrtnxt
+pोस  [pause -1.56 via pause; next -4.38]		p pausa kh via pausa naxt a	pause	bsxfbsnxtx
+وكف اللبا  [close_door -2.21 via ساكر ال ب; next -3.04]	وكف البا ساكر ال ب	klusa dur via naxt a	-	kflbklsdrfskrlbnxt
+ac  [yes -2.67 via ih; next -2.97]		ak ias h via ih naxt kh	yes	kshfhnxtkh
+ve  [follow_me -3.57 via tbani; next -3.72]		va fulu ma a kh via tbani naxt a h	follow_me	flmxhftbnxth
+لا  [no 0.00 via لا; next -3.30]	لا لا	nu via naxt a a	no	lnflnxt
+vatela  [back -2.89 via لتالي; next -3.18]	لتالي	vatala bak k via naxt a	back	ftlbkxkfltlnxtx
+anuli  [left -4.52 via al lisar; next -4.74]		anuli laft kh via al lisar naxt h	-	nlftxflsrnxth
+snúa a welig  [close_door -4.55 via sakker el beb; next -4.79]		snua a ualig klusa dur khkh via sakar al bab naxt hk	close_door	snlklsdrxfskrlbnxthk
+ecamesi an lium  [right -3.42 via aal limin; next -3.62]		akamasi an lium right a via al limin naxt a	right	kmsnlmrxtflmnxt
+nebno krop kawan  [map -4.13 via el karta; next -4.14]		nabnu krup kauan map a via al karta naxt	map	nbnkrbknmbflkrtnxt
+winlmft  [open_door -3.00 via hell el beb; next -3.02]		uinlmft upan dur a via hal al bab naxt a	open_door	nlmftbndrfhlbnxt
+مفم تش  [map -4.21 via ال كارتا; next -4.32]	مفم تش ال كارتا	map via naxt a	map	mfmtcmbflkrtnxt
+[forward -1.66 via oddem; next -1.69]		furuard via udam naxt k	forward	frdfdmnxtk
+إمشي لقدام  [left -5.61 via علي ليسار; next -5.62]	امشي لقدام علي ليسار	laft kh via naxt kh	-	mclkdmlftxflsrnxtx
+قدم  [forward -1.74 via قدام; next -6.16]	قدم قدام	furuard h via naxt	forward	kdmfrdhfkdmnxt
+إرج على تالي  [back -3.04 via لتالي; next -3.73]	ارج علي تالي لتالي	bak a via naxt a ha	back	rjltlbkfltlnxth
+إرجا  [yes -4.14 via إيه; next -4.47]	ارجا ايه	ias via naxt h	yes	rjsfhnxth
+دور اليسارة  [left -3.61 via علي ليسار; next -5.23]	دور اليساره علي ليسار	laft a via naxt kh a	left	drlsrlftflsrnxtx
+دور اليمين  [right -3.28 via علي ليمين; next -5.89]	دور اليمين علي ليمين	right a via naxt kh k	right	drlmnrxtxflmnxtxk
+أوقف  [stop -1.78 via أقف; next -6.30]	اوقف اقف	stup h via naxt a	stop	kfstbhxfkfnxt
+беркә  [close_door -11.67 via سكر الباب; next -12.01]	سكر الباب	klusa dur h via naxt	close_door	klsdrhfskrlbnxt
+eجri  [run -0.49 via اجري; next -3.62]	ج اجري	a ri run k via naxt a	run	jrnkfjrnxt
+tocbe  [hide -1.59 via تخبي; next -5.37]	تخبي	tukba hida khk via naxt kh ah	hide	tkbhdxkftxbnxtxh
+أقعد في بلاستك  [hold_position -0.38 via أقعد في بلاصتك; next -8.67]	اقعد في بلاستك اقعد في بلاصتك	huld pusitiun a via naxt h	hold_position	kdfblstkhldbstnxfkdfblstknxtxh
+ateki  [back -3.81 via لتالي; next -4.23]	لتالي	ataki bak a via naxt a	-	tkbkxfltlnxt
+آجما  [attack -2.40 via هجم; next -3.64]	اجما هجم	atak via naxt a	attack	jmtkfhjmnxt
+هز هذي  [pick_up -3.00 via هزها; next -5.40]	هز هذي هزها	pik up a via naxt kh	pick_up	hzhdbkbfhzhnxtx
+drie sergie  [right -6.87 via علي ليمين; next -7.15]	علي ليمين	dria sargia right h via naxt h kh	right	drsrkrxtxhflmnxthx
+amro  [reload -2.46 via عمر; next -4.18]	عمر	amru raluad via naxt	reload	mrldfmrnxtx
+إباة  [yes -2.81 via إيه; next -4.52]	اباه ايه	ias via naxt kh	yes	bsxfhnxtx
+بطلة  [back -4.17 via لتالي; next -5.05]	بطله لتالي	bak h via naxt kh kh	-	btlbkhfltlnxtx
+شنوة أحوالك اليوم  [hold_position -9.68 via أقعد في بلاصتك; next -11.26]	شنوه احوالك اليوم اقعد في بلاصتك	huld pusitiun k via naxt	hold_position	cnhlklmhldbstnkxfkdfblstknxt
+نحب نشرب قهوة  [hold_position -8.00 via اقعد في بلاصتك; next -8.69]	نحب نشرب قهوه اقعد في بلاصتك	huld pusitiun via naxt k	hold_position	nhbncrbkhldbstnxfkdfblstknxtxk
+الماءش متاع البارح كان مزيان  [hold_position -9.80 via اقعد في بلاصتك; next -10.73]	الماش متاع البارح كان مزيان اقعد في بلاصتك	huld pusitiun k via naxt ha	hold_position	lmcmtlbrhknmznhldbstnkxfkdfblstknxth
+ما عنديش وقت توه  [hold_position -6.95 via اقعد في بلاصتك; next -8.62]	ما عنديش وقت توه اقعد في بلاصتك	huld pusitiun kh via naxt	hold_position	mndckthldbstnkxfkdfblstknxtx
+خوي يخدم في تونس  [hold_position -7.66 via اقعد في بلاصتك; next -9.61]	خوي يخدم في تونس اقعد في بلاصتك	huld pusitiun h via naxt k	hold_position	xdmftnshldbstnhfkdfblstknxtk
+الدنيا سخونة اليوم  [hold_position -10.02 via اقعد في بلاصتك; next -11.19]	الدنيا سخونه اليوم اقعد في بلاصتك	huld pusitiun via naxt k	hold_position	ldnsxnlmhldbstnfkdfblstknxtk
+إمشي بقدام  [left -5.52 via علي ليسار; next -5.67]	امشي بقدام علي ليسار	laft kh kh via naxt kh h	left	mcbkdmlftxflsrnxtxh
+kadima  [forward -7.41 via قدام; next -7.69]	قدام	kadima furuard h via naxt h k	forward	kdmfrdhfkdmnxthk
+إرجع ل تالي  [come_here -3.52 via إيجا لهنا; next -3.61]	ارجع ل تالي ايجا لهنا	kuma hara a kh via naxt a	-	rjltlkmhrxfjlhnxt
+eلجا  [no -2.59 via لا; next -3.99]	لجا لا	a nu khk via naxt a k	no	ljnxkflnxtk
+دور ليسارة  [left -3.50 via علي ليسار; next -5.62]	دور ليساره علي ليسار	laft a kh via naxt kh	left	drlsrlftxflsrnxtx
+دور ليمينا  [right -3.00 via علي ليمين; next -4.91]	دور ليمينا علي ليمين	right a via naxt k	right	drlmnrxtflmnxtk
+أوقف  [stop -1.72 via أقف; next -5.79]	اوقف اقف	stup h via naxt kh hk	stop	kfstbhfkfnxtxhk
+brke  [follow_me -6.34 via تبعني; next -6.50]	تبعني	brka fulu ma a via naxt kh	-	brkflmftbnxtx
+إجري  [run -0.20 via اجري; next -3.98]	اجري اجري	run via naxt a k	run	jrnfjrnxtkx
+tucbe  [hide -3.59 via تخبي; next -7.35]	تخبي	tukba hida a khk via naxt h akh	hide	tkbhdxkftxbnxthx
+أقعد في بلاستك  [hold_position -0.48 via أقعد في بلاصتك; next -8.26]	اقعد في بلاستك اقعد في بلاصتك	huld pusitiun via naxt	hold_position	kdfblstkhldbstnxfkdfblstknxtx
+أtkي  [back -2.97 via لتالي; next -3.55]	ا ي لتالي	tk bak kh via naxt a khkh	back	tkbkhfltlnxtx
+هزو هذه  [pick_up -2.33 via هزها; next -4.17]	هزو هذه هزها	pik up a via naxt h	pick_up	hzhdhbkbfhzhnxth
+ricarji  [come_here -6.49 via ايجا لهنا; next -6.84]	ايجا لهنا	rikarji kuma hara k via naxt	come_here	rkrjkmhrkfjlhnxtx
+آmro  [reload -1.78 via عمر; next -4.18]	ا عمر	mru raluad h via naxt	reload	mrldhxfmrnxtx
+ibeha  [yes -4.63 via إيه; next -5.21]	ايه	ibaha ias a via naxt kh	yes	bhsfhnxtx
+بتلا  [back -2.95 via لتالي; next -3.19]	بتلا لتالي	bak kh via naxt a k	-	btlbkxfltlnxtk
+أنولي  [run -2.96 via اجري; next -4.04]	انولي اجري	run k via naxt	-	nlrnkfjrnxt
+شنوة أحوالك اليوم  [hold_position -9.38 via أقعد في بلاصتك; next -10.60]	شنوه احوالك اليوم اقعد في بلاصتك	huld pusitiun k a via naxt	hold_position	cnhlklmhldbstnkxfkdfblstknxt
+نحب نشرب قهوة  [hold_position -7.97 via اقعد في بلاصتك; next -8.67]	نحب نشرب قهوه اقعد في بلاصتك	huld pusitiun h kh via naxt h	hold_position	nhbncrbkhldbstnhkhfkdfblstknxtxh
+الماشو متاع البارح كان مزيان  [hold_position -9.25 via اقعد في بلاصتك; next -9.67]	الماشو متاع البارح كان مزيان اقعد في بلاصتك	huld pusitiun k kh via naxt k h	hold_position	lmcmtlbrhknmznhldbstnkxfkdfblstknxtkh
+ما عنديش وقت توا  [hold_position -6.38 via اقعد في بلاصتك; next -7.84]	ما عنديش وقت توا اقعد في بلاصتك	huld pusitiun a via naxt h	hold_position	mndckthldbstnxfkdfblstknxthx
+خوي يخدم في تونس  [hold_position -7.81 via اقعد في بلاصتك; next -8.98]	خوي يخدم في تونس اقعد في بلاصتك	huld pusitiun h via naxt k	hold_position	xdmftnshldbstnhxfkdfblstknxtxkx
+الدنيا سخونة اليوم  [hold_position -9.38 via اقعد في بلاصتك; next -10.68]	الدنيا سخونه اليوم اقعد في بلاصتك	huld pusitiun k a via naxt	hold_position	ldnsxnlmhldbstnkxfkdfblstknxtx
+kodemo  [forward -2.15 via قدام; next -4.33]	قدام	kudamu furuard kh via naxt a	forward	kdmfrdxfkdmnxt
+emc lkoddem  [open_door -6.38 via حل الباب; next -6.58]	حل الباب	amk lkudam upan dur a via naxt kh	open_door	mklkdmbndrxfhlbnxtx
+eلتلي  [back -0.23 via لتالي; next -2.48]	لتلي لتالي	a bak a via naxt	back	ltlbkfltlnxtx
+rjltli  [back -1.36 via لتالي; next -3.38]	لتالي	rjltli bak a via naxt a a	back	rjltlbkfltlnxtx
+rجا  [run -1.30 via اجري; next -2.05]	جا اجري	r run a via naxt kh	run	rjrnfjrnxtx
+e ellizar  [left -3.18 via علي ليسار; next -4.27]	علي ليسار	a alizar laft a via naxt h	left	lzrlftxflsrnxth
+à gauche  [come_here -10.02 via ايجا لهنا; next -10.13]	ايجا لهنا	a gausha kuma hara via naxt a	-	kckmhrfjlhnxt
+durlizar  [left -5.61 via علي ليسار; next -7.17]	علي ليسار	durlizar laft kh via naxt h h	left	drlzrlftxflsrnxth
+يي ألمة  [right -2.43 via علي ليمين; next -2.67]	ي المه علي ليمين	right a via naxt h	right	lmrxtflmnxth
+أدغات  [forward -3.32 via قدام; next -3.77]	ادغات قدام	furuard a a via naxt a h	forward	dxtfrdfkdmnxth
+dourliman  [right -5.30 via علي ليمين; next -6.31]	علي ليمين	durliman right kh a via naxt a	right	drlmnrxtxflmnxt
+ng  [run -2.97 via اجري; next -3.49]	اجري	ng run kh via naxt a k	run	nkrnkhfjrnxtk
+आشb  [shoot -4.37 via اضرب; next -4.44]	ش اضرب	b shut ah via naxt	shoot	cbcthfdrbnxt
+stop  [wait -6.43 via استني; next -6.88]	استني	stup uait a via naxt	-	stbtfstnxtx
+باخکا  [forward -4.78 via قدام; next -4.98]	باخکا قدام	furuard h via naxt k	forward	bxfrdhxfkdmnxtkx
+اشيغي  [run -1.00 via اجري; next -2.03]	اشيغي اجري	run via naxt a	run	cxrnfjrnxt
+الل ببي  [open_door -1.65 via حل الباب; next -2.70]	ال بي حل الباب	upan dur kh via naxt h	open_door	lbndrxfhlbnxth
+ساكي لbb  [close_door -1.62 via سكر الباب; next -2.89]	ساكي ل سكر الباب	b klusa dur via naxt k	close_door	sklbklsdrfskrlbnxtxk
+tevani  [follow_me -4.65 via تبعني; next -6.30]	تبعني	tavani fulu ma kh via naxt a	follow_me	tfnflmxftbnxt
+你جميا  [run -1.63 via اجري; next -1.87]	جميا اجري	run a via naxt h	run	jmrnfjrnxtxh
+in jalonna  [come_here -8.11 via إيجا لهنا; next -9.67]	ايجا لهنا	in jaluna kuma hara via naxt k h	come_here	njlnkmhrxfjlhnxtkh
+veme  [come_here -3.86 via ايجا لهنا; next -3.89]	ايجا لهنا	vama kuma hara a via naxt a k	come_here	fmkmhrxfjlhnxtxk
+اتaك  [back -4.64 via لتالي; next -4.82]	ات ك لتالي	a bak via naxt	back	tkbkfltlnxtx
+ودغب  [shoot -2.23 via اضرب; next -2.55]	ودغب اضرب	shut a via naxt khkh	shoot	dxbctfdrbnxtx
+tiri  [run -4.90 via اجري; next -5.06]	اجري	tiri run k via naxt kh	-	trnkfjrnxtx
+ameur  [reload -7.79 via عمر; next -8.80]	عمر	amaur raluad h hk via naxt	reload	mrldhkfmrnxtx
+recharger  [hold_position -12.01 via اقعد في بلاصتك; next -12.50]	اقعد في بلاصتك	rashargar huld pusitiun via naxt kh	-	rcrkrhldbstnfkdfblstknxtx
+okot فiblاstek  [hold_position -1.47 via اقعد في بلاصتك; next -5.21]	ف ا اقعد في بلاصتك	ukut ibl stak huld pusitiun h via naxt kh	hold_position	ktfblstkhldbstnhfkdfblstknxtx
+مa ttareكsa  [come_here -4.31 via ايجا لهنا; next -4.32]	م ك ايجا لهنا	a tara sa kuma hara a via naxt a	come_here	mtrkskmhrfjlhnxt
+sتaنa  [wait -1.12 via استنى; next -2.80]	ت ن استني	s a a uait via naxt	wait	stntfstnxtx
+osbog  [open_door -6.52 via حل الباب; next -6.87]	حل الباب	usbug upan dur kh via naxt h	open_door	sbkbndrxfhlbnxtxh
+تكبا  [hide -2.61 via تخبي; next -3.59]	تكبا تخبي	hida via naxt a khk	hide	tkbhdftxbnxtxk
+esa  [pick_up -4.05 via هزها; next -4.08]	هزها	asa pik up kh via naxt	pick_up	sbkbxfhzhnxtx
+edzu  [attack -4.64 via هجم; next -4.77]	هجم	adzu atak via naxt h	attack	dztkfhjmnxth
+esdi  [wait -3.34 via استني; next -3.40]	استني	asdi uait a a via naxt a	wait	sdtfstnxt
+elكrta  [map -1.29 via الكارطة; next -4.82]	ك الكارطه	al rta map k via naxt	map	lkrtmbkflkrtnxtx
+pोस  [pause -3.09 via بوز; next -6.06]	بوز	p pausa a k via naxt	pause	bskfbznxt
+وكف اللبا  [close_door -2.52 via سكر الباب; next -3.19]	وكف البا سكر الباب	klusa dur kh via naxt a k	-	kflbklsdrxfskrlbnxtk
+ac  [yes -3.47 via ايه; next -4.50]	ايه	ak ias a h via naxt kh	yes	kshfhnxtx
+ve  [back -4.18 via لتالي; next -4.24]	لتالي	va bak via naxt	back	fbkxfltlnxt
+vatela  [back -2.89 via لتالي; next -4.18]	لتالي	vatala bak k via naxt	back	ftlbkxkfltlnxtx
+anuli  [back -5.47 via لتالي; next -5.78]	لتالي	anuli bak kh h via naxt kh h	-	nlbkxhfltlnxtxhx
+snúa a welig  [hold_position -9.47 via اقعد في بلاصتك; next -9.53]	اقعد في بلاصتك	snua a ualig huld pusitiun k h via naxt k kha	hold_position	snlkhldbstnkhfkdfblstknxtkx
+ecamesi an lium  [come_here -4.97 via ايجا لهنا; next -5.00]	ايجا لهنا	akamasi an lium kuma hara kh via naxt kh	come_here	kmsnlmkmhrkhfjlhnxtx
+nebno krop kawan  [hold_position -6.25 via اقعد في بلاصتك; next -6.34]	اقعد في بلاصتك	nabnu krup kauan huld pusitiun kh via naxt a	hold_position	nbnkrbknhldbstnxfkdfblstknxt
+winlmft  [open_door -4.00 via حل الباب; next -4.24]	حل الباب	uinlmft upan dur via naxt	open_door	nlmftbndrfhlbnxt
+مفم تش  [right -5.08 via علي ليمين; next -5.09]	مفم تش علي ليمين	right kh via naxt kh k	right	mfmtcrxtxflmnxtxk
+[no -5.60 via لا; next -5.84]	لا	nu kh via naxt kh	no	nxflnxtx

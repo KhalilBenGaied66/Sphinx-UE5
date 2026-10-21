@@ -12,6 +12,7 @@
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File Tools\Run-Tests.ps1
     powershell -ExecutionPolicy Bypass -File Tools\Run-Tests.ps1 -Filter SpeechBenchmark -NoBuild
+    powershell -ExecutionPolicy Bypass -File Tools\Run-Tests.ps1 -Filter SpeechRecognition.Transcriber -NoBuild -OrtThreads 4
 #>
 [CmdletBinding()]
 param(
@@ -19,7 +20,9 @@ param(
     [string]$Filter = 'SpeechRecognition',
     [switch]$NoBuild,
     # Also write the decoder's own log lines (verbose: several hundred per model load)
-    [switch]$DecoderLog
+    [switch]$DecoderLog,
+    # ONNX Runtime intra-op threads for the Darija model in the editor (default: ONNX Runtime's own choice)
+    [int]$OrtThreads = -1
 )
 
 $ErrorActionPreference = 'Stop'
@@ -54,6 +57,9 @@ $editor = Join-Path $Engine 'Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
 $arguments = @("`"$project`"", "-ExecCmds=`"Automation RunTests $Filter;Quit`"", '-TestExit="Automation Test Queue Empty"', "-ReportExportPath=`"$report`"",
     '-unattended', '-nopause', '-nosplash', '-nullrhi', '-nosound', '-stdout', '-FullStdOutLogOutput')
 if ($DecoderLog) { $arguments += '-LogCmds="SpeechRecognitionPlugin Verbose"' }
+if ($OrtThreads -ge 0) {
+    $arguments += "-ini:Engine:[/Script/NNERuntimeORT.NNERuntimeORTSettings]:EditorThreadingOptions=(bUseGlobalThreadPool=False,IntraOpNumThreads=$OrtThreads,InterOpNumThreads=1,ExecutionMode=SEQUENTIAL)"
+}
 $code = Invoke-Logged $editor $arguments $log
 
 $index = Join-Path $report 'index.json'

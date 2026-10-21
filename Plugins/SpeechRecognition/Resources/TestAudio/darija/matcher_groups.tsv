@@ -1,0 +1,143 @@
+forward	قدّام
+forward	9oddem
+forward	9odem
+forward	goddem
+forward	إمشي لقدّام
+forward	emchi l9oddem
+forward	imchi l9odem
+back	لتالي
+back	ltali
+back	lteli
+back	ارجع لتالي
+back	arja3 ltali
+back	orja3 ltali
+back	ارجع
+back	arja3
+back	orja3
+back	وخّر
+back	wakhar
+back	wa5ar
+back	ou5ar
+left	على ليسار
+left	3al lisar
+left	3la lisar
+left	أ ڨوش
+left	a gauche
+left	agoch
+left	دور ليسار
+left	dour lisar
+left	dor lisar
+right	على ليمين
+right	3al limin
+right	3la limin
+right	أ دروات
+right	a droite
+right	adrwat
+right	دور ليمين
+right	dour limin
+right	dor limin
+jump	اُنڨز
+jump	onguez
+jump	ongez
+jump	on9ez
+stop	أُقف
+stop	o9ef
+stop	w9ef
+stop	ou9ef
+stop	حبس
+stop	7bes
+stop	hbes
+stop	ستوب
+stop	stop
+stop	stob
+stop	بركا
+stop	barka
+stop	berka
+run	اجري
+run	ajri
+run	jri
+open_door	حلّ الباب
+open_door	7ell el beb
+open_door	7ell lbeb
+open_door	7el el bab
+close_door	سكّر الباب
+close_door	sakker el beb
+close_door	sakker lbeb
+close_door	sakar el bab
+follow_me	تبعني
+follow_me	tba3ni
+follow_me	teb3ni
+follow_me	إيجا معايا
+follow_me	ija m3aya
+follow_me	iji m3aya
+come_here	إيجا لهنا
+come_here	ija lehna
+come_here	ija lhna
+attack	هجم
+attack	hjem
+attack	ehjem
+attack	أتاك
+attack	attaque
+attack	atak
+attack	attaki
+shoot	اُضرب
+shoot	odhrob
+shoot	edhreb
+shoot	adhreb
+shoot	تيري
+shoot	tiri
+shoot	tirer
+reload	عمّر
+reload	3ammer
+reload	3amer
+reload	ريشارجي
+reload	recharji
+reload	recharger
+hold_position	أُقعد في بلاصتك
+hold_position	o93od fi blastek
+hold_position	o9o3d fi blastek
+hold_position	ما تتحرّكش
+hold_position	ma tet7arrekch
+hold_position	matet7arekch
+wait	استنّى
+wait	stanna
+wait	estanna
+wait	أُصبر
+wait	osbor
+wait	esbor
+hide	تخبّى
+hide	tkhabba
+hide	t5abba
+pick_up	هزّها
+pick_up	hezzha
+pick_up	hezha
+pick_up	هزّو
+pick_up	hezzou
+pick_up	hezzo
+pick_up	هزّ هاذي
+pick_up	hezz hedhi
+pick_up	hez hedi
+map	الكارطة
+map	el karta
+map	lkarta
+pause	بوز
+pause	pause
+pause	pauz
+pause	وقّف اللعبة
+pause	wa99ef el le3ba
+pause	wa9ef lle3ba
+yes	إيه
+yes	ih
+yes	iyeh
+yes	باهي
+yes	behi
+yes	bahi
+no	لا
+no	la
+no	le
+no	بطّل
+no	battel
+no	batel
+no	أنولي
+no	annuli
+no	anouli
