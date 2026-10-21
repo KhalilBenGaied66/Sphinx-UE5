@@ -1,9 +1,9 @@
 {
 	"FileVersion": 3,
-	"Version": 2,
-	"VersionName": "2.0.0",
+	"Version": 3,
+	"VersionName": "2.1.0",
 	"FriendlyName": "Speech Recognition Plugin",
-	"Description": "Offline voice commands for Unreal Engine 5, built on PocketSphinx: keyword spotting, JSGF grammars and language models. No cloud service, no GPU.",
+	"Description": "Offline voice commands for Unreal Engine 5, built on PocketSphinx: keyword spotting, JSGF grammars and language models. A second engine recognises any phrase you can write, in any alphabet: Arabic and its dialects, Tunisian Darija included, or invented words, with a speech model run on the Neural Network Engine. No dictionary, no training, no cloud service, no GPU.",
 	"Category": "Audio",
 	"CreatedBy": "Shane Colbert; UE5 port by Urszula Kustra; fixes and extensions by Khalil Ben Gaied",
 	"CreatedByURL": "https://github.com/KhalilBenGaied66",
@@ -12,6 +12,12 @@
 	"SupportURL": "",
 	"CanContainContent": false,
 	"Installed": false,
+	"Plugins": [
+		{
+			"Name": "NNERuntimeORT",
+			"Enabled": true
+		}
+	],
 	"Modules": [
 		{
 			"Name": "SpeechRecognition",
