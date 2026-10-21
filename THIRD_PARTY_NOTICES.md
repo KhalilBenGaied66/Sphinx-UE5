@@ -63,6 +63,12 @@ The rest of the test audio is not in the repository:
 - German recordings are downloaded by `Tools/Get-TestSpeech.ps1` from VoxForge
   (`ralfherzog-20080214-de115`, (C) 2008 Ralf Herzog, GNU GPL 3). They are used
   for testing only and are not redistributed here.
+- Tunisian Darija clips are recorded by `Tools/DarijaEval/record.py` or
+  synthesised by `Tools/DarijaEval/placeholder.py` on your machine, and stay in
+  `Tools/DarijaEval/recordings/`, which is not in the repository. Recordings of
+  people are personal data: keep them with each speaker's consent.
+- `Plugins/SpeechRecognition/Resources/TestAudio/darija/` holds text only: the
+  command spellings and transcripts that the matcher's parity test uses.
 
 ## Speech models
 
@@ -75,6 +81,12 @@ publishers, and each keeps its publisher's licence:
 | US English | dictionary `cmudict-en-us.dict`, language model `en-us.lm.bin` | CMUSphinx / CMUdict | BSD-style |
 | French | acoustic model `cmusphinx-fr-ptm-5.2`, `fr.dict`, `fr-small.lm.bin` | CMUSphinx / Université du Maine | BSD-style (the script saves its `LICENSE` next to the model) |
 | German | acoustic model, dictionary and language model `cmusphinx-de-voxforge-5.2` | VoxForge / Zamia Speech | GNU LGPL 3 |
+| The second engine: `any` and every Arabic code (`Content/model/omnilingual`) | Omnilingual ASR CTC 300M, int8 ONNX export `OpenVoiceOS/omnilingual-asr-ctc-300m-onnx` (revision `bc55e1d`) | Meta (model), OpenVoiceOS (export) | Apache-2.0 (the script saves the model card as `MODEL_CARD.md`) |
+
+The Darija engine runs the model with Unreal Engine's NNERuntimeORT plugin
+(ONNX Runtime), which ships with the engine under Epic's licence. The optional
+Gemini engine calls Google's API under Google's terms; nothing of it is
+distributed here.
 
 Read the licence of a model before you ship a game with it.
 

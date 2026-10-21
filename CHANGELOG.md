@@ -4,6 +4,46 @@ Starting point: [ukustra/sphinx-ue4](https://github.com/ukustra/sphinx-ue4) at
 commit `08e3957` ("5.8 update"). The Unreal Engine 5 port itself is that
 repository's work and is not listed here.
 
+## 2.1.0 (October 2026)
+
+### Added
+
+- **A second engine: any phrase you can write.** For what PocketSphinx has no
+  model for, Meta's Omnilingual ASR (CTC 300M, int8 ONNX, Apache-2.0) runs
+  offline inside Unreal on the Neural Network Engine (NNERuntimeORT, CPU), on a
+  background task, with its own speech detector. Language code `any` (invented
+  words, names, mixed languages) or an Arabic code: `ar` (Modern Standard
+  Arabic), `aeb` (Tunisian), `ary`, `arz`, `apc`... All share one model folder,
+  `Content/model/omnilingual`, which `Tools/Get-Models.ps1 -Language
+  omnilingual` downloads (328 MB).
+- **Phrase scoring** (`FPhraseScorer`). Each phrase is aligned with the model's
+  per-frame character scores (CTC Viterbi over the whole utterance), so a
+  command is recognised whatever the model would have written for it. Arabizi
+  phrases are also scored in Arabic script; word breaks are optional. On 89
+  synthetic Darija command clips inside Unreal: 78 recognised, 0 wrong, 0 of 18
+  distractors fired, against 50 for matching the model's text.
+- **Text matching across scripts** (`FTranscriptMatcher`), for engines that only
+  write text: Arabic and Latin spellings normalised and compared, and reduced
+  to a consonant skeleton across scripts.
+- **Voice Command component:** `Transcript Matching` (phrase scoring or text),
+  `Phrase Score Threshold` and `Margin`, `Transcript Match Threshold` and
+  `Margin`. `FRecognisedPhraseDetail` gains `bIsTranscript`, `MatchedPhrase`,
+  `PhraseScore`, `PhraseScores` and `ProcessingSeconds`.
+- **A Gemini engine for development** (`-SpeechTranscriber=gemini`, key from the
+  `GEMINI_API_KEY` environment variable, never shipped).
+- **Sample:** `-SpeechLanguage=aeb` (Tunisian Darija), `ar` (MSA), `any`
+  (spells). The screen shows the model's text, the winning phrase and its score.
+- **`Tools/DarijaEval`:** the Darija command list, a recording tool, and a
+  script that scores every engine on the same clips.
+- **Tests:** six more (phrase scorer, matcher parity with the Python version on
+  1,343 cases, speech detector events, the model on 115 clips, the live
+  subsystem switching Tunisian, English, MSA and `any`).
+
+### Changed
+
+- The plugin depends on the NNERuntimeORT plugin (part of the engine), and on
+  the NNE, HTTP and Json modules.
+
 ## 2.0.0 (October 2026)
 
 ### Fixed

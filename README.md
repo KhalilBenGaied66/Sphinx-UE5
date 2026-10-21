@@ -12,6 +12,17 @@ push a sentence. It is not a transcription engine, and a model from the 2010s
 will not behave like one from the 2020s. In return it costs almost nothing to
 run next to a game.
 
+**A second engine recognises any phrase you can write.** Tunisian Darija,
+Modern Standard Arabic, a spell called "amorix valor": type the command, in
+Arabic script or Latin letters, and the game hears it. There is no dictionary
+to fill and nothing to train. A modern speech model (Meta's Omnilingual ASR,
+328 MB, Apache-2.0) runs offline inside Unreal on the engine's own Neural
+Network Engine, and each phrase is scored against what it heard, the way
+PocketSphinx spots key phrases. Use the language code `any`, or an Arabic code
+(`ar`, `aeb` Tunisian, `ary` Moroccan, `arz` Egyptian...): they all share one
+model. Both engines sit behind the same Voice Command component. See Status
+for what has been measured.
+
 ## What it is for
 
 Voice as an input, next to the keyboard and the gamepad: a known set of things
@@ -45,7 +56,7 @@ questions. Those need a transcription model; see the next section.
 | Runs | offline, on the CPU, alongside the game | offline, on the CPU or the GPU | online, on someone else's servers |
 | Size and cost | 26 MB of memory for English, about 7 ms of one core to decode a second of speech | from about 75 MB (tiny) to several GB (large) | an API key, a quota, a bill or a free tier |
 | When the game hears it | as the phrase is spotted, before the speaker stops if asked | after a chunk of audio is complete | after the audio has gone and come back |
-| Languages | any CMUSphinx model: English, French, German, Spanish, Russian... no Arabic | about a hundred, of very uneven quality | the most, including Arabic dialects |
+| Languages | any CMUSphinx model: English, French, German, Spanish, Russian... and, through the second engine, Arabic with its dialects and any phrase written as it sounds | about a hundred, of very uneven quality | the most, including Arabic dialects |
 | Accuracy on free speech | well behind current models | close to current models | current models |
 
 Pick this one when the player says one of a few dozen known things and the game
@@ -119,13 +130,17 @@ after it), and one said inside a sentence about 430 ms sooner.
 | What | State |
 |---|---|
 | Builds as a standalone plugin (`RunUAT BuildPlugin`, Win64) | UE 5.5.4, 5.6.1 and 5.8.1: builds, no compiler warning |
-| Automated tests (`Tools/Run-Tests.ps1`), UE 5.8 | 14 of 14 pass |
+| Automated tests (`Tools/Run-Tests.ps1`), UE 5.8 | 20 of 20 pass, 6 of them for Arabic |
+| Arabic (`ar`, `aeb`, `ary`...), Omnilingual ASR through NNE with phrase scoring | built. On 89 synthetic Darija command clips and 18 distractors, inside Unreal: phrase scoring 78 of 89 commands, 0 false matches, 0 false accepts, against 50 of 89 for matching the model's text (thresholds chosen on those clips). Model loaded in 1.6 to 3.2 s; about 0.4 s per command with 8 ONNX Runtime threads, 0.7 s with 4, 2.4 s with 1; phrase scoring adds about 8 ms. The C++ matcher and phrase spellings agree with the Python ones on 1,343 and 143 cases |
+| ... with a person speaking | the author, Tunisian Darija, two live sessions in the sample: about 75% of commands worked with text matching, by the author's count, and "the Tunisian works" with phrase scoring. Not yet measured on recordings with known commands; MSA not yet spoken |
+| Invented words (`any`) | five made-up spell phrases, written once in Latin letters, spoken by two synthetic voices (English, French): 10 of 10 recognised, 0 wrong, 0 of 8 sentences of chat fired a spell. Nobody has spoken them yet |
+| Darija through Gemini (`-SpeechTranscriber=gemini`) | built, for development. Not yet called from Unreal: the free tier's 20 requests a day for `gemini-3.6-flash` went to the measurement |
 | Pre-built plugin (the release zip) in a Blueprint-only project, UE 5.8 | loads without compiling; the unit tests and the recorded-speech decoder test pass there. 5.5 and 5.6 zips built the same way, not opened |
 | ... of which on the live microphone | start, switch mode, shut down, four times over: passes. The device is opened and read; nobody spoke into it |
 | Benchmark on audio files | run; 116 synthetic utterances (English, French), 31 recorded (1 English, 30 German) |
 | Sample project | builds and runs in the editor on UE 5.8; driven by the author's voice |
 | A person speaking into a microphone | used by the author with their own voice, in their capstone game (UE 5.6) and in the sample (UE 5.8). Not measured: every accuracy figure comes from audio files |
-| Packaged game build | the sample, packaged with `BuildCookRun` (UE 5.8, Win64, Development): the models and the DLLs are staged, and the game loads the English model and starts listening. Shipping: packages and runs without a crash; it writes no log, so listening was not confirmed there |
+| Packaged game build | the sample, packaged with `BuildCookRun` (UE 5.8, Win64, Development): the models, the DLLs and ONNX Runtime are staged; the game loads the English model and starts listening, and with `-SpeechLanguage=any` or `aeb` loads the second engine's model (3.5 s) and scores phrases. Shipping (2.0.0): packages and runs without a crash; it writes no log, so listening was not confirmed there; the second engine was not tried in Shipping |
 | Mac, Linux, consoles | not supported: the bundled libraries are 64-bit Windows builds |
 | Unreal Engine 5.4 and earlier | not tried |
 
@@ -144,6 +159,24 @@ Open `SphinxSample.uproject` (it is set to UE 5.8; right-click it to switch
 engine version), let it compile, press Play, and say "go forward", "turn left",
 "jump", "stop". The screen shows the recogniser's state, the microphone level,
 and the last command heard with its timing.
+
+In Tunisian Darija; or in Modern Standard Arabic with `-SpeechLanguage=ar`; or
+with invented spell words with `-SpeechLanguage=any` ("velaris", "zelthar
+morun", "amorix valor corva aeterna", "silentium"):
+
+```
+powershell -ExecutionPolicy Bypass -File Tools\Get-Models.ps1 -Language en,omnilingual
+"C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe" "%CD%\SphinxSample.uproject" -game -windowed -ResX=1280 -ResY=720 -SpeechLanguage=aeb
+```
+
+Say "9oddem" (قدّام), "ltali" (لتالي) or "wakhar" (وخّر), "3al lisar" or "a
+gauche", "3al limin" or "a droite", "onguez" (اُنڨز), "o9ef" (أُقف), "barka" or
+"stop". In MSA: تقدّم، ارجع، يسارا، يمينا، اقفز، توقف. The screen shows what
+the model wrote, the phrase that won, its score and the time it took.
+In the running sample, **L** switches language: English, Tunisian, MSA, spells.
+The first switch to one of the last three loads the 328 MB model, a pause of a
+few seconds. Add `-SpeechTranscriber=gemini` to compare with Gemini (online, needs
+`GEMINI_API_KEY` in the environment).
 
 To use the plugin in your own project:
 
@@ -167,7 +200,8 @@ More: [docs/usage.md](docs/usage.md) (modes, events, tolerance, limits) and
 | French | CMUSphinx `fr-ptm-5.2` | synthetic speech |
 | German | VoxForge / Zamia `de-voxforge-5.2` | 30 recorded sentences from the corpus the model was trained on |
 | Others | any CMUSphinx model in the same layout | not tried |
-| Arabic, Tunisian Darija | none exists for CMUSphinx | planned with a second engine: see the roadmap |
+| Arabic: MSA (`ar`), Tunisian (`aeb`), Moroccan (`ary`), Egyptian (`arz`), Levantine (`apc`)... | none exists for CMUSphinx: Omnilingual ASR CTC 300M (Meta, Apache-2.0) through NNE, one model for every Arabic code; phrases written in Arabic script or Arabizi are scored against its output | synthetic Tunisian voices; two live sessions in Darija by the author. See [docs/models.md](docs/models.md#arabic-and-tunisian-darija) |
+| Any phrase (`any`): invented words, names, mixed languages | the same model and scoring, with no language | five invented spells on two synthetic voices |
 
 Accented and non-Latin words work: key phrases are lower-cased with Unicode
 rules and looked up in the dictionary as UTF-8. French recognition is clearly
@@ -212,11 +246,13 @@ between Windows versions, so your figures will not match to the unit.
    platforms.
 2. **A recorded test set.** A few speakers, a headset, a room: the accuracy
    figures that matter.
-3. **Arabic and Tunisian Darija**, through a second recognition engine behind
-   the same Voice Command component: whisper.cpp with a model fine-tuned on
-   Tunisian speech, its transcript matched against the command list. First
-   step, a measurement: Darija commands recorded by a few speakers, scored
-   against each candidate model. See [docs/models.md](docs/models.md#arabic-and-tunisian-darija).
+3. **Arabic, measured.** The engine is in: Omnilingual ASR through NNE with
+   phrase scoring, and Gemini for comparison. Next: Darija and MSA commands
+   recorded by a few speakers with `Tools/DarijaEval/record.py`, and every
+   method scored on them with `score.py`, including the Tunisian Whisper
+   fine-tunes (3 to 6 GB). If that is not good enough for a game, the next step
+   is fine-tuning the model on those recordings, run the same way on NNE. See
+   [docs/models.md](docs/models.md#arabic-and-tunisian-darija).
 4. **A packaged-build check** in the test script (done by hand so far).
 
 ## Licence and credits
