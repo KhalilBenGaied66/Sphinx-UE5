@@ -20,3 +20,9 @@ DerivedDataCache/
 
 # Written by packaging (BuildCookRun)
 /Build/
+
+# Darija measurement: speakers' voices are personal data, results are regenerated
+/Tools/DarijaEval/.venv/
+/Tools/DarijaEval/recordings/
+/Tools/DarijaEval/results/
+__pycache__/

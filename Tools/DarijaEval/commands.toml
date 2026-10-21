@@ -1,0 +1,346 @@
+# Tunisian Darija voice commands for the measurement.
+#
+# Written by Claude from general knowledge of Tunisian Arabic. It is a draft for
+# a Tunisian speaker to correct BEFORE recording: change a wording, add the one
+# people actually say, delete what nobody says. score.py and record.py read this
+# file and nothing else, so an edit here changes both.
+#
+# Per command:
+#   id        stable name used in file names and reports
+#   en        what the game does
+# Per wording (one to three per command; record.py rotates through them by take):
+#   ar        Arabic script, as a speaker would write it
+#   arabizi   Latin spellings people use (3 = ع, 7 = ح, 9 = ق, 5 = خ); the first
+#             one is shown to the speaker
+#   loan      set when the wording is a borrowed word, with its source
+#   sphinx    PocketSphinx dictionary lines for the French acoustic model:
+#             "<token> <French phones>". The tokens, in order, are the phrase the
+#             French model listens for. Phone set of the model:
+#             aa ai an au bb ch dd ee ei eu ff gg gn ii in jj kk ll mm nn oe on oo
+#             ou pp rr ss tt un uu uy vv ww yy zz
+#             ع ح ه ء have no French phone and are dropped; ق -> kk; خ غ -> rr
+#             (the French uvular r is the closest); ج -> jj; ش -> ch; ڨ -> gg.
+#
+# Some wordings (barka, dour lisar/limin, arja3 alone, hezz hedhi, battel,
+# annuli, attaki) come from a second draft written by another Claude session;
+# o9ef (stop) and wakhar (back) from the author's own voice in the first live
+# test of the plugin.
+#
+# The list deliberately keeps a few near-collisions a game would meet
+# (ija m3aya / ija lehna, 7ell / 7bes) and two one-syllable answers (ih, la),
+# because those are where recognisers confuse commands.
+
+schema = 1
+
+[[command]]
+id = "forward"
+en = "move forward"
+  [[command.wording]]
+  ar = "قدّام"
+  arabizi = ["9oddem", "9odem", "goddem"]
+  sphinx = ["9oddem kk oo dd aa mm"]
+  [[command.wording]]
+  ar = "إمشي لقدّام"
+  arabizi = ["emchi l9oddem", "imchi l9odem"]
+  sphinx = ["emchi ee mm ch ii", "l9oddem ll kk oo dd aa mm"]
+
+[[command]]
+id = "back"
+en = "move back"
+  [[command.wording]]
+  ar = "لتالي"
+  arabizi = ["ltali", "lteli"]
+  sphinx = ["ltali ll tt aa ll ii"]
+  [[command.wording]]
+  ar = "ارجع لتالي"
+  arabizi = ["arja3 ltali", "orja3 ltali"]
+  sphinx = ["arja aa rr jj aa", "ltali ll tt aa ll ii"]
+  [[command.wording]]
+  ar = "ارجع"
+  arabizi = ["arja3", "orja3"]
+  sphinx = ["arja aa rr jj aa"]
+  # wakhar: also from the first live test
+  [[command.wording]]
+  ar = "وخّر"
+  arabizi = ["wakhar", "wa5ar", "ou5ar"]
+  sphinx = ["wakhar ww aa rr aa rr"]
+
+[[command]]
+id = "left"
+en = "turn left"
+  [[command.wording]]
+  ar = "على ليسار"
+  arabizi = ["3al lisar", "3la lisar"]
+  sphinx = ["al aa ll", "lisar ll ii ss aa rr"]
+  [[command.wording]]
+  ar = "أ ڨوش"
+  arabizi = ["a gauche", "agoch"]
+  loan = "French: à gauche"
+  sphinx = ["agoch aa gg au ch"]
+  [[command.wording]]
+  ar = "دور ليسار"
+  arabizi = ["dour lisar", "dor lisar"]
+  sphinx = ["dour dd ou rr", "lisar ll ii ss aa rr"]
+
+[[command]]
+id = "right"
+en = "turn right"
+  [[command.wording]]
+  ar = "على ليمين"
+  arabizi = ["3al limin", "3la limin"]
+  sphinx = ["al aa ll", "limin ll ii mm ii nn"]
+  [[command.wording]]
+  ar = "أ دروات"
+  arabizi = ["a droite", "adrwat"]
+  loan = "French: à droite"
+  sphinx = ["adrwat aa dd rr ww aa tt"]
+  [[command.wording]]
+  ar = "دور ليمين"
+  arabizi = ["dour limin", "dor limin"]
+  sphinx = ["dour dd ou rr", "limin ll ii mm ii nn"]
+
+[[command]]
+id = "jump"
+en = "jump"
+  [[command.wording]]
+  ar = "اُنڨز"
+  arabizi = ["onguez", "ongez", "on9ez"]
+  sphinx = ["onguez oo nn gg ee zz"]
+
+[[command]]
+id = "stop"
+en = "stop moving"
+  # o9ef: what the author said for stop in the first live test (2026-10-20)
+  [[command.wording]]
+  ar = "أُقف"
+  arabizi = ["o9ef", "w9ef", "ou9ef"]
+  sphinx = ["okef oo kk ee ff"]
+  [[command.wording]]
+  ar = "حبس"
+  arabizi = ["7bes", "hbes"]
+  sphinx = ["hbes bb ee ss"]
+  [[command.wording]]
+  ar = "ستوب"
+  arabizi = ["stop", "stob"]
+  loan = "French/English: stop"
+  sphinx = ["stop ss tt oo pp"]
+  [[command.wording]]
+  ar = "بركا"
+  arabizi = ["barka", "berka"]
+  sphinx = ["barka bb aa rr kk aa"]
+
+[[command]]
+id = "run"
+en = "run"
+  [[command.wording]]
+  ar = "اجري"
+  arabizi = ["ajri", "jri"]
+  sphinx = ["ajri aa jj rr ii"]
+
+[[command]]
+id = "open_door"
+en = "open the door"
+  [[command.wording]]
+  ar = "حلّ الباب"
+  arabizi = ["7ell el beb", "7ell lbeb", "7el el bab"]
+  sphinx = ["hell ee ll", "lbeb ll bb ee bb"]
+
+[[command]]
+id = "close_door"
+en = "close the door"
+  [[command.wording]]
+  ar = "سكّر الباب"
+  arabizi = ["sakker el beb", "sakker lbeb", "sakar el bab"]
+  sphinx = ["sakker ss aa kk ee rr", "lbeb ll bb ee bb"]
+
+[[command]]
+id = "follow_me"
+en = "follow me"
+  [[command.wording]]
+  ar = "تبعني"
+  arabizi = ["tba3ni", "teb3ni"]
+  sphinx = ["tbani tt bb aa nn ii"]
+  [[command.wording]]
+  ar = "إيجا معايا"
+  arabizi = ["ija m3aya", "iji m3aya"]
+  sphinx = ["ija ii jj aa", "maya mm aa yy aa"]
+
+[[command]]
+id = "come_here"
+en = "come here"
+  [[command.wording]]
+  ar = "إيجا لهنا"
+  arabizi = ["ija lehna", "ija lhna"]
+  sphinx = ["ija ii jj aa", "lehna ll ee nn aa"]
+
+[[command]]
+id = "attack"
+en = "attack"
+  [[command.wording]]
+  ar = "هجم"
+  arabizi = ["hjem", "ehjem"]
+  sphinx = ["hjem jj ee mm"]
+  [[command.wording]]
+  ar = "أتاك"
+  arabizi = ["attaque", "atak", "attaki"]
+  loan = "French: attaque"
+  sphinx = ["atak aa tt aa kk"]
+
+[[command]]
+id = "shoot"
+en = "shoot"
+  [[command.wording]]
+  ar = "اُضرب"
+  arabizi = ["odhrob", "edhreb", "adhreb"]
+  sphinx = ["odrob oo dd rr oo bb"]
+  [[command.wording]]
+  ar = "تيري"
+  arabizi = ["tiri", "tirer"]
+  loan = "French: tirer"
+  sphinx = ["tiri tt ii rr ii"]
+
+[[command]]
+id = "reload"
+en = "reload"
+  [[command.wording]]
+  ar = "عمّر"
+  arabizi = ["3ammer", "3amer"]
+  sphinx = ["ammer aa mm ee rr"]
+  [[command.wording]]
+  ar = "ريشارجي"
+  arabizi = ["recharji", "recharger"]
+  loan = "French: recharger"
+  sphinx = ["recharji rr ee ch aa rr jj ii"]
+
+[[command]]
+id = "hold_position"
+en = "hold position"
+  [[command.wording]]
+  ar = "أُقعد في بلاصتك"
+  arabizi = ["o93od fi blastek", "o9o3d fi blastek"]
+  loan = "partly: blasa, from place"
+  sphinx = ["okod oo kk oo dd", "fi ff ii", "blastek bb ll aa ss tt ee kk"]
+  [[command.wording]]
+  ar = "ما تتحرّكش"
+  arabizi = ["ma tet7arrekch", "matet7arekch"]
+  sphinx = ["ma mm aa", "tetarekch tt ee tt aa rr ee kk ch"]
+
+[[command]]
+id = "wait"
+en = "wait"
+  [[command.wording]]
+  ar = "استنّى"
+  arabizi = ["stanna", "estanna"]
+  sphinx = ["stanna ss tt aa nn aa"]
+  [[command.wording]]
+  ar = "أُصبر"
+  arabizi = ["osbor", "esbor"]
+  sphinx = ["osbor oo ss bb oo rr"]
+
+[[command]]
+id = "hide"
+en = "hide / take cover"
+  [[command.wording]]
+  ar = "تخبّى"
+  arabizi = ["tkhabba", "t5abba"]
+  sphinx = ["tkhabba tt rr aa bb aa"]
+
+[[command]]
+id = "pick_up"
+en = "pick it up"
+  [[command.wording]]
+  ar = "هزّها"
+  arabizi = ["hezzha", "hezha"]
+  sphinx = ["hezzha ee zz aa"]
+  [[command.wording]]
+  ar = "هزّو"
+  arabizi = ["hezzou", "hezzo"]
+  sphinx = ["hezzou ee zz ou"]
+  [[command.wording]]
+  ar = "هزّ هاذي"
+  arabizi = ["hezz hedhi", "hez hedi"]
+  sphinx = ["hezz ee zz", "hedhi ee dd ii"]
+
+[[command]]
+id = "map"
+en = "open the map"
+  [[command.wording]]
+  ar = "الكارطة"
+  arabizi = ["el karta", "lkarta"]
+  loan = "French: carte"
+  sphinx = ["lkarta ll kk aa rr tt aa"]
+
+[[command]]
+id = "pause"
+en = "pause the game"
+  [[command.wording]]
+  ar = "بوز"
+  arabizi = ["pause", "pauz"]
+  loan = "French: pause"
+  sphinx = ["pause pp oo zz"]
+  [[command.wording]]
+  ar = "وقّف اللعبة"
+  arabizi = ["wa99ef el le3ba", "wa9ef lle3ba"]
+  sphinx = ["wakkef ww aa kk ee ff", "lleba ll ee bb aa"]
+
+[[command]]
+id = "yes"
+en = "yes / confirm"
+  [[command.wording]]
+  ar = "إيه"
+  arabizi = ["ih", "iyeh"]
+  sphinx = ["ih ii"]
+  [[command.wording]]
+  ar = "باهي"
+  arabizi = ["behi", "bahi"]
+  sphinx = ["behi bb ee ii"]
+
+[[command]]
+id = "no"
+en = "no / cancel"
+  [[command.wording]]
+  ar = "لا"
+  arabizi = ["la", "le"]
+  sphinx = ["la ll aa"]
+  [[command.wording]]
+  ar = "بطّل"
+  arabizi = ["battel", "batel"]
+  sphinx = ["battel bb aa tt ee ll"]
+  [[command.wording]]
+  ar = "أنولي"
+  arabizi = ["annuli", "anouli"]
+  loan = "French: annuler"
+  sphinx = ["annuli aa nn uu ll ii"]
+
+# Distractors: things a player says that are NOT commands. A recogniser that
+# fires a command on these is producing false matches. "silence" means: say
+# nothing, the clip records room noise.
+[[distractor]]
+id = "chat_howareyou"
+ar = "شنوّة أحوالك"
+arabizi = "chnowa a7walek"
+
+[[distractor]]
+id = "chat_weather"
+ar = "الجو مزيان اليوم"
+arabizi = "ejjaw mezyen lyoum"
+
+[[distractor]]
+id = "chat_coffee"
+ar = "نحب نشرب قهوة"
+arabizi = "n7eb nochrob 9ahwa"
+
+[[distractor]]
+id = "chat_keys"
+ar = "وين المفاتح"
+arabizi = "win el mfete7"
+
+[[distractor]]
+id = "chat_dontget"
+ar = "ما فهمتش"
+arabizi = "ma fhemtech"
+
+[[distractor]]
+id = "silence"
+ar = "(صمت)"
+arabizi = "(say nothing)"
