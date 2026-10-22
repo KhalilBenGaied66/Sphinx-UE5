@@ -29,15 +29,23 @@ repository's work and is not listed here.
   `Phrase Score Threshold` and `Margin`, `Transcript Match Threshold` and
   `Margin`. `FRecognisedPhraseDetail` gains `bIsTranscript`, `MatchedPhrase`,
   `PhraseScore`, `PhraseScores` and `ProcessingSeconds`.
+- **`Set Input File`** (and `SpeechRecognition.InputFile`): a WAV file in place
+  of the microphone, played in real time, for tests and for replaying
+  recordings through the live path.
+- **A log line per language change and per utterance**: which language, which
+  engine, whether the model was loaded or reused, what was heard, and the best
+  and next phrase with their scores. The sample shows a phrase that came close
+  but did not fire, and why.
 - **A Gemini engine for development** (`-SpeechTranscriber=gemini`, key from the
   `GEMINI_API_KEY` environment variable, never shipped).
 - **Sample:** `-SpeechLanguage=aeb` (Tunisian Darija), `ar` (MSA), `any`
   (spells). The screen shows the model's text, the winning phrase and its score.
 - **`Tools/DarijaEval`:** the Darija command list, a recording tool, and a
   script that scores every engine on the same clips.
-- **Tests:** six more (phrase scorer, matcher parity with the Python version on
-  1,343 cases, speech detector events, the model on 115 clips, the live
-  subsystem switching Tunisian, English, MSA and `any`).
+- **Tests:** seven more (phrase scorer, matcher parity with the Python version
+  on 1,454 cases, speech detector events, the model on 115 clips, the live
+  subsystem switching Tunisian, English, MSA and `any`, and the same switch with
+  a clip of each language played through the worker).
 
 ### Changed
 

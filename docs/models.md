@@ -189,6 +189,13 @@ writes Hindi, Korean or Ethiopic letters. All of these are synthetic audio or
 unlabelled transcripts: only recordings of people with known commands can
 rank the methods. `Tools/DarijaEval/record.py` makes them.
 
+**Letters of other scripts.** Omnilingual's CTC model is not told which
+language to expect, and on a short or unclear clip it sometimes writes Hindi,
+Korean or Ethiopic letters (`aलiसर`, `이민`). Nothing in the plugin pins Arabic
+codes to Arabic output, and phrase scoring does not need it to: only the
+letters of your phrases are scored, so stray scripts in the model's own text do
+not decide anything. They do show up in the log and on screen.
+
 **Any phrase, no language (`any`).** Phrase scoring does not use the language
 code: it checks whether the letters of a phrase fit the sounds the model
 heard, with the letters of every script it was trained on. So the same engine

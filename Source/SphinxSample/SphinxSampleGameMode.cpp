@@ -128,5 +128,14 @@ void ASphinxSampleHUD::DrawHUD()
 		// what the engine wrote, whether it matched a command or not
 		const double Age = World->GetRealTimeSeconds() - Cube->LastTranscriptTime;
 		Line(FString::Printf(TEXT("Last transcript: \"%s\"   (%.0f ms, %.1fs ago)"), *Cube->LastTranscript, Cube->LastTranscriptSeconds * 1000.f, Age), FLinearColor(0.8f, 0.8f, 0.8f));
+		if (!Cube->LastBestPhrase.IsEmpty())
+		{
+			// close but not accepted: say why
+			Line(Cube->bLastFired
+				? FString::Printf(TEXT("Best phrase \"%s\": %.2f, %.2f ahead of the next command (fired)"), *Cube->LastBestPhrase, Cube->LastBestScore, Cube->LastLead)
+				: FString::Printf(TEXT("Best phrase \"%s\": %.2f, %.2f ahead (not fired: needs %.1f or better and %.1f ahead; add the wording you said)"),
+					*Cube->LastBestPhrase, Cube->LastBestScore, Cube->LastLead, Cube->VoiceCommands->PhraseScoreThreshold, Cube->VoiceCommands->PhraseScoreMargin),
+				Cube->bLastFired ? FLinearColor::Green : FLinearColor(1.f, 0.7f, 0.3f));
+		}
 	}
 }

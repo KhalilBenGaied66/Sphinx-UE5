@@ -69,6 +69,27 @@ instead (**Transcript Match Threshold** 80, **Transcript Match Margin** 5).
 is no grammar to search. The model, the engines and their speed are in
 [models.md](models.md#arabic-and-tunisian-darija).
 
+**When a phrase does not fire.** Every utterance writes two lines to the log:
+
+```
+SpeechRecognitionPlugin: Heard "imchi limen" (1.2 s of audio, transcribed in 450 ms)
+SpeechRecognitionPlugin: Phrase scores: best Right (-1.10, "imchi limin"), next Forward (-3.80)
+```
+
+and every change of language one more (`Listening in 'aeb' (...; model already
+loaded), 6 phrase(s), from the microphone`). A best phrase above -2.5 that did
+not fire lost on the margin; one well below it means the player said a wording
+you have not written: add it to the command's phrases, as it sounds. The sample
+shows the same on screen. No "Heard" line at all means the speech detector
+heard nothing: the microphone level is too low, or nobody spoke.
+
+**Replaying audio through the live path.** `Set Input File` on the subsystem
+(or the console variable `SpeechRecognition.InputFile`) plays a 16 kHz 16-bit
+mono WAV in place of the microphone, in real time, then silence. Everything
+else is the same: speech detector, engine, language switches, components. It is
+how `SpeechRecognition.Subsystem.LanguageSwitchWithAudio` tests the sample's
+language switch, and a way to replay a player's recording.
+
 ## The subsystem
 
 Get it with **Get World Subsystem > Speech Recognition Subsystem**, then:

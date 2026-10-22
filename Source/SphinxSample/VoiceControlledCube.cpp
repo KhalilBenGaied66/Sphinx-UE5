@@ -40,14 +40,18 @@ TArray<FVoiceCommand> AVoiceControlledCube::CommandsFor(const FString& LanguageC
 	// against what the second engine's speech model heard. A phrase may be written
 	// in Arabic script or in Latin letters, as it sounds; one spelling is enough,
 	// more spellings help. The tolerance is only used by PocketSphinx.
+	//
+	// To add your own wording, add it to a command's list below and rebuild; the
+	// screen shows how close each utterance came, so a wording that is said often
+	// but scores below -2.5 is the one to add.
 	if (Code == TEXT("aeb"))
 	{
 		// Tunisian Darija, as in Tools/DarijaEval/commands.toml
 		return {
 			MakeCommand(TEXT("Forward"), { TEXT("قدّام"), TEXT("إمشي لقدّام"), TEXT("9oddem"), TEXT("emchi l9oddem") }, EPhraseRecognitionTolerance::VE_5),
 			MakeCommand(TEXT("Back"),    { TEXT("لتالي"), TEXT("ارجع"), TEXT("وخّر"), TEXT("ltali"), TEXT("arja3"), TEXT("wakhar") }, EPhraseRecognitionTolerance::VE_5),
-			MakeCommand(TEXT("Left"),    { TEXT("على ليسار"), TEXT("دور ليسار"), TEXT("3al lisar"), TEXT("a gauche") }, EPhraseRecognitionTolerance::VE_5),
-			MakeCommand(TEXT("Right"),   { TEXT("على ليمين"), TEXT("دور ليمين"), TEXT("3al limin"), TEXT("a droite") }, EPhraseRecognitionTolerance::VE_5),
+			MakeCommand(TEXT("Left"),    { TEXT("على ليسار"), TEXT("دور ليسار"), TEXT("امشي ليسار"), TEXT("3al lisar"), TEXT("imchi lisar"), TEXT("a gauche") }, EPhraseRecognitionTolerance::VE_5),
+			MakeCommand(TEXT("Right"),   { TEXT("على ليمين"), TEXT("دور ليمين"), TEXT("امشي ليمين"), TEXT("3al limin"), TEXT("imchi limin"), TEXT("a droite") }, EPhraseRecognitionTolerance::VE_5),
 			MakeCommand(TEXT("Jump"),    { TEXT("اُنڨز"), TEXT("onguez") }, EPhraseRecognitionTolerance::VE_5),
 			MakeCommand(TEXT("Stop"),    { TEXT("أُقف"), TEXT("حبس"), TEXT("بركا"), TEXT("o9ef"), TEXT("barka"), TEXT("stop") }, EPhraseRecognitionTolerance::VE_5),
 		};
@@ -182,6 +186,41 @@ void AVoiceControlledCube::HandlePhrasesHeard(const TArray<FRecognisedPhraseDeta
 			LastTranscript = Phrase.Phrase;
 			LastTranscriptSeconds = Phrase.ProcessingSeconds;
 			LastTranscriptTime = GetWorld()->GetRealTimeSeconds();
+
+			// the best and second best command, as the component sees them, so that a
+			// phrase that was close but not accepted shows on screen
+			float Best = -1e9f, Second = -1e9f;
+			FString BestPhrase;
+			for (const FVoiceCommand& Command : VoiceCommands->Commands)
+			{
+				float CommandBest = -1e9f;
+				FString CommandPhrase;
+				for (const FString& Candidate : Command.Phrases)
+				{
+					if (const float* Score = Phrase.PhraseScores.Find(Candidate.TrimStartAndEnd()))
+					{
+						if (*Score > CommandBest)
+						{
+							CommandBest = *Score;
+							CommandPhrase = Candidate;
+						}
+					}
+				}
+				if (CommandBest > Best)
+				{
+					Second = Best;
+					Best = CommandBest;
+					BestPhrase = CommandPhrase;
+				}
+				else if (CommandBest > Second)
+				{
+					Second = CommandBest;
+				}
+			}
+			LastBestPhrase = BestPhrase;
+			LastBestScore = Best;
+			LastLead = Best - Second;
+			bLastFired = Best >= VoiceCommands->PhraseScoreThreshold && LastLead >= VoiceCommands->PhraseScoreMargin;
 		}
 	}
 }

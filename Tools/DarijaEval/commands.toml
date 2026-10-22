@@ -81,6 +81,11 @@ en = "turn left"
   ar = "دور ليسار"
   arabizi = ["dour lisar", "dor lisar"]
   sphinx = ["dour dd ou rr", "lisar ll ii ss aa rr"]
+  # imchi limin / imchi lisar: said by the author in the live tests
+  [[command.wording]]
+  ar = "امشي ليسار"
+  arabizi = ["imchi lisar", "emchi lisar"]
+  sphinx = ["emchi ee mm ch ii", "lisar ll ii ss aa rr"]
 
 [[command]]
 id = "right"
@@ -98,6 +103,10 @@ en = "turn right"
   ar = "دور ليمين"
   arabizi = ["dour limin", "dor limin"]
   sphinx = ["dour dd ou rr", "limin ll ii mm ii nn"]
+  [[command.wording]]
+  ar = "امشي ليمين"
+  arabizi = ["imchi limin", "emchi limin"]
+  sphinx = ["emchi ee mm ch ii", "limin ll ii mm ii nn"]
 
 [[command]]
 id = "jump"
