@@ -18,6 +18,12 @@ struct FSpeechWorkerRequest
 	/** False closes the microphone and the decoder without starting new ones. */
 	bool bListen = true;
 
+	/**
+	 * A 16 kHz 16-bit mono WAV file to listen to instead of the microphone, played
+	 * in real time and followed by silence. Empty: the default recording device.
+	 */
+	FString InputFile;
+
 	FSphinxDecoderConfig Config;
 };
 

@@ -56,6 +56,12 @@ public:
 	float LastTranscriptSeconds = 0.f;
 	double LastTranscriptTime = 0.0;
 
+	/** Phrase scoring: the best phrase of the last utterance, fired or not, and by how much it led. */
+	FString LastBestPhrase;
+	float LastBestScore = 0.f;
+	float LastLead = 0.f;
+	bool bLastFired = false;
+
 private:
 	UFUNCTION()
 	void HandleVoiceCommand(FName Command, FGameplayTag Tag, const FRecognisedPhraseDetail& Phrase);

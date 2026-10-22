@@ -130,7 +130,7 @@ after it), and one said inside a sentence about 430 ms sooner.
 | What | State |
 |---|---|
 | Builds as a standalone plugin (`RunUAT BuildPlugin`, Win64) | UE 5.5.4, 5.6.1 and 5.8.1: builds, no compiler warning |
-| Automated tests (`Tools/Run-Tests.ps1`), UE 5.8 | 20 of 20 pass, 6 of them for Arabic |
+| Automated tests (`Tools/Run-Tests.ps1`), UE 5.8 | 21 of 21 pass, 7 of them for the second engine. One plays a clip of each language through the live path while switching any, English, Tunisian, MSA, any, as the sample's L key does: each is recognised |
 | Arabic (`ar`, `aeb`, `ary`...), Omnilingual ASR through NNE with phrase scoring | built. On 89 synthetic Darija command clips and 18 distractors, inside Unreal: phrase scoring 78 of 89 commands, 0 false matches, 0 false accepts, against 50 of 89 for matching the model's text (thresholds chosen on those clips). Model loaded in 1.6 to 3.2 s; about 0.4 s per command with 8 ONNX Runtime threads, 0.7 s with 4, 2.4 s with 1; phrase scoring adds about 8 ms. The C++ matcher and phrase spellings agree with the Python ones on 1,343 and 143 cases |
 | ... with a person speaking | the author, Tunisian Darija, two live sessions in the sample: about 75% of commands worked with text matching, by the author's count, and "the Tunisian works" with phrase scoring. Not yet measured on recordings with known commands; MSA not yet spoken |
 | Invented words (`any`) | five made-up spell phrases, written once in Latin letters, spoken by two synthetic voices (English, French): 10 of 10 recognised, 0 wrong, 0 of 8 sentences of chat fired a spell. Nobody has spoken them yet |
@@ -175,7 +175,9 @@ gauche", "3al limin" or "a droite", "onguez" (اُنڨز), "o9ef" (أُقف), "b
 the model wrote, the phrase that won, its score and the time it took.
 In the running sample, **L** switches language: English, Tunisian, MSA, spells.
 The first switch to one of the last three loads the 328 MB model, a pause of a
-few seconds. Add `-SpeechTranscriber=gemini` to compare with Gemini (online, needs
+few seconds. When a phrase does not fire, the screen shows the best phrase,
+its score and why it was not accepted; add the wording you said to
+`CommandsFor()` in `Source/SphinxSample/VoiceControlledCube.cpp`. Add `-SpeechTranscriber=gemini` to compare with Gemini (online, needs
 `GEMINI_API_KEY` in the environment).
 
 To use the plugin in your own project:

@@ -6,12 +6,19 @@
 #include "SpeechRecognitionWorker.h"
 
 #include "Engine/World.h"
+#include "HAL/IConsoleManager.h"
 #include "Misc/ConfigCacheIni.h"
 #include "Misc/Paths.h"
 
 #include <cstdlib>
 
 #define SPEECHRECOGNITIONPLUGIN ISpeechRecognition::Get()
+
+static TAutoConsoleVariable<FString> CVarSpeechInputFile(
+	TEXT("SpeechRecognition.InputFile"),
+	TEXT(""),
+	TEXT("A 16 kHz 16-bit mono WAV file to listen to instead of the microphone (played in real time, then silence). Empty: the microphone. Applies the next time a mode starts."),
+	ECVF_Default);
 
 USpeechRecognitionSubsystem::USpeechRecognitionSubsystem()
 {
@@ -166,6 +173,7 @@ bool USpeechRecognitionSubsystem::Shutdown()
 		bModeEnabled = false;
 		Transcriber.Reset();
 		TranscriberKey.Reset();
+		LastListeningDescription.Reset();
 		Keywords.Reset();
 		ConfigParams.Reset();
 		RejectedPhrases.Reset();
@@ -236,6 +244,9 @@ bool USpeechRecognitionSubsystem::ApplyMode()
 	FSpeechWorkerRequest Request;
 	FSphinxDecoderConfig& Config = Request.Config;
 
+	Request.InputFile = !InputFile.IsEmpty() ? InputFile : CVarSpeechInputFile.GetValueOnGameThread().TrimStartAndEnd();
+	const FString InputName = Request.InputFile.IsEmpty() ? FString(TEXT("the microphone")) : FString::Printf(TEXT("the file %s"), *Request.InputFile);
+
 	if (IsTranscribing())
 	{
 		// No PocketSphinx model: an engine transcribes what is said, and the voice
@@ -249,11 +260,21 @@ bool USpeechRecognitionSubsystem::ApplyMode()
 			return false;
 		}
 		FString TranscriberError;
+		const bool bHadTranscriber = Transcriber.IsValid();
+		const FString PreviousKey = TranscriberKey;
 		if (!EnsureTranscriber(TranscriberError))
 		{
 			StopListening();
 			ReportFailure(ESpeechRecognitionError::TranscriberUnavailable, TranscriberError);
 			return false;
+		}
+		const FString Listening = FString::Printf(TEXT("'%s' (%s; %s), %d phrase(s), from %s"), *LanguageCode, *Transcriber->Describe(),
+			bHadTranscriber && PreviousKey == TranscriberKey ? TEXT("model already loaded") : TEXT("model loaded now"),
+			Keywords.Num() + [this]() { int32 N = 0; for (const auto& Source : KeywordSources) { N += Source.Value.Num(); } return N; }(), *InputName);
+		if (Listening != LastListeningDescription)
+		{
+			UE_LOG(SpeechRecognitionPlugin, Log, TEXT("Listening in %s"), *Listening);
+			LastListeningDescription = Listening;
 		}
 		Config.Transcriber = Transcriber;
 		Config.Mode = Mode;
@@ -300,6 +321,15 @@ bool USpeechRecognitionSubsystem::ApplyMode()
 	case ESpeechRecognitionMode::VE_LANGUAGE_MODEL:
 		Config.LanguageModelPath = USpeechRecognitionSettings::GetLanguageModelPath(LanguageCode, LanguageModelName);
 		break;
+	}
+
+	{
+		const FString Listening = FString::Printf(TEXT("'%s' (PocketSphinx), from %s"), *LanguageCode, *InputName);
+		if (Listening != LastListeningDescription)
+		{
+			UE_LOG(SpeechRecognitionPlugin, Log, TEXT("Listening in %s"), *Listening);
+			LastListeningDescription = Listening;
+		}
 	}
 
 	// Missing files are reported here, on the calling thread, so that the caller
@@ -442,6 +472,20 @@ TArray<FString> USpeechRecognitionSubsystem::GetRejectedPhrases() const
 FString USpeechRecognitionSubsystem::GetLanguageCode() const
 {
 	return LanguageCode;
+}
+
+void USpeechRecognitionSubsystem::SetInputFile(const FString& WavPath)
+{
+	const FString Path = WavPath.TrimStartAndEnd();
+	if (Path == InputFile)
+	{
+		return;
+	}
+	InputFile = Path;
+	if (bModeEnabled)
+	{
+		ApplyMode();
+	}
 }
 
 bool USpeechRecognitionSubsystem::IsTranscribing() const

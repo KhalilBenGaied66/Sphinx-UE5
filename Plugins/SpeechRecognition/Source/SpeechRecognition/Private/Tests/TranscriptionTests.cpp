@@ -10,6 +10,7 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "SpeechRecognitionSubsystem.h"
+#include "SpeechRecognitionTestListener.h"
 #include "Tests/AutomationCommon.h"
 #include "SpeechRecognitionSettings.h"
 #include "SpeechTestSupport.h"
@@ -525,6 +526,158 @@ bool FDarijaSubsystemTest::RunTest(const FString& Parameters)
 			AddError(FString::Printf(TEXT("%s: still not listening after 30 s"), Languages[Index]));
 			Speech->Shutdown();
 			return true;
+		}
+		return false;
+	}));
+	return true;
+}
+
+// The path the sample's L key takes, with audio: a language switch through the
+// subsystem (Init With Language Code, new key phrases), then a clip of that
+// language played through the worker in place of the microphone. Starts fresh in
+// "any", then English, Tunisian, MSA and "any" again: the languages that share
+// the model must keep hearing after a switch.
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FLanguageSwitchAudioTest, "SpeechRecognition.Subsystem.LanguageSwitchWithAudio", TranscriptionTestFlags)
+bool FLanguageSwitchAudioTest::RunTest(const FString& Parameters)
+{
+	const FString Eval = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir() / TEXT("Tools/DarijaEval/recordings"));
+	struct FStep
+	{
+		const TCHAR* Language;
+		FString File;
+		TArray<FString> Phrases;
+		FString Expected;
+	};
+	const TArray<FString> Spells = { TEXT("amorix valor"), TEXT("corva aeterna"), TEXT("sanarel vitae"), TEXT("zelthar morun"), TEXT("kraveth ulnar") };
+	const TArray<FStep> Steps = {
+		{ TEXT("any"), Eval / TEXT("spells/shield_0.wav"), Spells, TEXT("amorix valor") },
+		{ TEXT("en"), SpeechTest::GetAudioRoot() / TEXT("generated/en/go_forward_normal.wav"), { TEXT("go forward"), TEXT("turn left"), TEXT("stop") }, TEXT("go forward") },
+		{ TEXT("aeb"), Eval / TEXT("placeholder-edge/ttshedi/forward_0_1.wav"), { TEXT("إمشي لقدّام"), TEXT("ارجع لتالي"), TEXT("دور ليسار"), TEXT("حبس") }, TEXT("إمشي لقدّام") },
+		{ TEXT("ar"), Eval / TEXT("placeholder-edge/ttsreem/back_1_1.wav"), { TEXT("تقدّم"), TEXT("ارجع"), TEXT("يسارا"), TEXT("توقف") }, TEXT("ارجع") },
+		{ TEXT("any"), Eval / TEXT("spells/fire_1.wav"), Spells, TEXT("corva aeterna") },
+	};
+	for (const FStep& Step : Steps)
+	{
+		if (!IFileManager::Get().FileExists(*Step.File))
+		{
+			AddInfo(FString::Printf(TEXT("Skipped: %s is missing (Tools/New-TestAudio.ps1, Tools/DarijaEval/spells_check.py and the placeholder-edge clips make them)"), *Step.File));
+			return true;
+		}
+	}
+	if (!USpeechRecognitionSettings::HasTranscriptionModel(TEXT("any")) || !USpeechRecognitionSettings::HasSphinxModel(TEXT("en")))
+	{
+		AddInfo(TEXT("Skipped: needs the omnilingual and en models (Tools/Get-Models.ps1 -Language en,omnilingual)"));
+		return true;
+	}
+
+	USpeechRecognitionSubsystem* Subsystem = nullptr;
+	for (const FWorldContext& Context : GEngine->GetWorldContexts())
+	{
+		if (UWorld* World = Context.World())
+		{
+			Subsystem = Subsystem != nullptr ? Subsystem : World->GetSubsystem<USpeechRecognitionSubsystem>();
+		}
+	}
+	if (!TestNotNull(TEXT("a world with the subsystem"), Subsystem))
+	{
+		return true;
+	}
+	Subsystem->Shutdown();
+
+	USpeechRecognitionTestListener* Listener = NewObject<USpeechRecognitionTestListener>(GetTransientPackage());
+	Listener->AddToRoot();
+	Subsystem->OnPhrasesRecognised.AddDynamic(Listener, &USpeechRecognitionTestListener::HandlePhrasesRecognised);
+
+	struct FRun
+	{
+		int32 Step = 0;
+		bool bStarted = false;
+		double Deadline = 0.0;
+	};
+	const TSharedRef<FRun> Run = MakeShared<FRun>();
+	const TWeakObjectPtr<USpeechRecognitionSubsystem> WeakSubsystem(Subsystem);
+
+	ADD_LATENT_AUTOMATION_COMMAND(FFunctionLatentCommand([this, Run, WeakSubsystem, Listener, Steps]() -> bool
+	{
+		USpeechRecognitionSubsystem* Speech = WeakSubsystem.Get();
+		auto Finish = [&]()
+		{
+			if (Speech != nullptr)
+			{
+				Speech->OnPhrasesRecognised.RemoveDynamic(Listener, &USpeechRecognitionTestListener::HandlePhrasesRecognised);
+				Speech->RemoveKeywordSource(Listener);
+				Speech->SetInputFile(FString());
+				Speech->Shutdown();
+			}
+			Listener->RemoveFromRoot();
+			return true;
+		};
+		if (Speech == nullptr)
+		{
+			AddError(TEXT("The subsystem went away during the test."));
+			return Finish();
+		}
+		if (Run->Step >= Steps.Num())
+		{
+			return Finish();
+		}
+		const FStep& Step = Steps[Run->Step];
+
+		if (!Run->bStarted)
+		{
+			// as AVoiceControlledCube::SwitchLanguage does, then the clip in place of the microphone
+			Listener->Heard.Reset();
+			TArray<FRecognitionPhrase> Phrases;
+			for (const FString& Phrase : Step.Phrases)
+			{
+				Phrases.Emplace(Phrase);
+			}
+			Speech->InitWithLanguageCode(Step.Language);
+			Speech->AddKeywordSource(Listener, Phrases);
+			Speech->SetInputFile(Step.File);
+			Run->bStarted = true;
+			Run->Deadline = FPlatformTime::Seconds() + 20.0;
+			return false;
+		}
+
+		if (Speech->GetState() == ESpeechRecognitionState::Failed)
+		{
+			AddError(FString::Printf(TEXT("%s: %s"), Step.Language, *Speech->GetLastErrorMessage()));
+			return Finish();
+		}
+
+		for (const FRecognisedPhraseDetail& Heard : Listener->Heard)
+		{
+			FString Best = Heard.Phrase;
+			float BestScore = 0.f;
+			if (Heard.bIsTranscript)
+			{
+				// what a voice command component would pick: the phrase that scored best
+				BestScore = -1e9f;
+				for (const TPair<FString, float>& Score : Heard.PhraseScores)
+				{
+					if (Score.Value > BestScore)
+					{
+						BestScore = Score.Value;
+						Best = Score.Key;
+					}
+				}
+			}
+			AddInfo(FString::Printf(TEXT("%s: heard \"%s\" -> \"%s\"%s"), Step.Language, *Heard.Phrase, *Best,
+				Heard.bIsTranscript ? *FString::Printf(TEXT(" (%.2f)"), BestScore) : TEXT("")));
+			if (Best == Step.Expected && (!Heard.bIsTranscript || BestScore >= -2.5f))
+			{
+				++Run->Step;
+				Run->bStarted = false;
+				return false;
+			}
+		}
+		Listener->Heard.Reset();
+
+		if (FPlatformTime::Seconds() > Run->Deadline)
+		{
+			AddError(FString::Printf(TEXT("%s (step %d): \"%s\" was not recognised within 20 s of the switch"), Step.Language, Run->Step + 1, *Step.Expected));
+			return Finish();
 		}
 		return false;
 	}));

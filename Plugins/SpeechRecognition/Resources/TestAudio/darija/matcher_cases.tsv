@@ -27,6 +27,9 @@ agoch		agush	left	kc
 دور ليسار	دور ليسار		left	drlsr
 dour lisar		dur lisar	left	drlsr
 dor lisar		dur lisar	left	drlsr
+امشي ليسار	امشي ليسار		left	mclsr
+imchi lisar		imshi lisar	left	mclsr
+emchi lisar		amshi lisar	left	mclsr
 على ليمين	علي ليمين		right	lmn
 3al limin		al limin	right	lmn
 3la limin		ala limin	right	lmn
@@ -36,6 +39,9 @@ adrwat		adruat	right	drt
 دور ليمين	دور ليمين		right	drlmn
 dour limin		dur limin	right	drlmn
 dor limin		dur limin	right	drlmn
+امشي ليمين	امشي ليمين		right	mclmn
+imchi limin		imshi limin	right	mclmn
+emchi limin		amshi limin	right	mclmn
 اُنڨز	انقز		jump	nkz
 onguez		ungaz	jump	nkz
 ongez		ungaz	jump	nkz
@@ -1341,3 +1347,108 @@ nebno krop kawan  [hold_position -6.25 via اقعد في بلاصتك; next -6.3
 winlmft  [open_door -4.00 via حل الباب; next -4.24]	حل الباب	uinlmft upan dur via naxt	open_door	nlmftbndrfhlbnxt
 مفم تش  [right -5.08 via علي ليمين; next -5.09]	مفم تش علي ليمين	right kh via naxt kh k	right	mfmtcrxtxflmnxtxk
 [no -5.60 via لا; next -5.84]	لا	nu kh via naxt kh	no	nxflnxtx
+[forward 0.00 via إمشي لقدّام]	امشي لقدام	furuard via	forward	frdfmclkdm
+[forward -1.72 via قدّام]	قدام	furuard h via	forward	frdhfkdm
+[back -0.34 via ارجع لتالي]	ارجع لتالي	bak a via	back	bkfrjltl
+[back -1.01 via ارجع]	ارجع	bak via	back	bkfrj
+[left -0.48 via دور ليسار]	دور ليسار	laft via	left	lftxfdrlsr
+[right -0.18 via دور ليمين]	دور ليمين	right via	right	rxtxfdrlmn
+[jump -1.05 via اُنڨز]	انقز	jump kh via	jump	jmbxfnkz
+[stop -1.82 via أُقف]	اقف	stup via	stop	stbxfkf
+[None -4.61 via berka]		nuna via barka	stop	nfbrk
+[run -0.18 via jri]		run via jri	run	rnxfjr
+[hide -1.45 via tkhabba]		hida kh via tkhaba	hide	hdxftxb
+[follow_me -0.20 via teb3ni]		fulu ma via tabani	follow_me	flmftbn
+[hold_position -0.39 via أُقعد في بلاصتك]	اقعد في بلاصتك	huld pusitiun ak via	hold_position	hldbstnkfkdfblstk
+[attack -1.02 via atak]		atak via atak	attack	tkftk
+[attack -2.37 via هجم]	هجم	atak ah via	attack	tkhfhjm
+[open_door -0.16 via حلّ الباب]	حل الباب	upan dur via	open_door	bndrfhlb
+[close_door -0.05 via سكّر الباب]	سكر الباب	klusa dur kh via	close_door	klsdrxfskrlb
+[pick_up -0.01 via هزّ هاذي]	هز هاذي	pik up via	pick_up	bkbfhzhd
+[reload -1.40 via recharji]		raluad via rasharji	reload	rldfrcrj
+[reload -0.44 via 3amer]		raluad via amar	reload	rldfmr
+[None -2.56 via إيه]	ايه	nuna kh via	yes	nxfh
+[no -0.69 via بطّل]	بطل	nu k via	no	nkfbtl
+[no 0.00 via أنولي]	انولي	nu via	no	nfnl
+[None -8.95 via wa99ef el le3ba]		nuna kh via uakaf al laba	pause	nxkxfkflb
+[None -7.59 via emchi l9oddem]		nuna h khk via amshi lkudam	forward	nhxkfmclkdm
+[None -8.31 via sakar el bab]		nuna a via sakar al bab	close_door	nxfskrlb
+[None -6.52 via o93od fi blastek]		nuna kh via ukaud fi blastak	hold_position	nxfkdfblstk
+[None -6.38 via o9o3d fi blastek]		nuna a via ukuad fi blastak	hold_position	nxfkdfblstk
+[None -9.74 via arja3 ltali]		nuna k h via arja ltali	back	nkhfrjltl
+[forward -0.18 via إمشي لقدّام]	امشي لقدام	furuard via	forward	frdxfmclkdm
+[forward -1.97 via 9odem]		furuard kh via kudam	forward	frdkhfkdm
+[back -0.08 via ارجع لتالي]	ارجع لتالي	bak via	back	bkxfrjltl
+[back -1.46 via ارجع]	ارجع	bak via	back	bkfrj
+[left -0.38 via دور ليسار]	دور ليسار	laft a via	left	lftxfdrlsr
+[jump -0.72 via اُنڨز]	انقز	jump h via	jump	jmbhfnkz
+[stop -1.75 via أُقف]	اقف	stup hkh via	stop	stbhxfkf
+[stop -0.39 via berka]		stup ak via barka	stop	stbkfbrk
+[run -0.17 via اجري]	اجري	run h via	run	rnhfjr
+[None -2.76 via t5abba]		nuna h via tkhaba	hide	nhftxb
+[follow_me -0.07 via تبعني]	تبعني	fulu ma h via	follow_me	flmhftbn
+[hold_position -0.49 via أُقعد في بلاصتك]	اقعد في بلاصتك	huld pusitiun k via	hold_position	hldbstnkfkdfblstk
+[attack -0.29 via attaki]		atak k via ataki	attack	tkftk
+[attack -0.94 via ehjem]		atak k via ahjam	attack	tkfhjm
+[open_door -0.49 via حلّ الباب]	حل الباب	upan dur k via	open_door	bndrkfhlb
+[close_door -0.25 via سكّر الباب]	سكر الباب	klusa dur kh via	close_door	klsdrxfskrlb
+[pick_up -0.30 via هزّ هاذي]	هز هاذي	pik up a via	pick_up	bkbfhzhd
+[reload -0.39 via recharji]		raluad ak via rasharji	reload	rldkfrcrj
+[reload -1.35 via 3amer]		raluad akh via amar	reload	rldxfmr
+[yes -2.20 via iyeh]		ias via iah	yes	sfh
+[no -0.38 via battel]		nu a via batal	no	nxfbtl
+[None -8.44 via sakar el bab]		nuna via sakar al bab	close_door	nxfskrlb
+[None -7.55 via emchi l9oddem]		nuna h khkh via amshi lkudam	forward	nhxfmclkdm
+[None -7.84 via sakar el bab]		nuna h via sakar al bab	close_door	nhxfskrlb
+[None -6.05 via o93od fi blastek]		nuna kh via ukaud fi blastak	hold_position	nxfkdfblstk
+[None -6.46 via o9o3d fi blastek]		nuna via ukuad fi blastak	hold_position	nfkdfblstk
+[None -9.31 via arja3 ltali]		nuna k a via arja ltali	back	nkfrjltl
+[forward -0.37 via 9odem]		furuard ah via kudam	forward	frdhfkdm
+[forward -0.54 via emchi l9oddem]		furuard kh via amshi lkudam	forward	frdxfmclkdm
+[back 0.00 via ltali]		bak via ltali	back	bkfltl
+[back -0.29 via arja3 ltali]		bak k via arja ltali	back	bkfrjltl
+[back -0.14 via arja3]		bak via arja	back	bkfrj
+[left -0.46 via 3al lisar]		laft via al lisar	left	lftflsr
+[left -0.08 via a gauche]		laft via a gausha	left	lftxfkc
+[left -0.15 via dour lisar]		laft kh via dur lisar	left	lftxfdrlsr
+[None -2.29 via 3al limin]		nuna k via al limin	right	nkflmn
+[right -0.72 via أ دروات]	ا دروات	right h via	right	rxthfdrt
+[right -0.29 via dour limin]		right k via dur limin	right	rxtkfdrlmn
+[jump -2.45 via ongez]		jump kh via ungaz	jump	jmbxfnkz
+[None -2.99 via t5abba]		nuna k via tkhaba	hide	nkftxb
+[stop 0.00 via stop]		stup via stup	stop	stbfstb
+[stop -0.34 via barka]		stup a via barka	stop	stbfbrk
+[run -1.00 via اجري]	اجري	run via	run	rnfjr
+[open_door -1.44 via 7el el bab]		upan dur via hal al bab	open_door	bndrfhlb
+[close_door -1.34 via sakker el beb]		klusa dur a via sakar al bab	close_door	klsdrfskrlb
+[follow_me -0.38 via teb3ni]		fulu ma a via tabani	follow_me	flmxftbn
+[follow_me -0.55 via ija m3aya]		fulu ma khkh via ija maia	follow_me	flmxfjm
+[None -2.54 via ija lehna]		nuna kh via ija lahna	come_here	nxfjlhn
+[None -1.46 via hjem]		nuna via hjam	attack	nfhjm
+[attack -0.02 via أتاك]	اتاك	atak via	attack	tkftk
+[None -2.05 via odhrob]		nuna kh via udrub	shoot	nxfdrb
+[shoot 0.00 via tiri]		shut via tiri	shoot	ctftr
+[reload -0.04 via 3amer]		raluad via amar	reload	rldfmr
+[reload 0.00 via recharger]		raluad via rashargar	reload	rldfrcrkr
+[hold_position -0.38 via o93od fi blastek]		huld pusitiun a via ukaud fi blastak	hold_position	hldbstnxfkdfblstk
+[hold_position -1.05 via matet7arekch]		huld pusitiun kh via matataraksh	hold_position	hldbstnxfmthrkc
+[wait -0.39 via stanna]		uait ak via stana	wait	tkfstn
+[wait -0.33 via osbor]		uait a via usbur	wait	tfsbr
+[hide -1.52 via tkhabba]		hida kh via tkhaba	hide	hdxftxb
+[pick_up -2.10 via hezha]		pik up via hazha	pick_up	bkbfhzh
+[pick_up -0.71 via hezzo]		pik up h via hazu	pick_up	bkbhfhz
+[None -1.66 via hez hedi]		nuna via haz hadi	pick_up	nfhzhd
+[map -0.18 via el karta]		map via al karta	map	mbxflkrt
+[None -1.79 via pauz]		nuna hk via pauz	pause	nhkfbz
+[pause -1.09 via وقّف اللعبة]	وقف العبه	pausa k via	pause	bskfkflb
+[None -1.83 via iyeh]		nuna a via iah	yes	nxfh
+[yes -1.10 via behi]		ias via bahi	yes	sfbh
+[no 0.00 via لا]	لا	nu via	no	nfl
+[no -0.48 via batel]		nu via batal	no	nxfbtl
+[no -0.16 via annuli]		nu via anuli	no	nfnl
+[None -3.98 via sakar el bab]		nuna a k via sakar al bab	close_door	nkxfskrlb
+[None -2.80 via arja3 ltali]		nuna via arja ltali	back	nxfrjltl
+[None -3.50 via ma tet7arrekch]		nuna a kh via ma tataraksh	hold_position	nxfmthrkc
+[None -2.73 via 7el el bab]		nuna ha via hal al bab	open_door	nhfhlb
+[None -3.39 via battel]		nuna a ak via batal	no	nkfbtl
+[None -1.59 via le]		nuna khk via la	no	nxkfl

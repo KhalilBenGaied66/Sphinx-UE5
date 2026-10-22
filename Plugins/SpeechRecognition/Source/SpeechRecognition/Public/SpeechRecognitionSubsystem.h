@@ -60,6 +60,11 @@ class SPEECHRECOGNITION_API USpeechRecognitionSubsystem : public UTickableWorldS
 	FSpeechTranscriberPtr Transcriber;
 	FString TranscriberKey;
 
+	// a WAV file to listen to instead of the microphone (SetInputFile)
+	FString InputFile;
+	// what the last mode request listened with, to log changes only
+	FString LastListeningDescription;
+
 	bool ApplyMode();
 	bool EnsureTranscriber(FString& OutError);
 	void StopListening();
@@ -151,6 +156,16 @@ public:
 	/** Engine, model and where it runs, for a language that is transcribed; empty otherwise. */
 	UFUNCTION(BlueprintPure, Category = "Audio|SpeechRecognition")
 	FString GetTranscriberDescription() const;
+
+	/**
+	 * Listens to a WAV file (16 kHz, 16-bit, mono) instead of the microphone, played
+	 * in real time and followed by silence; an empty path goes back to the
+	 * microphone. For tests and for replaying recordings through the live path. The
+	 * console variable SpeechRecognition.InputFile does the same for every world.
+	 * Takes effect at once if a mode is enabled.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Audio|SpeechRecognition")
+	void SetInputFile(const FString& WavPath);
 
 	/** Codes of the languages that have a model installed under the model folder. */
 	UFUNCTION(BlueprintPure, Category = "Audio|SpeechRecognition")

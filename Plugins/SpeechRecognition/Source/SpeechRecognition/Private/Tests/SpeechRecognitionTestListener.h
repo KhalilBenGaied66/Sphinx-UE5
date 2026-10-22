@@ -34,4 +34,12 @@ public:
 	{
 		++ListeningStartedCount;
 	}
+
+	TArray<FRecognisedPhraseDetail> Heard;
+
+	UFUNCTION()
+	void HandlePhrasesRecognised(const TArray<FRecognisedPhraseDetail>& Phrases)
+	{
+		Heard.Append(Phrases);
+	}
 };
