@@ -150,10 +150,14 @@ Requirements: Windows, Unreal Engine 5.5 or later with Visual Studio 2022, a
 microphone.
 
 ```
-git clone <this repository>
-cd sphinx-ue5
+git clone https://github.com/KhalilBenGaied66/Sphinx-UE5.git C:\Dev\Sphinx-UE5
+cd C:\Dev\Sphinx-UE5
 powershell -ExecutionPolicy Bypass -File Tools\Get-Models.ps1
 ```
+
+Clone into a short path such as `C:\Dev\Sphinx-UE5`: Unreal's build files go
+several folders deep, and a long parent path breaks the build on Windows'
+260-character path limit.
 
 Open `SphinxSample.uproject` (it is set to UE 5.8; right-click it to switch
 engine version), let it compile, press Play, and say "go forward", "turn left",
