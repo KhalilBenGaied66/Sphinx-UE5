@@ -9,7 +9,6 @@ dependencies = [
     "sounddevice",
     "faster-whisper",
     "pocketsphinx",
-    "google-genai",
 ]
 
 [project.optional-dependencies]

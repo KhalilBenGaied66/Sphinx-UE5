@@ -17,13 +17,6 @@ namespace SpeechTranscribers
 	 */
 	FSpeechTranscriberPtr CreateOmnilingual(const FString& Folder, FString& OutError);
 
-	/**
-	 * Gemini, through Google's API. Online, and for development only: the key is
-	 * read from the GEMINI_API_KEY environment variable and must never ship inside
-	 * a game. The free tier allows a small number of requests a day per model.
-	 */
-	FSpeechTranscriberPtr CreateGemini(const FString& LanguageCode, const FString& Model, FString& OutError);
-
 	/** model.int8.onnx or model.onnx in Folder, whichever exists, int8 first; empty when neither does. */
 	FString FindOnnxModel(const FString& Folder);
 }

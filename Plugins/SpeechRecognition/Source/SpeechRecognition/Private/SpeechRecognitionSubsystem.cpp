@@ -356,14 +356,9 @@ bool USpeechRecognitionSubsystem::ApplyMode()
 
 bool USpeechRecognitionSubsystem::EnsureTranscriber(FString& OutError)
 {
-	const ESpeechTranscriptionEngine Engine = USpeechRecognitionSettings::GetTranscriptionEngine();
-	const FString GeminiModel = GetDefault<USpeechRecognitionSettings>()->GeminiModel;
-	// The local model is keyed by its folder alone, so that switching between Arabic
-	// codes that share it ("ar", "aeb") does not load it again. Gemini's prompt names
-	// the language, so it is keyed by the language too.
-	const FString Key = Engine == ESpeechTranscriptionEngine::Gemini
-		? FString::Printf(TEXT("gemini|%s|%s"), *LanguageCode, *GeminiModel)
-		: FString::Printf(TEXT("local|%s"), *USpeechRecognitionSettings::GetTranscriptionModelDir(LanguageCode));
+	// The model is keyed by its folder alone, so that switching between Arabic codes
+	// that share it ("ar", "aeb") does not load it again.
+	const FString Key = FString::Printf(TEXT("local|%s"), *USpeechRecognitionSettings::GetTranscriptionModelDir(LanguageCode));
 	if (Transcriber.IsValid() && Key == TranscriberKey)
 	{
 		return true;
@@ -371,11 +366,7 @@ bool USpeechRecognitionSubsystem::EnsureTranscriber(FString& OutError)
 
 	Transcriber.Reset();
 	TranscriberKey.Reset();
-	if (Engine == ESpeechTranscriptionEngine::Gemini)
-	{
-		Transcriber = SpeechTranscribers::CreateGemini(LanguageCode, GeminiModel, OutError);
-	}
-	else if (USpeechRecognitionSettings::HasTranscriptionModel(LanguageCode))
+	if (USpeechRecognitionSettings::HasTranscriptionModel(LanguageCode))
 	{
 		const double Start = FPlatformTime::Seconds();
 		Transcriber = SpeechTranscribers::CreateOmnilingual(USpeechRecognitionSettings::GetTranscriptionModelDir(LanguageCode), OutError);
@@ -387,7 +378,7 @@ bool USpeechRecognitionSubsystem::EnsureTranscriber(FString& OutError)
 	else
 	{
 		OutError = FString::Printf(
-			TEXT("'%s' has neither a PocketSphinx model nor a transcription model under %s. For 'any' and Arabic, Tunisian Darija included, run Tools\\Get-Models.ps1 -Language omnilingual, or start with -SpeechTranscriber=gemini (online, needs GEMINI_API_KEY)."),
+			TEXT("'%s' has neither a PocketSphinx model nor a transcription model under %s. For 'any' and Arabic, Tunisian Darija included, run Tools\\Get-Models.ps1 -Language omnilingual."),
 			*LanguageCode, *USpeechRecognitionSettings::GetModelRoot());
 	}
 

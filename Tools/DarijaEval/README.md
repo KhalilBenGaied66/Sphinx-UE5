@@ -23,7 +23,6 @@ a test (`export_cpp_cases.py`).
 | Scoring (`score.py`) | ran end to end on the placeholder audio with the engines below | see Results |
 | Whisper base, small, large-v3-turbo (faster-whisper) | run on placeholder audio, on the GPU (each with and without the command prompt) and on the CPU | |
 | Tunisian fine-tune (TuniSpeech-AI/whisper-tunisian-dialect) | adapter written, **not run**: the model is a 3.09 GB download, waiting for the user's OK | `uv run --extra tunisian python score.py --engines whisper-tunisian` stops and prints the size |
-| Gemini (free API tier, reference only) | run on 22 placeholder clips, then stopped by the free tier's limit: **20 requests per day per model** for gemini-3.6-flash (quota id `GenerateRequestsPerDayPerProjectPerModel-FreeTier`, read from the API's error on 2026-10-19) | `results/cache/gemini.jsonl` |
 | French PocketSphinx + Darija words in French phones | run on placeholder audio: key phrase spotting at the plugin default threshold (other thresholds: `--engines sphinx-fr-kws@1e-10`) and grammar mode | |
 | Omnilingual ASR CTC 300M (the plugin's engine), through onnxruntime in Python | run on placeholder audio | `--engines omni-ctc-300m` |
 | The plugin itself, in Unreal | run on placeholder audio: the Unreal test writes its transcripts, `score.py` scores them | `Tools/Run-Tests.ps1 -Filter SpeechRecognition.Transcriber`, then `--engines ue-nne` |
@@ -52,24 +51,18 @@ loads, runs and gets scored. It does not measure recognition.
    better five or more: women and men, and more than one region (in Tunis ق is
    /q/, elsewhere it is often /g/). Use one `--speaker` id per person.
 5. **Score:** `uv run --extra tunisian python score.py --engines all --device cuda`
-   (see Candidates for what needs a download first). `all` is every local
-   engine; nothing leaves the PC. Add Gemini by name, `--engines all,gemini`,
-   only for speakers who agreed to it. For the plugin itself,
+   (see Candidates for what needs a download first). `all` is every engine;
+   nothing leaves the PC. For the plugin itself,
    run `Tools\Run-Tests.ps1 -Filter SpeechRecognition.Transcriber` first: it
    transcribes every clip under `recordings/` inside Unreal, and
    `--engines ue-nne` scores what it heard.
 6. **Or try it live:** run the sample with `-SpeechLanguage=aeb` (the repository
    README says how) and speak to the cube. That is a demonstration; only the
-   recorded clips give numbers. Gemini answers 20 clips a
-   day on the free tier, and its transcripts are cached, so the reference column
-   fills in over several days. Run the same command again each day, or set
-   `GEMINI_MODEL` to a model with a larger free quota.
+   recorded clips give numbers.
 
 Consent: recordings are personal data (Tunisian law 2004-63). They stay in
-`recordings/`, which is git-ignored. The **gemini** engine sends each clip to
-Google. Google's free-tier terms let it use submitted content to improve its
-products, so check the current terms and ask each speaker first. To keep a
-speaker's audio local, leave `gemini` out of `--engines`.
+`recordings/`, which is git-ignored. Every engine runs on this PC, so no clip
+leaves it. Ask each speaker before recording all the same.
 
 Arabic letters may show up disconnected or left-to-right in a Windows console.
 The Arabizi line under each prompt is there for that reason.
@@ -82,14 +75,13 @@ The Arabizi line under each prompt is there for that reason.
 | `whisper-turbo` | Whisper large-v3-turbo, same settings | none: it was already in this machine's Hugging Face cache (1.6 GB on disk) | MIT | offline, CPU int8 |
 | `…+prompt` | the same model with the command list given as `initial_prompt`, which biases it toward the commands | | | |
 | `whisper-tunisian` | TuniSpeech-AI/whisper-tunisian-dialect: Whisper large-v2 with a LoRA trained on about 21 h of Tunisian speech, merged into the weights; through transformers, fp16 on the GPU | **3.09 GB**; needs `uv sync --extra tunisian` too (torch 2.11 cu128 from the local uv cache, transformers) | **CC-BY-NC-4.0: no commercial use**, so it can be measured but not shipped in a commercial game | offline, GPU. About 3.1 GB of fp16 weights, which fits easily in the 16 GB of the RTX 5060 Ti |
-| `gemini` | Gemini API (`GEMINI_MODEL`, default `gemini-3.6-flash`, as in the Derja voice agent), audio plus a Derja transcription prompt | none | API terms | online; **reference only**, because an API key cannot ship inside a game. Latency includes the network |
 | `sphinx-fr-kws[@threshold]`, `sphinx-fr-grammar` | pocketsphinx 5.1 with the French acoustic model from `Content/model/fr` and each Darija wording spelled in French phones (`sphinx` lines in `commands.toml`) | none (30 MB, already local) | BSD (pocketsphinx); the French model's own licence | offline, CPU |
 | `omni-ctc-300m` | Omnilingual ASR CTC 300M (Meta), int8 ONNX, through onnxruntime, greedy CTC: the model the plugin runs | 328 MB | Apache-2.0 | offline, CPU (8 threads) |
 | `ue-nne` | the same model run by the plugin inside Unreal (NNE, ONNX Runtime CPU): transcripts and times read from `Saved/SpeechRecognition/darija-nne.tsv` | none | | Unreal, CPU |
 | `omni-kws` | the same model, with each phrase scored against its output (`phrase_scoring.py`, CTC Viterbi over the whole utterance) instead of matching its text. `--kws-score` (-2.5) and `--kws-margin` (0.5) set the acceptance; `omni-kws-anywhere` lets the phrase sit anywhere in the utterance | none more | Apache-2.0 | offline, CPU |
 | `ue-nne-kws` | phrase scoring inside Unreal: the command the Voice Command component chose for each clip (`darija-nne-kws.tsv`) | none | | Unreal, CPU |
 
-The Whisper and Gemini engines write text, which `commands.py` matches to the
+The Whisper engines write text, which `commands.py` matches to the
 command list. The text is normalised first: Arabic harakat, hamza forms and ڨ/ق
 are unified, and Arabizi digits map to letters. Then it is compared, a window of
 words at a time, with every Arabic and Latin spelling of every wording
@@ -106,18 +98,6 @@ themselves, so its output maps to a command directly:
 
 No engine downloads a model unless `score.py` is given `--allow-download`.
 Without that flag, a missing model stops that engine and prints its size.
-
-Gemini key: `score.py` reads `GEMINI_API_KEY` (and optionally `GEMINI_MODEL`)
-from the environment. No key is stored in this folder. To reuse the voice
-agent's key for one shell session:
-
-```bash
-export GEMINI_API_KEY="$(grep -E '^GEMINI_API_KEY=' "$HOME/Desktop/Voice Agent/Voice Agent1/.env" | cut -d= -f2- | tr -d '\r')"
-```
-
-Gemini transcripts are cached in `results/cache/` by audio hash and settings, so
-a re-run does not spend the free quota again. Requests are paced at 8 per
-minute (`--gemini-rpm`).
 
 ## What is measured
 
@@ -148,7 +128,7 @@ compute depends on the model and the clip length, hardly on what was said.
 GPU run, all engines (`results/20261019-212942/report.md`):
 
 ```bash
-uv run --extra tunisian python score.py --manifest recordings/placeholder/manifest.csv recordings/placeholder-edge/manifest.csv --engines all,gemini --device cuda
+uv run --extra tunisian python score.py --manifest recordings/placeholder/manifest.csv recordings/placeholder-edge/manifest.csv --engines all --device cuda
 ```
 
 | Engine | Hit | False match | Miss | False accept | Latency median / p90 (ms) |
@@ -159,13 +139,13 @@ uv run --extra tunisian python score.py --manifest recordings/placeholder/manife
 | whisper-small+prompt@gpu | 57/89 | 3/89 | 29/89 | 1/18 | 112 / 166 |
 | whisper-turbo@gpu | 37/89 | 0/89 | 52/89 | 1/18 | 178 / 195 |
 | whisper-turbo+prompt@gpu | 49/89 | 0/89 | 40/89 | 2/18 | 184 / 201 |
-| gemini | 9/22 | 1/22 | 12/22 | - | 1730 / 3254 (network included) |
 | sphinx-fr-kws@1e-30 | 26/89 | 63/89 | 0/89 | 18/18 | 86 / 105 |
 | sphinx-fr-grammar | 54/89 | 32/89 | 3/89 | 17/18 | 37 / 49 |
 
-Gemini scored 22 clips, all from its cache, before the daily quota ran out.
-Its other 85 clips are counted as errors, not as misses.
-`whisper-tunisian` was not run (not downloaded).
+`whisper-tunisian` was not run (not downloaded). That run also had a Gemini
+column (online, 9 of 22 clips before the free tier's 20 requests a day ran
+out); the Gemini engine was removed in 2.1.1, since a game needs a recogniser
+that works offline.
 
 The plugin's engine, in Python and in Unreal (`results/20261020-005104/report.md`;
 the Unreal transcripts from `Tools/Run-Tests.ps1 -Filter SpeechRecognition.Transcriber -OrtThreads 8`):
@@ -269,7 +249,6 @@ What the plumbing already shows, independent of the audio:
   as "شنوة أوليك", and "أوليك" is close enough to "أنولي" (annuli, cancel) to
   fire "no". Short wordings make the matcher fire easily; the threshold and
   margin need tuning on real recordings held out from the test.
-- **Gemini's free tier fits a reference, not a test set:** 20 clips a day.
 
 ## Limits
 
@@ -282,9 +261,6 @@ What the plumbing already shows, independent of the audio:
 - CPU numbers use int8 and GPU numbers float16 for the faster-whisper models.
   A game renders on the same GPU; the GPU latencies here are measured on an
   idle card.
-- The Gemini free tier allows 20 requests a day per model: a full speaker set
-  (78 clips) takes four days for the reference column. Requests that fail are
-  not cached and are counted in the Errors column, not as misses.
 - The fuzzy matcher's threshold (80) and margin (5) are set by hand. They are
   printed in every report and can be changed with `--threshold` and `--margin`.
   A threshold tuned on the same recordings it is scored on would flatter the
@@ -322,6 +298,6 @@ What the plumbing already shows, independent of the audio:
 Set up with `uv sync --extra tunisian` (Python 3.11; the extra brings torch
 2.11 cu128 and transformers). Then always use `uv run --extra tunisian ...`:
 a plain `uv run` re-syncs to the base dependencies and uninstalls torch.
-Without the extra, only CPU engines and Gemini run. The GPU route reuses the
+Without the extra, only the CPU engines run. The GPU route reuses the
 cuBLAS and cuDNN DLLs inside the torch wheel for CTranslate2, so no CUDA
 toolkit is needed. Free tools only; nothing here needs a paid service.

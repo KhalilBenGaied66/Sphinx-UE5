@@ -1,7 +1,7 @@
 """The candidate recognisers, behind one interface.
 
 Each engine takes 16 kHz mono float32 audio and returns what it heard. Text
-engines (Whisper, the Tunisian fine-tune, Gemini) return a transcript that
+engines (Whisper, the Tunisian fine-tune) return a transcript that
 score.py matches to the command list; PocketSphinx returns a command directly.
 
 No engine downloads a model unless score.py is run with --allow-download: a
@@ -10,10 +10,7 @@ model missing from the Hugging Face cache stops the run with its size instead.
 
 from __future__ import annotations
 
-import io
 import os
-import time
-import wave
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -335,77 +332,7 @@ class UnrealPhraseScoring(UnrealNNE):
         return Result(f"[{command} {score:.2f} via {phrase}]", command=command, direct=True, latency_ms=ms)
 
 
-# --- (c) Gemini, reference only ---------------------------------------------
-
-GEMINI_PROMPT = (
-    "This audio is one short voice command spoken to a video game in Tunisian "
-    "Derja (Tunisian Arabic), possibly with French loanwords. Transcribe exactly "
-    "what is said in Arabic script; write French loanwords in Arabic letters too. "
-    "Do not translate and do not correct to Modern Standard Arabic. If nothing "
-    "intelligible is said, output nothing. Output the transcript only."
-)
-
-
-def _wav_bytes(audio: np.ndarray) -> bytes:
-    buf = io.BytesIO()
-    with wave.open(buf, "wb") as w:
-        w.setnchannels(1)
-        w.setsampwidth(2)
-        w.setframerate(16000)
-        w.writeframes((np.clip(audio, -1, 1) * 32767).astype("<i2").tobytes())
-    return buf.getvalue()
-
-
-class Gemini(Engine):
-    name = "gemini"
-
-    def __init__(self, rpm: float):
-        self.model_name = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
-        self.min_interval = 60.0 / rpm
-        self.last_call = 0.0
-
-    def describe(self) -> str:
-        return (f"Gemini API ({self.model_name}), free tier, audio sent as WAV with a "
-                f"Derja transcription prompt, temperature 0; latency includes the network")
-
-    def load(self, allow_download: bool) -> None:
-        from google import genai
-
-        key = os.environ.get("GEMINI_API_KEY", "").strip()
-        if not key:
-            raise RuntimeError("GEMINI_API_KEY is not set in the environment")
-        self.genai = genai
-        self.client = genai.Client(api_key=key)
-        self.thinking = True
-
-    def wait_turn(self) -> None:
-        """Free-tier pacing; called outside the latency measurement."""
-        gap = time.monotonic() - self.last_call
-        if gap < self.min_interval:
-            time.sleep(self.min_interval - gap)
-        self.last_call = time.monotonic()
-
-    def run(self, audio: np.ndarray) -> Result:
-        from google.genai import types
-
-        parts = [types.Part.from_bytes(data=_wav_bytes(audio), mime_type="audio/wav"),
-                 types.Part.from_text(text=GEMINI_PROMPT)]
-        kwargs = dict(temperature=0.0, max_output_tokens=128)
-        if self.thinking:
-            kwargs["thinking_config"] = types.ThinkingConfig(thinking_level="low")
-        try:
-            resp = self.client.models.generate_content(
-                model=self.model_name, contents=parts,
-                config=types.GenerateContentConfig(**kwargs))
-        except Exception as exc:  # older models reject thinking_level
-            if self.thinking and "thinking" in str(exc).lower():
-                self.thinking = False
-                return self.run(audio)
-            raise
-        return Result((resp.text or "").strip())
-
-
-# --- (d) French PocketSphinx with Darija words in French phones -------------
+# --- (c) French PocketSphinx with Darija words in French phones -------------
 
 class SphinxFrench(Engine):
     def __init__(self, clist: cl.CommandList, mode: str, model_dir: Path,
@@ -487,8 +414,6 @@ def build(spec: str, clist: cl.CommandList, args) -> Engine:
         return FasterWhisper(base[8:], clist, prompt=(opt == "prompt"), device=args.device)
     if base == "whisper-tunisian":
         return TunisianWhisper(args.device)
-    if base == "gemini":
-        return Gemini(args.gemini_rpm)
     if base == "ue-nne-kws":
         return UnrealPhraseScoring(HERE.parents[1] / "Saved" / "SpeechRecognition" / "darija-nne-kws.tsv")
     if base == "ue-nne":
@@ -505,8 +430,7 @@ def build(spec: str, clist: cl.CommandList, args) -> Engine:
     raise SystemExit(f"unknown engine {spec!r}")
 
 
-# "all" means every local engine. Gemini sends audio to Google and spends a quota,
-# so it runs only when named: --engines all,gemini
+# "all" means every engine.
 ALL = ["whisper-base", "whisper-base+prompt", "whisper-small", "whisper-small+prompt",
        "whisper-turbo", "whisper-turbo+prompt", "whisper-tunisian", "omni-ctc-300m", "omni-kws",
        "sphinx-fr-kws", "sphinx-fr-grammar"]

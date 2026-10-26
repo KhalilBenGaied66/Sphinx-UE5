@@ -1,8 +1,6 @@
 #include "SpeechRecognitionSettings.h"
 
 #include "HAL/FileManager.h"
-#include "Misc/CommandLine.h"
-#include "Misc/Parse.h"
 #include "SpeechTranscribers.h"
 #include "Misc/Paths.h"
 
@@ -137,32 +135,13 @@ bool USpeechRecognitionSettings::HasTranscriptionModel(const FString& LanguageCo
 	return FolderHasTranscriptionModel(GetTranscriptionModelDir(LanguageCode));
 }
 
-ESpeechTranscriptionEngine USpeechRecognitionSettings::GetTranscriptionEngine()
-{
-	FString Override;
-	if (FParse::Value(FCommandLine::Get(), TEXT("SpeechTranscriber="), Override))
-	{
-		if (Override.Equals(TEXT("gemini"), ESearchCase::IgnoreCase))
-		{
-			return ESpeechTranscriptionEngine::Gemini;
-		}
-		if (Override.Equals(TEXT("local"), ESearchCase::IgnoreCase))
-		{
-			return ESpeechTranscriptionEngine::LocalModel;
-		}
-	}
-	return GetDefault<USpeechRecognitionSettings>()->TranscriptionEngine;
-}
-
 bool USpeechRecognitionSettings::IsTranscribedLanguage(const FString& LanguageCode)
 {
 	if (LanguageCode.IsEmpty() || HasSphinxModel(LanguageCode))
 	{
 		return false;
 	}
-	return HasTranscriptionModel(LanguageCode)
-		|| GetTranscriptionEngine() == ESpeechTranscriptionEngine::Gemini
-		|| UsesSharedModel(LanguageCode);
+	return HasTranscriptionModel(LanguageCode) || UsesSharedModel(LanguageCode);
 }
 
 FString USpeechRecognitionSettings::GetAcousticModelDir(const FString& LanguageCode)

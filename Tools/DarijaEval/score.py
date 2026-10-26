@@ -2,7 +2,7 @@
 
     uv run --extra tunisian python score.py                                   # default engines, real recordings
     uv run --extra tunisian python score.py --manifest recordings/placeholder/manifest.csv
-    uv run --extra tunisian python score.py --engines whisper-small,gemini,sphinx-fr-kws
+    uv run --extra tunisian python score.py --engines whisper-small,omni-kws,sphinx-fr-kws
     uv run --extra tunisian python score.py --engines all --allow-download
 
 For every clip: the engine's output, the command it maps to (fuzzy match across
@@ -15,15 +15,13 @@ Definitions used in the report:
   false match  command clip mapped to a different command
   miss         command clip mapped to no command
   false accept distractor clip (chat, silence) mapped to any command
-Gemini transcripts are cached in results/cache/ (the free tier has a daily quota);
-the local engines are always re-run.
+Every engine runs offline, on this PC, and is re-run each time.
 """
 
 from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import json
 import os
 import platform
@@ -42,10 +40,6 @@ from record import read_wav
 
 HERE = Path(__file__).parent
 DEFAULT_ENGINES = "whisper-base,whisper-small,sphinx-fr-kws,sphinx-fr-grammar"
-
-
-def sha1(path: Path) -> str:
-    return hashlib.sha1(path.read_bytes()).hexdigest()
 
 
 def load_clips(manifest: Path) -> list[dict]:
@@ -73,7 +67,7 @@ def machine() -> str:
     except Exception:
         pass
     pkgs = []
-    for p in ("faster-whisper", "ctranslate2", "pocketsphinx", "google-genai", "transformers", "torch"):
+    for p in ("faster-whisper", "ctranslate2", "pocketsphinx", "transformers", "torch"):
         try:
             pkgs.append(f"{p} {metadata.version(p)}")
         except metadata.PackageNotFoundError:
@@ -81,75 +75,29 @@ def machine() -> str:
     return f"{cpu}; GPU {gpu or 'none'}; Python {platform.python_version()}; " + ", ".join(pkgs)
 
 
-class Cache:
-    def __init__(self, path: Path):
-        self.path = path
-        self.data: dict[str, dict] = {}
-        if path.exists():
-            for line in path.read_text(encoding="utf-8").splitlines():
-                rec = json.loads(line)
-                self.data[rec["key"]] = rec
-
-    def get(self, key: str) -> dict | None:
-        return self.data.get(key)
-
-    def put(self, key: str, rec: dict) -> None:
-        rec = dict(rec, key=key)
-        self.data[key] = rec
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        with self.path.open("a", encoding="utf-8") as f:
-            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
-
-
-def run_engine(engine: en.Engine, clips: list[dict], clist: cl.CommandList, args, cache_dir: Path):
+def run_engine(engine: en.Engine, clips: list[dict], clist: cl.CommandList, args):
     t0 = time.perf_counter()
     engine.load(args.allow_download)
     load_s = time.perf_counter() - t0
     description = engine.describe()
-    cache = Cache(cache_dir / f"{engine.name}.jsonl") if engine.name == "gemini" else None
 
     audio = {str(c["path"]): read_wav(c["path"]) for c in clips}
-    if cache is None and clips:  # warm-up, not timed
+    if clips:  # warm-up, not timed
         engine.run(audio[str(clips[0]["path"])])
 
     out = []
-    day_quota_gone = False
     for i, c in enumerate(clips, 1):
-        key = f"{sha1(c['path'])}|{description}"
-        rec = cache.get(key) if cache else None
-        cached = rec is not None
-        if rec is None and day_quota_gone:
-            rec = dict(text="", direct=False, command=None, latency_ms=0.0,
-                       error="not sent: the daily free-tier quota ran out earlier in this run")
-        if rec is None:
-            for attempt in range(5):
-                if isinstance(engine, en.Gemini):
-                    engine.wait_turn()
-                t = time.perf_counter()
-                try:
-                    res = engine.run_clip(c, audio[str(c["path"])])
-                    err = res.error
-                except Exception as exc:
-                    res, err = en.Result(""), f"{type(exc).__name__}: {exc}"[:1500]
-                ms = (time.perf_counter() - t) * 1000  # the last attempt only
-                rate_limited = "429" in err or "RESOURCE_EXHAUSTED" in err
-                if rate_limited and "PerDay" in err:
-                    # waiting does not help: the free tier resets once a day
-                    day_quota_gone = True
-                    print(f"  {engine.name}: daily quota reached; no more requests this run",
-                          flush=True)
-                    break
-                if not rate_limited or attempt == 4:
-                    break
-                wait = 20 * (attempt + 1)
-                print(f"  {engine.name}: rate limited, waiting {wait} s", flush=True)
-                time.sleep(wait)
-            if res.latency_ms is not None:
-                ms = res.latency_ms
-            rec = dict(text=res.text, direct=res.direct, command=res.command,
-                       latency_ms=round(ms, 1), error=err)
-            if cache and not err:
-                cache.put(key, rec)
+        t = time.perf_counter()
+        try:
+            res = engine.run_clip(c, audio[str(c["path"])])
+            err = res.error
+        except Exception as exc:
+            res, err = en.Result(""), f"{type(exc).__name__}: {exc}"[:1500]
+        ms = (time.perf_counter() - t) * 1000
+        if res.latency_ms is not None:
+            ms = res.latency_ms
+        rec = dict(text=res.text, direct=res.direct, command=res.command,
+                   latency_ms=round(ms, 1), error=err)
         if rec["direct"]:
             pred, score, runner, runner_score = rec["command"], None, None, None
         else:
@@ -160,7 +108,7 @@ def run_engine(engine: en.Engine, clips: list[dict], clist: cl.CommandList, args
                         wording=int(c["wording"]), take=int(c["take"]), said=c.get("text", ""),
                         text=rec["text"], pred=pred, score=score, runner_up=runner,
                         runner_up_score=runner_score, latency_ms=rec["latency_ms"],
-                        cached=cached, error=rec["error"]))
+                        error=rec["error"]))
         mark = "ok " if pred == c["command"] else ("-- " if pred is None else "XX ")
         print(f"  {engine.name} [{i}/{len(clips)}] {mark}{c['command']:<16} -> "
               f"{str(pred):<16} {rec['latency_ms']:>8.0f} ms  {rec['text'][:60]}"
@@ -173,7 +121,7 @@ def pct(a: int, b: int) -> str:
 
 
 def summarise(rows: list[dict]) -> dict:
-    # clips the engine failed on (quota, network) are counted as errors, not misses
+    # clips the engine failed on are counted as errors, not misses
     ok = [r for r in rows if not r["error"]]
     cmd = [r for r in ok if r["kind"] == "command"]
     dis = [r for r in ok if r["kind"] == "distractor"]
@@ -185,8 +133,7 @@ def summarise(rows: list[dict]) -> dict:
     errors = sum(bool(r["error"]) for r in rows)
     p90 = lat[min(len(lat) - 1, int(0.9 * len(lat)))] if lat else None
     return dict(n_cmd=len(cmd), hits=hits, wrong=wrong, miss=miss, n_dis=len(dis), fa=fa,
-                lat_med=statistics.median(lat) if lat else None, lat_p90=p90, errors=errors,
-                cached=sum(r["cached"] for r in rows))
+                lat_med=statistics.median(lat) if lat else None, lat_p90=p90, errors=errors)
 
 
 def report(path: Path, args, clips, clist, infos, rows) -> None:
@@ -222,8 +169,6 @@ def report(path: Path, args, clips, clist, infos, rows) -> None:
     for info in infos:
         s = summarise(by_engine[info["name"]])
         lat = (f"{s['lat_med']:.0f} / {s['lat_p90']:.0f}" if s["lat_med"] is not None else "-")
-        if s["cached"]:
-            lat += f" ({s['cached']} cached)"
         L.append(f"| {info['name']} | {pct(s['hits'], s['n_cmd'])} | {pct(s['wrong'], s['n_cmd'])} | "
                  f"{pct(s['miss'], s['n_cmd'])} | {pct(s['fa'], s['n_dis'])} | {lat} | "
                  f"{info['load_s']} | {s['errors']} |")
@@ -284,12 +229,11 @@ def main() -> int:
     ap.add_argument("--manifest", type=Path, nargs="+", default=[HERE / "recordings" / "manifest.csv"],
                     help="one or more manifest.csv files (default recordings/manifest.csv)")
     ap.add_argument("--engines", default=DEFAULT_ENGINES,
-                    help=f"comma list; 'all' = every local engine ({','.join(en.ALL)}); add gemini by name")
+                    help=f"comma list; 'all' = every engine ({','.join(en.ALL)})")
     ap.add_argument("--commands", type=Path, default=cl.DEFAULT_COMMANDS)
     ap.add_argument("--allow-download", action="store_true",
                     help="let engines download missing models (sizes are in engines.SIZES)")
     ap.add_argument("--device", default="cpu", help="cpu or cuda for Whisper models (default cpu)")
-    ap.add_argument("--gemini-rpm", type=float, default=8.0, help="Gemini requests per minute")
     ap.add_argument("--threshold", type=float, default=cl.THRESHOLD)
     ap.add_argument("--margin", type=float, default=cl.MARGIN)
     ap.add_argument("--kws-threshold", type=float, default=1e-30,
@@ -336,7 +280,7 @@ def main() -> int:
         engine = en.build(spec, clist, args)
         print(f"== {engine.name}", flush=True)
         try:
-            info, out = run_engine(engine, clips, clist, args, args.out / "cache")
+            info, out = run_engine(engine, clips, clist, args)
         except (en.NeedsDownload, RuntimeError, ImportError) as exc:
             print(f"   skipped: {exc}", flush=True)
             skipped.append((spec, str(exc)))
