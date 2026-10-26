@@ -43,7 +43,7 @@ enum class ETranscriptMatching : uint8
 	/**
 	 * Each phrase is scored against the speech model's output (FPhraseScorer), as
 	 * PocketSphinx spots key phrases. Needs an engine that scores phrases (the local
-	 * model); with one that only writes text (Gemini) the text is matched instead.
+	 * model does); with one that only writes text, the text is matched instead.
 	 */
 	PhraseScoring,
 	/** The text the engine wrote is compared with the phrases (FTranscriptMatcher). */

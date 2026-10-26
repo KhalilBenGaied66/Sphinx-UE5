@@ -62,8 +62,8 @@ Phrase Scoring, the default). The command whose best phrase scores at least
 exactly the phrase) and leads the next command by **Phrase Score Margin** (0.5)
 fires. **On Voice Command** then hands over the model's text as the phrase,
 **Matched Phrase** (the phrase that won), **Phrase Score**, every phrase's
-score in **Phrase Scores**, and **Processing Seconds**. With the Gemini engine,
-or Transcript Matching set to Text, the text is compared with the phrases
+score in **Phrase Scores**, and **Processing Seconds**. With Transcript
+Matching set to Text, the text is compared with the phrases
 instead (**Transcript Match Threshold** 80, **Transcript Match Margin** 5).
 **Tolerance** is not used. Only keyword mode works for these languages: there
 is no grammar to search. The model, the engines and their speed are in

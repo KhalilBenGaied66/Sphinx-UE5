@@ -100,21 +100,17 @@ How it works, for any language that has no PocketSphinx model:
 4. The Voice Command component fires the command whose best phrase scores -2.5
    or better and leads the next command by 0.5 (`Phrase Score Threshold`,
    `Phrase Score Margin`).
-5. For an engine that only writes text (Gemini), or with `Transcript Matching`
-   set to Text, the component compares the text with its phrases instead
+5. With `Transcript Matching` set to Text, the component compares the text with its phrases instead
    (`FTranscriptMatcher`). Spellings are normalised (harakat, hamza forms and
    ڨ/ق unified, Arabizi digits to letters), and across scripts both sides are
    reduced to a consonant skeleton (9 = ق = q = g, 7 = ح, ch = ش). The best
    command fires at 80 out of 100 or more and 5 ahead of the next one.
 
-Two engines, chosen in Project Settings > Plugins > Speech Recognition >
-Transcription, or on the command line with `-SpeechTranscriber=local` or
-`-SpeechTranscriber=gemini`:
+The engine:
 
 | Engine | Runs | Size | Licence | State |
 |---|---|---|---|---|
 | Omnilingual ASR CTC 300M (Meta), int8 ONNX export by OpenVoiceOS: the default | offline, on the CPU, through Unreal's Neural Network Engine (the NNERuntimeORT plugin, part of the engine). Ships with the game. One folder, `Content/model/omnilingual`, serves the code `any` and every Arabic code; a code's own folder (`model/aeb`) takes precedence | 328 MB (`Tools/Get-Models.ps1 -Language omnilingual`) | Apache-2.0 | built; tested on synthetic Darija, invented words, and two live sessions (below) |
-| Gemini (Google), through its API | online. The key is read from the `GEMINI_API_KEY` environment variable, and a key must never ship inside a game | none | Google's API terms | built; for development and for comparing. The free tier allowed 20 requests a day for `gemini-3.6-flash` (October 2026) |
 
 Why Omnilingual first: of the candidates below, it is the only one that runs
 inside Unreal with nothing added, because ONNX runs on the engine's own NNE.
@@ -128,7 +124,6 @@ their authors publish them):
 | Model | Size | Licence | Published result | Here |
 |---|---|---|---|---|
 | Omnilingual ASR CTC 300M, ONNX | 328 MB (int8) | Apache-2.0 | none for Tunisian | the default engine |
-| Gemini (online) | none | API terms | none | the reference, 20 requests a day free |
 | oddadmix/Whisperv3-tunisian-codeswitch: Whisper large-v3 for Tunisian Arabic mixed with French, 3rd in the NADI 2026 Tunisian code-switched ASR task | 6.2 GB | not stated | blind-test WER 15.2% | not downloaded: over 1 GB, licence unknown |
 | TuniSpeech-AI/whisper-tunisian-dialect: Whisper large-v2 + LoRA, 21 h of Tunisian speech | 3.1 GB | CC-BY-NC-4.0, no commercial use | none | not downloaded |
 | linagora/linto-asr-ar-tn-0.1: Kaldi TDNN for Tunisian | 0.8 GB | Apache-2.0 | WER 20.5% to 37.5% on its three test sets | not tried: needs a Kaldi runtime |

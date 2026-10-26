@@ -5,16 +5,6 @@
 #include "SpeechRecognition.h"
 #include "SpeechRecognitionSettings.generated.h"
 
-/** What transcribes the languages PocketSphinx has no model for. */
-UENUM(BlueprintType)
-enum class ESpeechTranscriptionEngine : uint8
-{
-	/** A model in the language's folder, run on the CPU by Unreal's Neural Network Engine. Offline; ships with the game. */
-	LocalModel,
-	/** Google's Gemini API. Online, needs GEMINI_API_KEY in the environment: for development and for comparing, never for a shipped game. */
-	Gemini
-};
-
 /**
  * Project Settings > Plugins > Speech Recognition.
  *
@@ -34,8 +24,8 @@ enum class ESpeechTranscriptionEngine : uint8
  * included) and every Arabic code: "ar" (Modern Standard Arabic), "aeb"
  * (Tunisian), "ary" (Moroccan), "arz" (Egyptian), "apc" (Levantine)... A code's
  * own folder (aeb/model.int8.onnx) takes precedence. Voice command components
- * score their phrases against what the model heard. With the Gemini engine no
- * folder is needed.
+ * score their phrases against what the model heard. Both engines run offline,
+ * on the CPU, inside the game.
  */
 UCLASS(config = Game, defaultconfig, meta = (DisplayName = "Speech Recognition"))
 class SPEECHRECOGNITION_API USpeechRecognitionSettings : public UDeveloperSettings
@@ -46,17 +36,6 @@ public:
 	/** Folder holding one sub-folder per language: relative to the project's Content folder, or absolute. */
 	UPROPERTY(config, EditAnywhere, Category = "Models")
 	FString ModelDirectory = TEXT("model");
-
-	/**
-	 * For languages without a PocketSphinx model. The command line overrides it:
-	 * -SpeechTranscriber=gemini or -SpeechTranscriber=local.
-	 */
-	UPROPERTY(config, EditAnywhere, Category = "Transcription")
-	ESpeechTranscriptionEngine TranscriptionEngine = ESpeechTranscriptionEngine::LocalModel;
-
-	/** Gemini model used by the Gemini engine. The free tier's daily quota is per model. */
-	UPROPERTY(config, EditAnywhere, Category = "Transcription")
-	FString GeminiModel = TEXT("gemini-3.6-flash");
 
 	//~ Begin UDeveloperSettings
 	virtual FName GetCategoryName() const override;
@@ -92,14 +71,11 @@ public:
 	/** The codes the shared Omnilingual model serves: "any" and the Arabic codes. */
 	static bool UsesSharedModel(const FString& LanguageCode);
 
-	/** The project's setting, unless the command line names another engine. */
-	static ESpeechTranscriptionEngine GetTranscriptionEngine();
-
 	/**
 	 * Whether the language is transcribed rather than decoded by PocketSphinx: it has
-	 * no PocketSphinx model, and it has a transcription model, or the Gemini engine is
-	 * selected, or it is "any" or an Arabic code. A code with none of these is a
-	 * PocketSphinx language whose model is missing.
+	 * no PocketSphinx model, and it has a transcription model or it is "any" or an
+	 * Arabic code. A code with none of these is a PocketSphinx language whose model
+	 * is missing.
 	 */
 	static bool IsTranscribedLanguage(const FString& LanguageCode);
 

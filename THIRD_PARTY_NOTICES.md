@@ -84,9 +84,7 @@ publishers, and each keeps its publisher's licence:
 | The second engine: `any` and every Arabic code (`Content/model/omnilingual`) | Omnilingual ASR CTC 300M, int8 ONNX export `OpenVoiceOS/omnilingual-asr-ctc-300m-onnx` (revision `bc55e1d`) | Meta (model), OpenVoiceOS (export) | Apache-2.0 (the script saves the model card as `MODEL_CARD.md`) |
 
 The Darija engine runs the model with Unreal Engine's NNERuntimeORT plugin
-(ONNX Runtime), which ships with the engine under Epic's licence. The optional
-Gemini engine calls Google's API under Google's terms; nothing of it is
-distributed here.
+(ONNX Runtime), which ships with the engine under Epic's licence.
 
 Read the licence of a model before you ship a game with it.
 

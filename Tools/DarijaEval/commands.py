@@ -1,6 +1,6 @@
 """The command list, and matching a free transcript back to one command.
 
-A recogniser that writes text (Whisper, Gemini) does not know the command list.
+A recogniser that writes text (Whisper) does not know the command list.
 Its transcript is normalised and compared with every spelling of every wording:
 Arabic script against Arabic script, Latin against the Arabizi and French
 spellings, and, across scripts, both reduced to a consonant skeleton (9 = ق = q

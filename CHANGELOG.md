@@ -4,6 +4,19 @@ Starting point: [ukustra/sphinx-ue4](https://github.com/ukustra/sphinx-ue4) at
 commit `08e3957` ("5.8 update"). The Unreal Engine 5 port itself is that
 repository's work and is not listed here.
 
+## 2.1.1 (October 2026)
+
+### Removed
+
+- **The Gemini engine.** A game needs a recogniser that works offline and
+  without a daily quota, and the free tier allowed 20 requests a day. Both
+  engines left run on the CPU, inside the game. `-SpeechTranscriber` and the
+  `Transcription Engine` and `Gemini Model` settings are gone; a project that
+  still sets them in its config gets the local model, as before by default.
+- The plugin no longer depends on the HTTP and Json modules.
+- `Tools/DarijaEval` no longer has a `gemini` engine or the `google-genai`
+  package.
+
 ## 2.1.0 (October 2026)
 
 ### Added
