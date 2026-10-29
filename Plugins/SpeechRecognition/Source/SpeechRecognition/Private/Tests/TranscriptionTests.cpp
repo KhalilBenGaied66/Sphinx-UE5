@@ -553,7 +553,7 @@ bool FLanguageSwitchAudioTest::RunTest(const FString& Parameters)
 		{ TEXT("any"), Eval / TEXT("spells/shield_0.wav"), Spells, TEXT("amorix valor") },
 		{ TEXT("en"), SpeechTest::GetAudioRoot() / TEXT("generated/en/go_forward_normal.wav"), { TEXT("go forward"), TEXT("turn left"), TEXT("stop") }, TEXT("go forward") },
 		{ TEXT("aeb"), Eval / TEXT("placeholder-edge/ttshedi/forward_0_1.wav"), { TEXT("إمشي لقدّام"), TEXT("ارجع لتالي"), TEXT("دور ليسار"), TEXT("حبس") }, TEXT("إمشي لقدّام") },
-		{ TEXT("ar"), Eval / TEXT("placeholder-edge/ttsreem/back_1_1.wav"), { TEXT("تقدّم"), TEXT("ارجع"), TEXT("يسارا"), TEXT("توقف") }, TEXT("ارجع") },
+		{ TEXT("ar"), Eval / TEXT("placeholder-edge/ttshedi/back_1_1.wav"), { TEXT("تقدّم"), TEXT("ارجع"), TEXT("يسارا"), TEXT("توقف") }, TEXT("ارجع") },
 		{ TEXT("any"), Eval / TEXT("spells/fire_1.wav"), Spells, TEXT("corva aeterna") },
 	};
 	for (const FStep& Step : Steps)
