@@ -32,7 +32,10 @@ VoiceCommands->Commands.Add(OpenDoor);
 VoiceCommands->OnVoiceCommand.AddDynamic(this, &AMyActor::HandleVoiceCommand);
 ```
 
-`Source/SphinxSample/VoiceControlledCube.cpp` is a complete example.
+`Source/SphinxSample/VoiceControlledCube.cpp` is a complete example. Its
+commands are in Project Settings (*Game > Sphinx Sample*,
+`Source/SphinxSample/SphinxSampleSettings.h`), where they can be changed
+without rebuilding.
 
 ### Any phrase: Arabic, Tunisian Darija, invented words
 
@@ -53,6 +56,11 @@ OpenDoor.Phrases = { TEXT("افتح الباب") };            // Modern Standar
 VoiceCommands->LanguageCode = TEXT("any");
 Shield.Phrases = { TEXT("amorix valor") };            // a spell: no language at all
 ```
+
+In Blueprint: on the Voice Command component, set **Language Code** to `any`,
+add a command to **Commands** (Command `Patronus`, Phrases `expecto patronum`),
+and in **On Voice Command**, *Switch on Name* on the command to run its logic.
+Nothing else changes between languages.
 
 `any` and all Arabic codes share one model (`Tools\Get-Models.ps1 -Language
 omnilingual`).

@@ -4,6 +4,18 @@ Starting point: [ukustra/sphinx-ue4](https://github.com/ukustra/sphinx-ue4) at
 commit `08e3957` ("5.8 update"). The Unreal Engine 5 port itself is that
 repository's work and is not listed here.
 
+## Unreleased
+
+### Changed
+
+- **The sample's commands are in Project Settings** (*Game > Sphinx Sample*),
+  one list per language, instead of in C++: a new phrase or a new spell needs
+  no rebuild. A command the cube has no action for makes it spin once, so a new
+  one can be tried before writing what it does. Checked by replaying a
+  synthetic clip through the live path with two added spells, "expecto
+  patronum" (-0.09) and "zelaris domisar kanty" (-0.16), "velaris" (-0.38), and
+  chat ("what time is it", best -9.15, not fired).
+
 ## 2.1.1 (October 2026)
 
 ### Removed

@@ -29,7 +29,10 @@ public:
 	 */
 	virtual void PreInitializeComponents() override;
 
-	/** The sample's commands in one language: en (PocketSphinx), aeb, ar or any (the second engine). */
+	/**
+	 * The sample's commands in one language: en (PocketSphinx), aeb, ar or any (the
+	 * second engine). They are edited in Project Settings > Game > Sphinx Sample.
+	 */
 	static TArray<FVoiceCommand> CommandsFor(const FString& LanguageCode);
 
 	/** Changes language while the game runs. */
@@ -73,4 +76,7 @@ private:
 	float SpinSpeed = 0.f;
 	float JumpVelocity = 0.f;
 	float GroundHeight = 0.f;
+
+	/** Degrees left of the one-turn spin for a command the cube has no action for. */
+	float SpinTurnLeft = 0.f;
 };
