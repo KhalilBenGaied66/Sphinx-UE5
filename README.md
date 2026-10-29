@@ -123,7 +123,7 @@ after it), and one said inside a sentence about 430 ms sooner.
 - Optional early reports: the event fires when the phrase is spotted, not when
   the speaker pauses.
 - A C++ decoder class without thread or microphone, for tools and tests.
-- 14 automated tests, a benchmark, and a sample project.
+- 21 automated tests, a benchmark, and a sample project.
 
 ## Status
 
