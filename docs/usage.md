@@ -98,6 +98,40 @@ else is the same: speech detector, engine, language switches, components. It is
 how `SpeechRecognition.Subsystem.LanguageSwitchWithAudio` tests the sample's
 language switch, and a way to replay a player's recording.
 
+### Coming from On Words Spoken
+
+Projects built on the original plugin usually wire it like this: the words in
+the game state's **Optional World List**, then in a character, **Bind Event to
+On Words Spoken**, a **For Each Loop** over **Text Phrases**, and a **Switch on
+String** with one pin per word. It works for English, but:
+
+- the words are written twice, in the list and on the Switch pins, and a typo
+  in either fails silently;
+- one way of saying each thing, unless the list and the Switch both grow;
+- one list for the whole game;
+- with the second engine (`any`, Arabic codes) it never fires: On Words Spoken
+  hands over the model's text ("expecto patronam"), which no Switch pin equals.
+  Deciding whether that text is close enough to a phrase is done by the Voice
+  Command component.
+
+The same graph with the component:
+
+1. On the character, add a **Voice Command** component. Set its **Language
+   Code** (`en`; `any` for invented words).
+2. In **Commands**, one entry per Switch pin: **Command** is the pin's name,
+   **Phrases** every way of saying it. Two pins that mean the same thing
+   ("Sorry", "Apologize") become one command with two phrases.
+3. Bind **On Voice Command**, **Switch on Name** on **Command**, and connect the
+   pins to what the old Switch drove (Play Anim Montage...).
+4. Empty the game state's Optional World List, or set the game mode's game state
+   back to the default. The component starts the recogniser itself, with its
+   Language Code, only if nothing has started it yet: a game state that still
+   starts it may set the language first.
+
+Bind Event, For Each Loop and Switch on String go. Single short words ("lucy",
+"better") fire on ordinary speech: a phrase of two or three words, or a
+stricter **Tolerance**, keeps them for when they are meant.
+
 ## The subsystem
 
 Get it with **Get World Subsystem > Speech Recognition Subsystem**, then:
