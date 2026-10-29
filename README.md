@@ -179,8 +179,15 @@ the model wrote, the phrase that won, its score and the time it took.
 In the running sample, **L** switches language: English, Tunisian, MSA, spells.
 The first switch to one of the last three loads the 328 MB model, a pause of a
 few seconds. When a phrase does not fire, the screen shows the best phrase,
-its score and why it was not accepted; add the wording you said to
-`CommandsFor()` in `Source/SphinxSample/VoiceControlledCube.cpp`.
+its score and why it was not accepted.
+
+**Your own commands, without C++.** In the editor, *Edit > Project Settings >
+Game > Sphinx Sample* has the cube's commands, one list per language. Add a
+command, give it a name and a phrase ("Patronus", "expecto patronum"), press
+Play, press L until the screen says `any`, and say it. Forward, Back, Left,
+Right, Jump and Stop move the cube; a command with any other name makes it spin
+once and shows its name. The lists are saved to `Config/DefaultGame.ini`; while
+the game runs, an edited list is used the next time L switches to it.
 
 To use the plugin in your own project:
 
