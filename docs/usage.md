@@ -41,9 +41,10 @@ without rebuilding.
 
 Set **Language Code** to `any`, or to an Arabic code: `ar` (Modern Standard
 Arabic), `aeb` (Tunisian), `ary` (Moroccan), `arz` (Egyptian), `apc`
-(Levantine)... Then write each command's phrases, as they sound, in Arabic
+(Levantine)... Then write each command's phrases, plainly, in Arabic
 script, Latin letters or both. There is no dictionary, so any word can be a
-command, an invented one included:
+command, an invented one included ([custom-phrases.md](custom-phrases.md):
+how to spell one, and what to do when it does not fire):
 
 ```cpp
 VoiceCommands->LanguageCode = TEXT("aeb");
