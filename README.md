@@ -187,7 +187,9 @@ command, give it a name and a phrase ("Patronus", "expecto patronum"), press
 Play, press L until the screen says `any`, and say it. Forward, Back, Left,
 Right, Jump and Stop move the cube; a command with any other name makes it spin
 once and shows its name. The lists are saved to `Config/DefaultGame.ini`; while
-the game runs, an edited list is used the next time L switches to it.
+the game runs, an edited list is used the next time L switches to it. How to
+spell a phrase: [docs/custom-phrases.md](docs/custom-phrases.md) (in short:
+plainly, once, the way you would write it).
 
 To use the plugin in your own project:
 
@@ -199,6 +201,8 @@ To use the plugin in your own project:
 3. Add a **Voice Command** component to an actor, fill in its commands, bind
    **On Voice Command**.
 4. Before packaging, stage the models: see [docs/models.md](docs/models.md).
+
+How to spell your own phrases, invented words included: [docs/custom-phrases.md](docs/custom-phrases.md).
 
 More: [docs/usage.md](docs/usage.md) (modes, events, tolerance, limits) and
 [docs/design.md](docs/design.md) (threads, start-up handling, why).

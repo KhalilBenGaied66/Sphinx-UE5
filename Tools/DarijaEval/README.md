@@ -293,6 +293,7 @@ What the plumbing already shows, independent of the audio:
 | `export_cpp_cases.py` | writes the cases the plugin's C++ matcher and phrase scorer are tested against (`Plugins/SpeechRecognition/Resources/TestAudio/darija/`) |
 | `phrase_scoring.py` | phrase scoring: CTC alignment of each phrase, Arabizi to Arabic transliteration |
 | `compare_matchers.py` | old and new text matching on transcripts already written, and on live transcripts |
+| `spelling_check.py` | how much a custom phrase's spelling matters: "remala konto biris" said six ways on two synthetic voices, scored against six spellings (docs/custom-phrases.md) |
 | `spells_check.py` | invented spell words, no language: five spells and four sentences of chat on two synthetic voices, scored with the plugin's default acceptance |
 
 Set up with `uv sync --extra tunisian` (Python 3.11; the extra brings torch
