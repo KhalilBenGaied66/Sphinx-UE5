@@ -6,10 +6,19 @@ world, or through the **Voice Command** component that drives it for you.
 ## The short way: a Voice Command component
 
 1. Add a **Voice Command** component to an actor.
-2. Fill **Commands**. Each has a name, one or more phrases that trigger it, a
-   tolerance, and optionally a gameplay tag.
-3. Bind **On Voice Command**. It hands you the command's name, its tag, and the
+2. Pick its **Language Code** in the dropdown: the languages installed under
+   `Content/model` (English, French, German...), and **Custom phrases, any
+   language** (`any`), for any phrase in any alphabet: invented words, names,
+   Arabic and its dialects. The Arabic varieties are listed after it; they use
+   the same model.
+3. Fill **Commands**, or give it **Command Sets** (below). Each command has a
+   name, one or more phrases that trigger it, a tolerance, and optionally a
+   gameplay tag.
+4. Bind **On Voice Command**. It hands you the command's name, its tag, and the
    phrase that was heard with its timing and score.
+
+No phrase is built into the plugin: it listens for what you list, and nothing
+else fires.
 
 The component starts the recogniser if nothing has (with its **Language Code**),
 adds its phrases to those being listened for, and removes them when it is
@@ -37,11 +46,47 @@ commands are in Project Settings (*Game > Sphinx Sample*,
 `Source/SphinxSample/SphinxSampleSettings.h`), where they can be changed
 without rebuilding.
 
+### Command lists as assets: Voice Command Sets
+
+For more than a handful of commands, or the same commands on several actors,
+keep them in assets. *Content Browser > Add > Miscellaneous > Data Asset >
+Voice Command Set*: a **Language** (the same dropdown) and **Commands**. Give
+the sets to the component's **Command Sets**.
+
+The component listens for its own **Commands**, plus the sets whose Language is
+its Language Code. So an actor can hold one set per language (`Spells_EN`,
+`Spells_Custom`), and **Set Language** picks:
+
+```
+Event BeginPlay -> Voice Command: Set Language ("any")
+```
+
+A command named in several places (the component and a set, two sets) is one
+command with all their phrases. Edit a set and every actor using it follows;
+the sets can be reviewed, versioned and localised apart from the Blueprints.
+
+### Changing commands while the game runs
+
+Every change takes effect at once, without restarting the recogniser (except
+Set Language to another language, which loads that language's model):
+
+| Node | Does |
+|---|---|
+| **Set Language** | switches the recogniser to a language and listens for that language's sets; it is shared, so every component hears in the new language |
+| **Add Command** | adds a command, or replaces the component's command of the same name |
+| **Remove Command** | removes the component's command of that name (sets are left as they are) |
+| **Set Commands** | replaces all the component's own commands |
+| **Add Command Set** / **Remove Command Set** / **Set Command Sets** | the same for sets |
+| **Get Active Commands** | what is listened for now, merged |
+
+A spell learnt in the game is then one node: *Add Command* (`Patronus`,
+`expecto patronum`). In C++, the same functions on `UVoiceCommandComponent`.
+
 ### Any phrase: Arabic, Tunisian Darija, invented words
 
-Set **Language Code** to `any`, or to an Arabic code: `ar` (Modern Standard
-Arabic), `aeb` (Tunisian), `ary` (Moroccan), `arz` (Egyptian), `apc`
-(Levantine)... Then write each command's phrases, plainly, in Arabic
+Set **Language Code** to **Custom phrases, any language** (`any`), or to an
+Arabic code: `ar` (Modern Standard Arabic), `aeb` (Tunisian), `ary`
+(Moroccan), `arz` (Egyptian), `apc` (Levantine)... Then write each command's phrases, plainly, in Arabic
 script, Latin letters or both. There is no dictionary, so any word can be a
 command, an invented one included ([custom-phrases.md](custom-phrases.md):
 how to spell one, and what to do when it does not fire):
@@ -58,7 +103,8 @@ VoiceCommands->LanguageCode = TEXT("any");
 Shield.Phrases = { TEXT("amorix valor") };            // a spell: no language at all
 ```
 
-In Blueprint: on the Voice Command component, set **Language Code** to `any`,
+In Blueprint: on the Voice Command component, set **Language Code** to Custom
+phrases (`any`),
 add a command to **Commands** (Command `Patronus`, Phrases `expecto patronum`),
 and in **On Voice Command**, *Switch on Name* on the command to run its logic.
 Nothing else changes between languages.

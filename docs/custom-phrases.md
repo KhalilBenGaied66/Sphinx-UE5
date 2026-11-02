@@ -17,7 +17,7 @@ and German with PocketSphinx work differently: see the last section.
 
 On a **Voice Command** component (Blueprint or C++):
 
-1. **Language Code**: `any`.
+1. **Language Code**: Custom phrases, any language (`any`).
 2. **Commands**: add one. **Command** is the name your logic switches on
    (`Barrier`), **Phrases** what the player says (`remala konto biris`).
 3. **On Voice Command** → **Switch on Name** on **Command** → your logic.

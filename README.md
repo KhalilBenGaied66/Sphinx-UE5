@@ -117,13 +117,17 @@ after it), and one said inside a sentence about 430 ms sooner.
 - A **Voice Command** component: commands with several wordings, an optional
   gameplay tag, a cooldown, one event. Components can be switched on and off to
   change what the player may say; the recogniser is not reloaded.
+- No word built in. A Language dropdown (installed languages, and Custom
+  phrases for anything else), commands kept in **Voice Command Set** assets,
+  one per language, and nodes to add, remove and switch them while the game
+  runs.
 - State, error codes and an `On Recognition Failed` event with a message that
   says what to do.
 - Start time, end time and score of every phrase.
 - Optional early reports: the event fires when the phrase is spotted, not when
   the speaker pauses.
 - A C++ decoder class without thread or microphone, for tools and tests.
-- 21 automated tests, a benchmark, and a sample project.
+- 22 automated tests, a benchmark, and a sample project.
 
 ## Status
 

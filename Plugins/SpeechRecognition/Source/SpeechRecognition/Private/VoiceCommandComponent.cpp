@@ -2,6 +2,7 @@
 #include "SpeechRecognitionSubsystem.h"
 #include "SphinxDecoder.h"
 #include "TranscriptMatcher.h"
+#include "VoiceCommandSet.h"
 
 #include <limits>
 
@@ -48,6 +49,122 @@ void UVoiceCommandComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void UVoiceCommandComponent::SetCommands(const TArray<FVoiceCommand>& InCommands)
 {
 	Commands = InCommands;
+	RefreshCommands();
+}
+
+void UVoiceCommandComponent::AddCommand(const FVoiceCommand& InCommand)
+{
+	if (FVoiceCommand* Existing = Commands.FindByPredicate([&InCommand](const FVoiceCommand& Command) { return Command.Command == InCommand.Command; }))
+	{
+		*Existing = InCommand;
+	}
+	else
+	{
+		Commands.Add(InCommand);
+	}
+	RefreshCommands();
+}
+
+bool UVoiceCommandComponent::RemoveCommand(FName Command)
+{
+	const int32 Removed = Commands.RemoveAll([Command](const FVoiceCommand& Candidate) { return Candidate.Command == Command; });
+	if (Removed > 0)
+	{
+		RefreshCommands();
+	}
+	return Removed > 0;
+}
+
+void UVoiceCommandComponent::SetCommandSets(const TArray<UVoiceCommandSet*>& InCommandSets)
+{
+	CommandSets.Reset();
+	for (UVoiceCommandSet* CommandSet : InCommandSets)
+	{
+		if (CommandSet != nullptr)
+		{
+			CommandSets.AddUnique(CommandSet);
+		}
+	}
+	RefreshCommands();
+}
+
+void UVoiceCommandComponent::AddCommandSet(UVoiceCommandSet* CommandSet)
+{
+	if (CommandSet != nullptr && !CommandSets.Contains(CommandSet))
+	{
+		CommandSets.Add(CommandSet);
+		RefreshCommands();
+	}
+}
+
+bool UVoiceCommandComponent::RemoveCommandSet(UVoiceCommandSet* CommandSet)
+{
+	const int32 Removed = CommandSets.Remove(CommandSet);
+	if (Removed > 0)
+	{
+		RefreshCommands();
+	}
+	return Removed > 0;
+}
+
+void UVoiceCommandComponent::SetLanguage(const FString& InLanguageCode)
+{
+	const FString Code = InLanguageCode.TrimStartAndEnd();
+	if (Code.IsEmpty())
+	{
+		return;
+	}
+	LanguageCode = Code;
+
+	// a recogniser already running in another language takes the new one; the
+	// phrases registered below restart it in keyword mode
+	USpeechRecognitionSubsystem* Subsystem = GetSubsystem();
+	if (Subsystem != nullptr && Subsystem->GetState() != ESpeechRecognitionState::Stopped && !Subsystem->GetLanguageCode().Equals(Code, ESearchCase::IgnoreCase))
+	{
+		Subsystem->InitWithLanguageCode(Code);
+	}
+	RefreshCommands();
+}
+
+TArray<FVoiceCommand> UVoiceCommandComponent::GetActiveCommands() const
+{
+	TArray<FVoiceCommand> Result;
+	auto Merge = [&Result](const FVoiceCommand& Command)
+	{
+		// one entry per command name, so that two lists naming the same command do
+		// not compete with each other for it
+		if (FVoiceCommand* Existing = Result.FindByPredicate([&Command](const FVoiceCommand& Candidate) { return Candidate.Command == Command.Command; }))
+		{
+			for (const FString& Phrase : Command.Phrases)
+			{
+				Existing->Phrases.AddUnique(Phrase);
+			}
+		}
+		else
+		{
+			Result.Add(Command);
+		}
+	};
+
+	for (const FVoiceCommand& Command : Commands)
+	{
+		Merge(Command);
+	}
+	for (const UVoiceCommandSet* CommandSet : CommandSets)
+	{
+		if (CommandSet != nullptr && CommandSet->IsForLanguage(LanguageCode))
+		{
+			for (const FVoiceCommand& Command : CommandSet->Commands)
+			{
+				Merge(Command);
+			}
+		}
+	}
+	return Result;
+}
+
+void UVoiceCommandComponent::RefreshCommands()
+{
 	if (bRegistered)
 	{
 		RegisterWithSubsystem();
@@ -69,7 +186,7 @@ void UVoiceCommandComponent::RegisterWithSubsystem()
 	}
 
 	TArray<FRecognitionPhrase> Phrases;
-	for (const FVoiceCommand& Command : Commands)
+	for (const FVoiceCommand& Command : GetActiveCommands())
 	{
 		for (const FString& Phrase : Command.Phrases)
 		{
@@ -107,7 +224,8 @@ const FVoiceCommand* UVoiceCommandComponent::FindCommandForPhrase(const FString&
 {
 	// compare in the form the recogniser reports: lower case, single spaces, no "(2)"
 	const FString Heard = FSphinxDecoder::NormalisePhrase(FSphinxDecoder::StripPronunciationSuffixes(Phrase));
-	for (const FVoiceCommand& Command : Commands)
+	ActiveCommands = GetActiveCommands();
+	for (const FVoiceCommand& Command : ActiveCommands)
 	{
 		for (const FString& Candidate : Command.Phrases)
 		{
@@ -122,9 +240,11 @@ const FVoiceCommand* UVoiceCommandComponent::FindCommandForPhrase(const FString&
 
 const FVoiceCommand* UVoiceCommandComponent::FindCommandForTranscript(const FString& Transcript, FString& OutPhrase, float& OutScore) const
 {
+	ActiveCommands = GetActiveCommands();
+	const TArray<FVoiceCommand>& Active = ActiveCommands;
 	TArray<TArray<FString>> Groups;
-	Groups.Reserve(Commands.Num());
-	for (const FVoiceCommand& Command : Commands)
+	Groups.Reserve(Active.Num());
+	for (const FVoiceCommand& Command : Active)
 	{
 		Groups.Add(Command.Phrases);
 	}
@@ -132,22 +252,24 @@ const FVoiceCommand* UVoiceCommandComponent::FindCommandForTranscript(const FStr
 	OutScore = Match.Score;
 	OutPhrase = Match.Phrase;
 	UE_LOG(SpeechRecognitionPlugin, Verbose, TEXT("\"%s\": best %s (%.0f), runner-up %s (%.0f)"), *Transcript,
-		Commands.IsValidIndex(Match.Group) ? *Commands[Match.Group].Command.ToString() : TEXT("none"), Match.Score,
-		Commands.IsValidIndex(Match.RunnerUp) ? *Commands[Match.RunnerUp].Command.ToString() : TEXT("none"), Match.RunnerUpScore);
-	return Commands.IsValidIndex(Match.Group) ? &Commands[Match.Group] : nullptr;
+		Active.IsValidIndex(Match.Group) ? *Active[Match.Group].Command.ToString() : TEXT("none"), Match.Score,
+		Active.IsValidIndex(Match.RunnerUp) ? *Active[Match.RunnerUp].Command.ToString() : TEXT("none"), Match.RunnerUpScore);
+	return Active.IsValidIndex(Match.Group) ? &Active[Match.Group] : nullptr;
 }
 
 const FVoiceCommand* UVoiceCommandComponent::FindCommandForPhraseScores(const TMap<FString, float>& Scores, FString& OutPhrase, float& OutScore) const
 {
+	ActiveCommands = GetActiveCommands();
+	const TArray<FVoiceCommand>& Active = ActiveCommands;
 	const float Unscored = -std::numeric_limits<float>::infinity();
 	int32 Top = INDEX_NONE, Second = INDEX_NONE;
 	float TopScore = Unscored, SecondScore = Unscored;
 	FString TopPhrase;
-	for (int32 i = 0; i < Commands.Num(); ++i)
+	for (int32 i = 0; i < Active.Num(); ++i)
 	{
 		float Best = Unscored;
 		FString BestPhrase;
-		for (const FString& Phrase : Commands[i].Phrases)
+		for (const FString& Phrase : Active[i].Phrases)
 		{
 			if (const float* Score = Scores.Find(Phrase.TrimStartAndEnd()))
 			{
@@ -175,13 +297,13 @@ const FVoiceCommand* UVoiceCommandComponent::FindCommandForPhraseScores(const TM
 	OutScore = TopScore;
 	OutPhrase = TopPhrase;
 	UE_LOG(SpeechRecognitionPlugin, Log, TEXT("Phrase scores: best %s (%.2f, \"%s\"), next %s (%.2f)"),
-		Commands.IsValidIndex(Top) ? *Commands[Top].Command.ToString() : TEXT("none"), TopScore, *TopPhrase,
-		Commands.IsValidIndex(Second) ? *Commands[Second].Command.ToString() : TEXT("none"), SecondScore);
-	if (!Commands.IsValidIndex(Top) || TopScore < PhraseScoreThreshold || TopScore - SecondScore < PhraseScoreMargin)
+		Active.IsValidIndex(Top) ? *Active[Top].Command.ToString() : TEXT("none"), TopScore, *TopPhrase,
+		Active.IsValidIndex(Second) ? *Active[Second].Command.ToString() : TEXT("none"), SecondScore);
+	if (!Active.IsValidIndex(Top) || TopScore < PhraseScoreThreshold || TopScore - SecondScore < PhraseScoreMargin)
 	{
 		return nullptr;
 	}
-	return &Commands[Top];
+	return &Active[Top];
 }
 
 void UVoiceCommandComponent::HandlePhrasesRecognised(const TArray<FRecognisedPhraseDetail>& Phrases)

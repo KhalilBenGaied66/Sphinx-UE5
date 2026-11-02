@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DeveloperSettings.h"
 #include "SpeechRecognition.h"
+#include "UObject/PropertyText.h"
 #include "SpeechRecognitionSettings.generated.h"
 
 /**
@@ -49,6 +50,18 @@ public:
 
 	/** Codes of the languages that have a PocketSphinx model (acoustic model and dictionary) or a transcription model under the model folder. */
 	static TArray<FString> FindInstalledLanguages();
+
+	/**
+	 * The choices of a Language dropdown (Voice Command component, Voice Command
+	 * Set): every language installed under the model folder, then Custom phrases
+	 * ("any"), then the Arabic varieties, which the Custom phrases model also
+	 * serves. A choice whose model is missing says so.
+	 */
+	UFUNCTION()
+	static TArray<FPropertyTextString> GetLanguageOptions();
+
+	/** "English (en)", "Custom phrases, any language (any)"; an unknown code as it is. */
+	static FText GetLanguageDisplayName(const FString& LanguageCode);
 
 	/** The language's folder under the model folder. */
 	static FString GetLanguageDir(const FString& LanguageCode);

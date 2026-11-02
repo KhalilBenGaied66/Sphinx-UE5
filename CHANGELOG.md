@@ -6,6 +6,21 @@ repository's work and is not listed here.
 
 ## Unreleased
 
+### Added
+
+- **A Language dropdown** on the Voice Command component: the languages
+  installed under the model folder by name ("English (en)"), then "Custom
+  phrases, any language (any)", then the Arabic varieties, which the same model
+  serves. A missing model says so. Typing a code is no longer needed.
+- **Voice Command Set**, a data asset: a language and its commands. A
+  component's **Command Sets** are listened for when their language is the
+  component's, so one actor holds a set per language. A command named in
+  several places is merged into one.
+- **Set Language**, **Add Command**, **Remove Command**, **Set / Add / Remove
+  Command Set(s)** and **Get Active Commands**, for Blueprint and C++: the
+  commands change while the game runs. Test:
+  `SpeechRecognition.Unit.VoiceCommandSets`.
+
 ### Changed
 
 - **The sample's commands are in Project Settings** (*Game > Sphinx Sample*),

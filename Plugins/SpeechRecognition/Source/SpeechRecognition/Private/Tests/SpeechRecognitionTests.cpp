@@ -16,6 +16,7 @@
 #include "SphinxDecoder.h"
 #include "UObject/Package.h"
 #include "VoiceCommandComponent.h"
+#include "VoiceCommandSet.h"
 
 // Run with:  Automation RunTests SpeechRecognition
 //
@@ -154,6 +155,85 @@ bool FSpeechVoiceCommandMappingTest::RunTest(const FString& Parameters)
 	{
 		TestEqual(TEXT("the event names the command"), Listener->Commands[0], FName(TEXT("OpenDoor")));
 	}
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FSpeechVoiceCommandSetsTest, "SpeechRecognition.Unit.VoiceCommandSets", SpeechTestFlags)
+bool FSpeechVoiceCommandSetsTest::RunTest(const FString& Parameters)
+{
+	auto MakeCommand = [](const TCHAR* Name, const TCHAR* Phrase)
+	{
+		FVoiceCommand Command;
+		Command.Command = Name;
+		Command.Phrases = { Phrase };
+		return Command;
+	};
+	auto Names = [](const TArray<FVoiceCommand>& Commands)
+	{
+		TArray<FString> Result;
+		for (const FVoiceCommand& Command : Commands)
+		{
+			Result.Add(Command.Command.ToString());
+		}
+		return FString::Join(Result, TEXT(","));
+	};
+
+	UVoiceCommandSet* English = NewObject<UVoiceCommandSet>(GetTransientPackage());
+	English->Language = TEXT("en");
+	English->Commands = { MakeCommand(TEXT("Shield"), TEXT("raise shield")) };
+	UVoiceCommandSet* Custom = NewObject<UVoiceCommandSet>(GetTransientPackage());
+	Custom->Language = TEXT("any");
+	Custom->Commands = { MakeCommand(TEXT("Shield"), TEXT("protego")), MakeCommand(TEXT("Patronus"), TEXT("expecto patronum")) };
+
+	UVoiceCommandComponent* Component = NewObject<UVoiceCommandComponent>(GetTransientPackage());
+	Component->Commands = { MakeCommand(TEXT("Pause"), TEXT("pause game")) };
+	Component->SetCommandSets({ English, Custom, nullptr });
+	TestEqual(TEXT("null sets are dropped"), Component->CommandSets.Num(), 2);
+
+	TestEqual(TEXT("en: the component's own commands, then the English set"), Names(Component->GetActiveCommands()), FString(TEXT("Pause,Shield")));
+	TestNull(TEXT("en: a phrase of the Custom set is not heard"), Component->FindCommandForPhrase(TEXT("expecto patronum")));
+
+	Component->SetLanguage(TEXT("ANY"));
+	TestEqual(TEXT("Set Language keeps the code"), Component->LanguageCode, FString(TEXT("ANY")));
+	TestEqual(TEXT("any: the Custom set instead, case ignored"), Names(Component->GetActiveCommands()), FString(TEXT("Pause,Shield,Patronus")));
+	const FVoiceCommand* Found = Component->FindCommandForPhrase(TEXT("expecto patronum"));
+	TestTrue(TEXT("any: a spell finds its command"), Found != nullptr && Found->Command == TEXT("Patronus"));
+
+	// a command named in the component and in a set: one entry, with both phrases
+	Component->AddCommand(MakeCommand(TEXT("Shield"), TEXT("shield up")));
+	const TArray<FVoiceCommand> Active = Component->GetActiveCommands();
+	TestEqual(TEXT("one entry per command name"), Names(Active), FString(TEXT("Pause,Shield,Patronus")));
+	if (Active.Num() == 3)
+	{
+		TestEqual(TEXT("the merged command has the phrases of both"), FString::Join(Active[1].Phrases, TEXT("|")), FString(TEXT("shield up|protego")));
+	}
+
+	Component->AddCommand(MakeCommand(TEXT("Pause"), TEXT("hold on")));
+	TestEqual(TEXT("Add Command replaces a command of the same name"), Component->Commands.Num(), 2);
+	TestTrue(TEXT("the new wording is heard"), Component->FindCommandForPhrase(TEXT("hold on")) != nullptr);
+	TestNull(TEXT("the old wording is not"), Component->FindCommandForPhrase(TEXT("pause game")));
+
+	TestTrue(TEXT("Remove Command"), Component->RemoveCommand(TEXT("Pause")));
+	TestFalse(TEXT("Remove Command, twice"), Component->RemoveCommand(TEXT("Pause")));
+	TestTrue(TEXT("Remove Command Set"), Component->RemoveCommandSet(Custom));
+	TestEqual(TEXT("what is left in any: the component's Shield"), Names(Component->GetActiveCommands()), FString(TEXT("Shield")));
+	Component->AddCommandSet(Custom);
+	Component->AddCommandSet(Custom);
+	TestEqual(TEXT("Add Command Set adds a set once"), Component->CommandSets.Num(), 2);
+
+	// the Language dropdown
+	const TArray<FPropertyTextString> Options = USpeechRecognitionSettings::GetLanguageOptions();
+	TArray<FString> Codes;
+	for (const FPropertyTextString& Option : Options)
+	{
+		Codes.Add(Option.ValueString);
+		TestFalse(FString::Printf(TEXT("%s has a name"), *Option.ValueString), Option.DisplayName.IsEmpty());
+	}
+	TestTrue(TEXT("the dropdown lists English"), Codes.Contains(TEXT("en")));
+	TestTrue(TEXT("the dropdown lists Custom phrases"), Codes.Contains(TEXT("any")));
+	TestTrue(TEXT("the dropdown lists Tunisian Arabic"), Codes.Contains(TEXT("aeb")));
+	TestFalse(TEXT("the shared model's folder is not a language"), Codes.Contains(TEXT("omnilingual")));
+	TestEqual(TEXT("each code once"), TSet<FString>(Codes).Num(), Codes.Num());
 	return true;
 }
 

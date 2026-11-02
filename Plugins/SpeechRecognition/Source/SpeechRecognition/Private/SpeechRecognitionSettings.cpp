@@ -74,6 +74,97 @@ TArray<FString> USpeechRecognitionSettings::FindInstalledLanguages()
 	return Languages;
 }
 
+namespace
+{
+	struct FLanguageName
+	{
+		const TCHAR* Code;
+		const TCHAR* Name;
+	};
+
+	// the names shown in the Language dropdown; any other code is shown as it is
+	const FLanguageName LanguageNames[] = {
+		{ TEXT("en"), TEXT("English") },
+		{ TEXT("fr"), TEXT("French") },
+		{ TEXT("de"), TEXT("German") },
+		{ TEXT("es"), TEXT("Spanish") },
+		{ TEXT("it"), TEXT("Italian") },
+		{ TEXT("pt"), TEXT("Portuguese") },
+		{ TEXT("nl"), TEXT("Dutch") },
+		{ TEXT("ru"), TEXT("Russian") },
+		{ TEXT("zn"), TEXT("Chinese") },
+		{ TEXT("any"), TEXT("Custom phrases, any language") },
+		{ TEXT("ar"), TEXT("Arabic") },
+		{ TEXT("aeb"), TEXT("Tunisian Arabic") },
+		{ TEXT("ary"), TEXT("Moroccan Arabic") },
+		{ TEXT("arq"), TEXT("Algerian Arabic") },
+		{ TEXT("arz"), TEXT("Egyptian Arabic") },
+		{ TEXT("apc"), TEXT("Levantine Arabic") },
+	};
+
+	// listed after Custom phrases, whose model serves them, whether installed or not
+	const TCHAR* const ListedArabicCodes[] = { TEXT("ar"), TEXT("aeb"), TEXT("ary"), TEXT("arq"), TEXT("arz"), TEXT("apc") };
+
+	// the folder of the Custom phrases model; not a language of its own
+	const TCHAR* const SharedModelFolder = TEXT("omnilingual");
+}
+
+FText USpeechRecognitionSettings::GetLanguageDisplayName(const FString& LanguageCode)
+{
+	const FString Code = LanguageCode.TrimStartAndEnd();
+	for (const FLanguageName& Language : LanguageNames)
+	{
+		if (Code.Equals(Language.Code, ESearchCase::IgnoreCase))
+		{
+			return FText::FromString(FString::Printf(TEXT("%s (%s)"), Language.Name, Language.Code));
+		}
+	}
+	return FText::FromString(Code);
+}
+
+TArray<FPropertyTextString> USpeechRecognitionSettings::GetLanguageOptions()
+{
+	TArray<FPropertyTextString> Options;
+	auto Add = [&Options](const FString& Code, bool bInstalled, const TCHAR* Note = nullptr)
+	{
+		FString Name = GetLanguageDisplayName(Code).ToString();
+		if (Note != nullptr)
+		{
+			Name += Note;
+		}
+		if (!bInstalled)
+		{
+			Name += TEXT(" - model not installed");
+		}
+		FPropertyTextString& Option = Options.AddDefaulted_GetRef();
+		Option.ValueString = Code;
+		Option.DisplayName = FText::FromString(Name);
+	};
+
+	// PocketSphinx languages, and any language with a transcription model of its own
+	const TArray<FString> Installed = FindInstalledLanguages();
+	if (!Installed.Contains(TEXT("en")))
+	{
+		// the default: listed so that it can be chosen back
+		Add(TEXT("en"), false);
+	}
+	for (const FString& Code : Installed)
+	{
+		if (!Code.Equals(SharedModelFolder, ESearchCase::IgnoreCase) && !UsesSharedModel(Code))
+		{
+			Add(Code, true);
+		}
+	}
+
+	const bool bSharedModel = HasTranscriptionModel(TEXT("any"));
+	Add(TEXT("any"), bSharedModel);
+	for (const TCHAR* Code : ListedArabicCodes)
+	{
+		Add(Code, HasTranscriptionModel(Code), TEXT(", custom phrases"));
+	}
+	return Options;
+}
+
 FString USpeechRecognitionSettings::GetLanguageDir(const FString& LanguageCode)
 {
 	return GetModelRoot() / LanguageCode;
