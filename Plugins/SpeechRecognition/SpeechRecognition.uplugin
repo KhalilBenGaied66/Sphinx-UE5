@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
-	"Version": 4,
-	"VersionName": "2.1.1",
+	"Version": 5,
+	"VersionName": "2.2.0",
 	"FriendlyName": "Speech Recognition Plugin",
 	"Description": "Offline voice commands for Unreal Engine 5, built on PocketSphinx: keyword spotting, JSGF grammars and language models. A second engine recognises any phrase you can write, in any alphabet: Arabic and its dialects, Tunisian Darija included, or invented words, with a speech model run on the Neural Network Engine. No dictionary, no training, no cloud service, no GPU.",
 	"Category": "Audio",

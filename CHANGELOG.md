@@ -4,7 +4,7 @@ Starting point: [ukustra/sphinx-ue4](https://github.com/ukustra/sphinx-ue4) at
 commit `08e3957` ("5.8 update"). The Unreal Engine 5 port itself is that
 repository's work and is not listed here.
 
-## Unreleased
+## 2.2.0 (November 2026)
 
 ### Added
 
