@@ -55,7 +55,13 @@ foreach ($code in $Language) {
     if (@('en', 'fr', 'de', 'omnilingual') -notcontains $code) { throw "No download recipe for '$code'. This script knows en, fr, de and omnilingual; see docs/models.md for other languages." }
 }
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-if (-not $Destination) { $Destination = Join-Path $root 'Content\model' }
+if (-not $Destination) {
+    # in a clone of the repository, the sample project's model folder
+    if (-not (Get-ChildItem $root -Filter '*.uproject' -ErrorAction SilentlyContinue)) {
+        throw "Say where your project's models go: -Destination <YourProject>\Content\model"
+    }
+    $Destination = Join-Path $root 'Content\model'
+}
 New-Item -ItemType Directory -Force -Path $Destination | Out-Null
 $Destination = (Resolve-Path $Destination).Path
 
@@ -78,8 +84,11 @@ function Get-File([string]$Url, [string]$Target) {
 
 function Expand-Archive2([string]$Archive, [string]$Target) {
     # tar.exe (bsdtar) reads gzip and xz alike, whatever the file is called
+    # Windows' own: from Git Bash, the tar.exe on the path is GNU tar, which takes C: for a host
     New-Item -ItemType Directory -Force -Path $Target | Out-Null
-    & tar.exe -xf $Archive -C $Target
+    $tar = Join-Path $env:SystemRoot 'System32\tar.exe'
+    if (-not (Test-Path $tar)) { $tar = 'tar.exe' }
+    & $tar -xf $Archive -C $Target
     if ($LASTEXITCODE -ne 0) { throw "Could not extract $Archive" }
 }
 
@@ -127,8 +136,12 @@ try {
                     New-Item -ItemType Directory -Force -Path $languageModels | Out-Null
                     Get-File "$pocketSphinx/en-us.lm.bin" (Join-Path $languageModels 'en.lm.bin')
                 }
-                # a grammar to try grammar mode with: Enable Grammar Mode "move"
-                Copy-Item (Join-Path $root 'Plugins\SpeechRecognition\Resources\TestAudio\grammars\en_move.gram') (Join-Path $target 'grammars\move.gram')
+                # a grammar to try grammar mode with: Enable Grammar Mode "move". Only in
+                # a clone of the repository; the script also runs on its own.
+                $sampleGrammar = Join-Path $root 'Plugins\SpeechRecognition\Resources\TestAudio\grammars\en_move.gram'
+                if (Test-Path $sampleGrammar) {
+                    Copy-Item $sampleGrammar (Join-Path $target 'grammars\move.gram')
+                }
             }
             'fr' {
                 "Downloading the French model..."

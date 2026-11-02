@@ -16,6 +16,13 @@ repository's work and is not listed here.
   patronum" (-0.09) and "zelaris domisar kanty" (-0.16), "velaris" (-0.38), and
   chat ("what time is it", best -9.15, not fired).
 
+### Fixed
+
+- `Tools/Get-Models.ps1` run on its own, outside a clone (as the release notes
+  tell Blueprint-only users to): it no longer stops on the sample grammar it
+  copies for `en`, and without `-Destination` it says where models go instead
+  of guessing. It uses Windows' `tar.exe`, so it also runs from Git Bash.
+
 ## 2.1.1 (October 2026)
 
 ### Removed
