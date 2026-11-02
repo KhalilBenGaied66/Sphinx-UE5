@@ -85,9 +85,9 @@ void ASphinxSampleHUD::DrawHUD()
 	}
 
 	Y += LineHeight * 0.5f;
-	Line(TEXT("L: switch language (en, aeb Tunisian, ar MSA, any: spells)"), FLinearColor(0.6f, 0.8f, 1.f));
+	Line(FString::Printf(TEXT("Commands: %s. L: next list (Project Settings > Game > Sphinx Sample)"), *Cube->GetLanguageName()), FLinearColor(0.6f, 0.8f, 1.f));
 	Line(TEXT("Say:"), FLinearColor::White);
-	for (const FVoiceCommand& Command : Cube->VoiceCommands->Commands)
+	for (const FVoiceCommand& Command : Cube->VoiceCommands->GetActiveCommands())
 	{
 		Line(FString::Printf(TEXT("  %s"), *FString::Join(Command.Phrases, TEXT("  /  "))), FLinearColor(0.8f, 0.8f, 0.8f));
 	}

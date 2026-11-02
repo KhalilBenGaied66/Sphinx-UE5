@@ -180,15 +180,16 @@ Say "9oddem" (قدّام), "ltali" (لتالي) or "wakhar" (وخّر), "3al lis
 gauche", "3al limin" or "a droite", "onguez" (اُنڨز), "o9ef" (أُقف), "barka" or
 "stop". In MSA: تقدّم، ارجع، يسارا، يمينا، اقفز، توقف. The screen shows what
 the model wrote, the phrase that won, its score and the time it took.
-In the running sample, **L** switches language: English, Tunisian, MSA, spells.
+In the running sample, **L** goes to the next list: English, Tunisian, MSA, spells.
 The first switch to one of the last three loads the 328 MB model, a pause of a
 few seconds. When a phrase does not fire, the screen shows the best phrase,
 its score and why it was not accepted.
 
 **Your own commands, without C++.** In the editor, *Edit > Project Settings >
-Game > Sphinx Sample* has the cube's commands, one list per language. Add a
-command, give it a name and a phrase ("Patronus", "expecto patronum"), press
-Play, press L until the screen says `any`, and say it. Forward, Back, Left,
+Game > Sphinx Sample* has the cube's commands: named lists, each with a
+language. Add a command to Spells, give it a name and a phrase ("Patronus",
+"expecto patronum"), press Play, press L until the screen says Spells, and say
+it. A new list (a name, a language, commands) is one more stop for L. Forward, Back, Left,
 Right, Jump and Stop move the cube; a command with any other name makes it spin
 once and shows its name. The lists are saved to `Config/DefaultGame.ini`; while
 the game runs, an edited list is used the next time L switches to it. How to

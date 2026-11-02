@@ -43,8 +43,8 @@ VoiceCommands->OnVoiceCommand.AddDynamic(this, &AMyActor::HandleVoiceCommand);
 
 `Source/SphinxSample/VoiceControlledCube.cpp` is a complete example. Its
 commands are in Project Settings (*Game > Sphinx Sample*,
-`Source/SphinxSample/SphinxSampleSettings.h`), where they can be changed
-without rebuilding.
+`Source/SphinxSample/SphinxSampleSettings.h`): a list of named lists, each with
+a language, which L goes through. They can be changed without rebuilding.
 
 ### Command lists as assets: Voice Command Sets
 

@@ -23,8 +23,8 @@ On a **Voice Command** component (Blueprint or C++):
 3. **On Voice Command** → **Switch on Name** on **Command** → your logic.
 
 In the sample project, the same lists are in *Project Settings > Game > Sphinx
-Sample*: add the command under **Spells (any)**, press Play, press L until the
-screen says `any`. A name the cube has no action for makes it spin once.
+Sample*: add the command to the **Spells** list, press Play, press L until the
+screen says Spells. A name the cube has no action for makes it spin once.
 
 ## How the plugin hears a phrase
 

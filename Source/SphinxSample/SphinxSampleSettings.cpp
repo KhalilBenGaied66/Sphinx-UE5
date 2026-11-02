@@ -22,7 +22,10 @@ USphinxSampleSettings::USphinxSampleSettings()
 	// English, PocketSphinx. Longer phrases are easier to tell apart, so they can
 	// be given a looser tolerance; a single short word needs a strict one or it
 	// fires on anything.
-	English = {
+	FSphinxSampleLanguage English;
+	English.Name = TEXT("English");
+	English.Language = TEXT("en");
+	English.Commands = {
 		MakeCommand(TEXT("Forward"), { TEXT("go forward"), TEXT("move forward") }, EPhraseRecognitionTolerance::VE_5),
 		MakeCommand(TEXT("Back"),    { TEXT("go back"), TEXT("move back") },       EPhraseRecognitionTolerance::VE_5),
 		MakeCommand(TEXT("Left"),    { TEXT("turn left") },                         EPhraseRecognitionTolerance::VE_5),
@@ -40,7 +43,10 @@ USphinxSampleSettings::USphinxSampleSettings()
 	// often but scores below -2.5 is the one to add.
 
 	// Tunisian Darija, as in Tools/DarijaEval/commands.toml
-	Tunisian = {
+	FSphinxSampleLanguage Tunisian;
+	Tunisian.Name = TEXT("Tunisian Darija");
+	Tunisian.Language = TEXT("aeb");
+	Tunisian.Commands = {
 		MakeCommand(TEXT("Forward"), { TEXT("قدّام"), TEXT("إمشي لقدّام"), TEXT("9oddem"), TEXT("emchi l9oddem") }, EPhraseRecognitionTolerance::VE_5),
 		MakeCommand(TEXT("Back"),    { TEXT("لتالي"), TEXT("ارجع"), TEXT("وخّر"), TEXT("ltali"), TEXT("arja3"), TEXT("wakhar") }, EPhraseRecognitionTolerance::VE_5),
 		MakeCommand(TEXT("Left"),    { TEXT("على ليسار"), TEXT("دور ليسار"), TEXT("امشي ليسار"), TEXT("3al lisar"), TEXT("imchi lisar"), TEXT("a gauche") }, EPhraseRecognitionTolerance::VE_5),
@@ -50,7 +56,10 @@ USphinxSampleSettings::USphinxSampleSettings()
 	};
 
 	// Modern Standard Arabic, written once each, in Arabic script only
-	Arabic = {
+	FSphinxSampleLanguage Arabic;
+	Arabic.Name = TEXT("Modern Standard Arabic");
+	Arabic.Language = TEXT("ar");
+	Arabic.Commands = {
 		MakeCommand(TEXT("Forward"), { TEXT("تقدّم"), TEXT("إلى الأمام") }, EPhraseRecognitionTolerance::VE_5),
 		MakeCommand(TEXT("Back"),    { TEXT("ارجع"), TEXT("إلى الخلف") }, EPhraseRecognitionTolerance::VE_5),
 		MakeCommand(TEXT("Left"),    { TEXT("يسارا"), TEXT("انعطف يسارا") }, EPhraseRecognitionTolerance::VE_5),
@@ -61,7 +70,10 @@ USphinxSampleSettings::USphinxSampleSettings()
 
 	// No language: invented words, written as they sound. A command may also mix
 	// languages, as Stop does.
-	Spells = {
+	FSphinxSampleLanguage Spells;
+	Spells.Name = TEXT("Spells");
+	Spells.Language = TEXT("any");
+	Spells.Commands = {
 		MakeCommand(TEXT("Forward"), { TEXT("velaris") }, EPhraseRecognitionTolerance::VE_5),
 		MakeCommand(TEXT("Back"),    { TEXT("zelthar morun") }, EPhraseRecognitionTolerance::VE_5),
 		MakeCommand(TEXT("Left"),    { TEXT("sanarel vitae") }, EPhraseRecognitionTolerance::VE_5),
@@ -69,21 +81,14 @@ USphinxSampleSettings::USphinxSampleSettings()
 		MakeCommand(TEXT("Jump"),    { TEXT("amorix valor corva aeterna") }, EPhraseRecognitionTolerance::VE_5),
 		MakeCommand(TEXT("Stop"),    { TEXT("silentium"), TEXT("stop"), TEXT("o9ef"), TEXT("قف") }, EPhraseRecognitionTolerance::VE_5),
 	};
+
+	Languages = { English, Tunisian, Arabic, Spells };
 }
 
-const TArray<FVoiceCommand>& USphinxSampleSettings::CommandsFor(const FString& LanguageCode) const
+int32 USphinxSampleSettings::FindLanguage(const FString& CodeOrName) const
 {
-	if (LanguageCode.Equals(TEXT("aeb"), ESearchCase::IgnoreCase))
+	return Languages.IndexOfByPredicate([&CodeOrName](const FSphinxSampleLanguage& Entry)
 	{
-		return Tunisian;
-	}
-	if (LanguageCode.Equals(TEXT("ar"), ESearchCase::IgnoreCase))
-	{
-		return Arabic;
-	}
-	if (LanguageCode.Equals(TEXT("any"), ESearchCase::IgnoreCase))
-	{
-		return Spells;
-	}
-	return English;
+		return Entry.Language.Equals(CodeOrName, ESearchCase::IgnoreCase) || Entry.Name.Equals(CodeOrName, ESearchCase::IgnoreCase);
+	});
 }

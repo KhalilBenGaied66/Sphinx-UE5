@@ -22,11 +22,6 @@ namespace
 	const float SpinTurnSpeed = 720.f;
 }
 
-TArray<FVoiceCommand> AVoiceControlledCube::CommandsFor(const FString& LanguageCode)
-{
-	return GetDefault<USphinxSampleSettings>()->CommandsFor(LanguageCode);
-}
-
 AVoiceControlledCube::AVoiceControlledCube()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -49,14 +44,26 @@ void AVoiceControlledCube::PreInitializeComponents()
 {
 	Super::PreInitializeComponents();
 
-	FString Language;
-	if (FParse::Value(FCommandLine::Get(), TEXT("SpeechLanguage="), Language))
-	{
-		VoiceCommands->LanguageCode = Language.ToLower();
-	}
 	// read here rather than in the constructor, so that edits made in Project
 	// Settings since the editor started are used
-	VoiceCommands->Commands = CommandsFor(VoiceCommands->LanguageCode);
+	const USphinxSampleSettings* Settings = GetDefault<USphinxSampleSettings>();
+	FString Wanted;
+	if (FParse::Value(FCommandLine::Get(), TEXT("SpeechLanguage="), Wanted))
+	{
+		LanguageIndex = FMath::Max(Settings->FindLanguage(Wanted), 0);
+	}
+	if (Settings->Languages.IsValidIndex(LanguageIndex))
+	{
+		const FSphinxSampleLanguage& Entry = Settings->Languages[LanguageIndex];
+		VoiceCommands->LanguageCode = Entry.Language;
+		VoiceCommands->Commands = Entry.Commands;
+	}
+}
+
+FString AVoiceControlledCube::GetLanguageName() const
+{
+	const TArray<FSphinxSampleLanguage>& Languages = GetDefault<USphinxSampleSettings>()->Languages;
+	return Languages.IsValidIndex(LanguageIndex) ? Languages[LanguageIndex].Name : FString();
 }
 
 void AVoiceControlledCube::BeginPlay()
@@ -82,30 +89,24 @@ void AVoiceControlledCube::BeginPlay()
 
 void AVoiceControlledCube::CycleLanguage()
 {
-	static const TCHAR* const Languages[] = { TEXT("en"), TEXT("aeb"), TEXT("ar"), TEXT("any") };
-	int32 Next = 0;
-	for (int32 i = 0; i < UE_ARRAY_COUNT(Languages); ++i)
+	const int32 Count = GetDefault<USphinxSampleSettings>()->Languages.Num();
+	if (Count > 0)
 	{
-		if (VoiceCommands->LanguageCode.Equals(Languages[i], ESearchCase::IgnoreCase))
-		{
-			Next = (i + 1) % UE_ARRAY_COUNT(Languages);
-			break;
-		}
+		SwitchLanguage((LanguageIndex + 1) % Count);
 	}
-	SwitchLanguage(Languages[Next]);
 }
 
-void AVoiceControlledCube::SwitchLanguage(const FString& LanguageCode)
+void AVoiceControlledCube::SwitchLanguage(int32 Index)
 {
-	USpeechRecognitionSubsystem* Speech = GetWorld()->GetSubsystem<USpeechRecognitionSubsystem>();
-	if (Speech == nullptr)
+	const TArray<FSphinxSampleLanguage>& Languages = GetDefault<USphinxSampleSettings>()->Languages;
+	if (!Languages.IsValidIndex(Index))
 	{
 		return;
 	}
-	// the subsystem takes the new language; the component's new phrases restart it
-	Speech->InitWithLanguageCode(LanguageCode);
-	VoiceCommands->LanguageCode = LanguageCode;
-	VoiceCommands->SetCommands(CommandsFor(LanguageCode));
+	LanguageIndex = Index;
+	// the commands first, so that the component registers them once, in the new language
+	VoiceCommands->Commands = Languages[Index].Commands;
+	VoiceCommands->SetLanguage(Languages[Index].Language);
 	LastCommand = NAME_None;
 	LastTranscript.Reset();
 }
@@ -124,7 +125,7 @@ void AVoiceControlledCube::HandlePhrasesHeard(const TArray<FRecognisedPhraseDeta
 			// phrase that was close but not accepted shows on screen
 			float Best = -1e9f, Second = -1e9f;
 			FString BestPhrase;
-			for (const FVoiceCommand& Command : VoiceCommands->Commands)
+			for (const FVoiceCommand& Command : VoiceCommands->GetActiveCommands())
 			{
 				float CommandBest = -1e9f;
 				FString CommandPhrase;

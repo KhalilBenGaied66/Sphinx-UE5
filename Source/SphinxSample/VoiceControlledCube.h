@@ -24,22 +24,20 @@ public:
 	AVoiceControlledCube();
 
 	/**
-	 * Picks the commands before the voice command component starts: -SpeechLanguage=aeb
-	 * (Tunisian Darija), ar (Modern Standard Arabic) or any (invented spell words).
+	 * Picks the commands before the voice command component starts: the first list
+	 * of Project Settings > Game > Sphinx Sample, or the one -SpeechLanguage= names
+	 * (aeb, Spells...).
 	 */
 	virtual void PreInitializeComponents() override;
 
-	/**
-	 * The sample's commands in one language: en (PocketSphinx), aeb, ar or any (the
-	 * second engine). They are edited in Project Settings > Game > Sphinx Sample.
-	 */
-	static TArray<FVoiceCommand> CommandsFor(const FString& LanguageCode);
+	/** Switches to one of the lists of Project Settings > Game > Sphinx Sample while the game runs. */
+	void SwitchLanguage(int32 Index);
 
-	/** Changes language while the game runs. */
-	void SwitchLanguage(const FString& LanguageCode);
-
-	/** en, aeb, ar, any, en...: bound to the L key. */
+	/** The next list, after the last the first: bound to the L key. */
 	void CycleLanguage();
+
+	/** The name of the list in use, for the HUD. */
+	FString GetLanguageName() const;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 
@@ -48,6 +46,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category = "Sample")
 	TObjectPtr<UVoiceCommandComponent> VoiceCommands;
+
+	/** The list in use, in Project Settings > Game > Sphinx Sample. */
+	int32 LanguageIndex = 0;
 
 	/** Last command heard and when, for the HUD. */
 	FName LastCommand;

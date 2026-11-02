@@ -23,6 +23,12 @@ repository's work and is not listed here.
 
 ### Changed
 
+- **The sample's lists are named and open-ended.** *Project Settings > Game >
+  Sphinx Sample* holds a list of command lists, each with a name, a language
+  and commands; L goes through them in order, and `-SpeechLanguage=` takes a
+  code or a name. A fifth list needs no code. The sample switches language
+  with the component's Set Language. Checked by replaying a synthetic clip of
+  a spell added in Project Settings ("Zembee", -1.18) through the live path.
 - **The sample's commands are in Project Settings** (*Game > Sphinx Sample*),
   one list per language, instead of in C++: a new phrase or a new spell needs
   no rebuild. A command the cube has no action for makes it spin once, so a new
