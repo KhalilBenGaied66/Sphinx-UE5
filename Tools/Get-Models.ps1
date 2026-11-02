@@ -28,7 +28,11 @@
     de 44 MB (its language model comes in the same archive), omnilingual 328 MB.
 
     The omnilingual folder holds model.int8.onnx, tokens.txt and the model card
-    instead of an acoustic model and a dictionary.
+    instead of an acoustic model and a dictionary. The script changes the model's
+    8 convolution weights from int8 to uint8 (the same values, shifted by 128 with
+    their zero point, so the outputs are bit-identical): the ONNX Runtime of UE 5.5
+    and 5.6 has no int8 ConvInteger. Run it again on a model downloaded before
+    this step and it converts that model, without downloading it again.
 
     Any other CMUSphinx model works too: give it the same layout under a folder of
     your choosing and pass that folder's name to Init With Language Code.
@@ -82,6 +86,69 @@ function Get-File([string]$Url, [string]$Target) {
     throw "Download failed: $Url"
 }
 
+# The 8 ConvInteger weights of model.int8.onnx, int8 -> uint8, edited in place: the
+# file keeps its size and layout. Made by Tools\ModelPatch\conv_uint8.py, which says
+# what each kind of edit is; the hashes pin the file before and after.
+$omnilingualOriginal = '38a6cc569d46eb382f27d85b3208b883e834ff281b2057a606ec79e4ae501545'
+$omnilingualConverted = '704ad397b1f2418ba778af6a7de16c5fda8f5a1821b31b8aafb042d8f90db7ca'
+$omnilingualEdits = @(
+    @('type', 2213565, 1), @('zp', 2213566, 3), @('type', 2213654, 1), @('xor', 2213731, 5120),
+    @('type', 2219033, 1), @('zp', 2219034, 3), @('type', 2219124, 1), @('xor', 2219202, 786432),
+    @('type', 3005816, 1), @('zp', 3005817, 3), @('type', 3005907, 1), @('xor', 3005985, 786432),
+    @('type', 3792599, 1), @('zp', 3792600, 3), @('type', 3792690, 1), @('xor', 3792768, 786432),
+    @('type', 4579382, 1), @('zp', 4579383, 3), @('type', 4579473, 1), @('xor', 4579551, 786432),
+    @('type', 5366165, 1), @('zp', 5366166, 3), @('type', 5366256, 1), @('xor', 5366334, 524288),
+    @('type', 5890804, 1), @('zp', 5890805, 3), @('type', 5890895, 1), @('xor', 5890973, 524288),
+    @('type', 6939802, 1), @('zp', 6939803, 3), @('type', 6939848, 1), @('xor', 6939881, 8388608)
+)
+
+function Convert-OmnilingualModel([string]$Path) {
+    $hash = (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
+    if ($hash -eq $omnilingualConverted) { return }
+    if ($hash -ne $omnilingualOriginal) {
+        throw "$Path is not the model this script downloads (SHA-256 $hash). Run it again with -Force."
+    }
+    "Converting the model's convolutions to uint8, for UE 5.5 and 5.6..."
+    # on a copy, so that an interruption leaves the original whole
+    $work = "$Path.converting"
+    Copy-Item -LiteralPath $Path $work -Force
+    $file = [System.IO.File]::Open($work, 'Open', 'ReadWrite')
+    try {
+        foreach ($edit in $omnilingualEdits) {
+            $kind, $offset, $length = $edit
+            $bytes = New-Object byte[] $length
+            $file.Position = $offset
+            if ($file.Read($bytes, 0, $length) -ne $length) { throw "Short read in $work" }
+            switch ($kind) {
+                'type' { if ($bytes[0] -ne 3) { throw "Unexpected byte at $offset" }; $bytes[0] = 2 }
+                'zp' {
+                    if ($bytes[0] -ne 0x2a -or $bytes[1] -ne 1 -or $bytes[2] -ne 0) { throw "Unexpected bytes at $offset" }
+                    $bytes[0] = 0x4a; $bytes[2] = 0x80
+                }
+                'xor' {
+                    # eight bytes at a time: a byte loop in PowerShell takes minutes on 12 MB
+                    $mask = [BitConverter]::ToInt64([byte[]](0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80), 0)
+                    for ($i = 0; $i -lt $length; $i += 8) {
+                        $word = [BitConverter]::ToInt64($bytes, $i) -bxor $mask
+                        [BitConverter]::GetBytes($word).CopyTo($bytes, $i)
+                    }
+                }
+            }
+            $file.Position = $offset
+            $file.Write($bytes, 0, $length)
+        }
+    }
+    finally {
+        $file.Close()
+    }
+    $hash = (Get-FileHash -LiteralPath $work -Algorithm SHA256).Hash.ToLowerInvariant()
+    if ($hash -ne $omnilingualConverted) {
+        Remove-Item -LiteralPath $work -Force
+        throw "The converted model is not the expected one (SHA-256 $hash)."
+    }
+    Move-Item -LiteralPath $work $Path -Force
+}
+
 function Expand-Archive2([string]$Archive, [string]$Target) {
     # tar.exe (bsdtar) reads gzip and xz alike, whatever the file is called
     # Windows' own: from Git Bash, the tar.exe on the path is GNU tar, which takes C: for a host
@@ -101,15 +168,18 @@ try {
 
         if ($code -eq 'omnilingual') {
             # a transcription model, not a PocketSphinx one
-            if ((Test-Path (Join-Path $target 'model.int8.onnx')) -and -not $Force) {
+            $model = Join-Path $target 'model.int8.onnx'
+            if ((Test-Path $model) -and -not $Force) {
+                Convert-OmnilingualModel $model
                 "$code already installed in $target (use -Force to download it again)."
                 continue
             }
             New-Item -ItemType Directory -Force -Path $target | Out-Null
             "Downloading the Omnilingual ASR model (328 MB)..."
-            Get-File "$omnilingual/model.int8.onnx" (Join-Path $target 'model.int8.onnx')
+            Get-File "$omnilingual/model.int8.onnx" $model
             Get-File "$omnilingual/tokens.txt" (Join-Path $target 'tokens.txt')
             Get-File "$omnilingual/README.md" (Join-Path $target 'MODEL_CARD.md')
+            Convert-OmnilingualModel $model
             $size = (Get-ChildItem $target -Recurse -File | Measure-Object Length -Sum).Sum / 1MB
             "{0}: installed in {1} ({2:N0} MB)" -f $code, $target, $size
             continue

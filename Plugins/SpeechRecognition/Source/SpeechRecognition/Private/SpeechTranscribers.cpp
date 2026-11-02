@@ -238,7 +238,9 @@ FSpeechTranscriberPtr SpeechTranscribers::CreateOmnilingual(const FString& Folde
 	Transcriber->Instance = Transcriber->Model->CreateModelInstanceCPU();
 	if (!Transcriber->Instance.IsValid())
 	{
-		OutError = TEXT("NNE could not create a model instance.");
+		// The usual cause: the model as downloaded from Hugging Face, on UE 5.5 or 5.6, whose ONNX
+		// Runtime has no int8 ConvInteger. Get-Models.ps1 converts the file.
+		OutError = FString::Printf(TEXT("NNE could not create a model instance from %s. On UE 5.5 or 5.6, run Tools\\Get-Models.ps1 -Language omnilingual again: it converts the model for their ONNX Runtime."), *ModelPath);
 		return nullptr;
 	}
 

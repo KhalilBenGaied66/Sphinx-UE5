@@ -112,6 +112,14 @@ The engine:
 |---|---|---|---|---|
 | Omnilingual ASR CTC 300M (Meta), int8 ONNX export by OpenVoiceOS: the default | offline, on the CPU, through Unreal's Neural Network Engine (the NNERuntimeORT plugin, part of the engine). Ships with the game. One folder, `Content/model/omnilingual`, serves the code `any` and every Arabic code; a code's own folder (`model/aeb`) takes precedence | 328 MB (`Tools/Get-Models.ps1 -Language omnilingual`) | Apache-2.0 | built; tested on synthetic Darija, invented words, and two live sessions (below) |
 
+`Get-Models.ps1` changes one thing in the downloaded file: the weights of its 8
+convolutions, from int8 to uint8 (each value and its zero point plus 128, so
+the outputs are bit-identical). The ONNX Runtime that UE 5.6 ships (1.20) has
+no int8 ConvInteger and would not load the model; UE 5.8's (1.24) runs either
+file. The script checks the file's SHA-256 before and after; the edits and why
+they are exact are in `Tools/ModelPatch/conv_uint8.py`. A model downloaded by
+hand is converted by running the script again.
+
 Why Omnilingual first: of the candidates below, it is the only one that runs
 inside Unreal with nothing added, because ONNX runs on the engine's own NNE.
 It is also under 1 GB, licensed for commercial use, and its training corpus

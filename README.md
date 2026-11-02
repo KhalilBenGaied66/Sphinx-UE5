@@ -133,15 +133,15 @@ after it), and one said inside a sentence about 430 ms sooner.
 
 | What | State |
 |---|---|
-| Builds as a standalone plugin (`RunUAT BuildPlugin`, Win64) | UE 5.5.4, 5.6.1 and 5.8.1: builds, no compiler warning |
-| Automated tests (`Tools/Run-Tests.ps1`), UE 5.8 | 21 of 21 pass, 7 of them for the second engine. One plays a clip of each language through the live path while switching any, English, Tunisian, MSA, any, as the sample's L key does: each is recognised |
+| Builds as a standalone plugin (`RunUAT BuildPlugin`, Win64) | UE 5.5.4, 5.6.1 and 5.8.1: builds, no compiler warning. The second engine runs on 5.6 and 5.8; on 5.6 it needs the model as `Get-Models.ps1` converts it (5.6's ONNX Runtime has no int8 ConvInteger). Not run on 5.5 |
+| Automated tests (`Tools/Run-Tests.ps1`), UE 5.8 and 5.6 | 22 of 22 pass on both (on 5.6 in a fresh clone, models from `Get-Models.ps1`), 7 of them for the second engine. One plays a clip of each language through the live path while switching any, English, Tunisian, MSA, any, as the sample's L key does: each is recognised |
 | Arabic (`ar`, `aeb`, `ary`...), Omnilingual ASR through NNE with phrase scoring | built. On 89 synthetic Darija command clips and 18 distractors, inside Unreal: phrase scoring 78 of 89 commands, 0 false matches, 0 false accepts, against 50 of 89 for matching the model's text (thresholds chosen on those clips). Model loaded in 1.6 to 3.2 s; about 0.4 s per command with 8 ONNX Runtime threads, 0.7 s with 4, 2.4 s with 1; phrase scoring adds about 8 ms. The C++ matcher and phrase spellings agree with the Python ones on 1,343 and 143 cases |
 | ... with a person speaking | the author, Tunisian Darija, two live sessions in the sample: about 75% of commands worked with text matching, by the author's count, and "the Tunisian works" with phrase scoring. Not yet measured on recordings with known commands; MSA not yet spoken |
 | Invented words (`any`) | five made-up spell phrases, written once in Latin letters, spoken by two synthetic voices (English, French): 10 of 10 recognised, 0 wrong, 0 of 8 sentences of chat fired a spell. Nobody has spoken them yet |
 | Pre-built plugin (the release zip) in a Blueprint-only project, UE 5.8 | 2.1.1: loads without compiling; all 21 tests pass there, the second engine included (Tunisian, English, MSA and `any`). 5.5 and 5.6 zips built the same way, not opened |
 | ... of which on the live microphone | start, switch mode, shut down, four times over: passes. The device is opened and read; nobody spoke into it |
 | Benchmark on audio files | run; 116 synthetic utterances (English, French), 31 recorded (1 English, 30 German) |
-| Sample project | builds and runs in the editor on UE 5.8; driven by the author's voice |
+| Sample project | builds and runs in the editor on UE 5.8; driven by the author's voice. Builds on UE 5.6 from a fresh clone, no compiler warning |
 | A person speaking into a microphone | used by the author with their own voice, in their capstone game (UE 5.6) and in the sample (UE 5.8). Not measured: every accuracy figure comes from audio files |
 | Packaged game build | the sample, packaged with `BuildCookRun` (UE 5.8, Win64, Development): the models, the DLLs and ONNX Runtime are staged; the game loads the English model and starts listening, and with `-SpeechLanguage=any` or `aeb` loads the second engine's model (3.5 s) and scores phrases. Shipping (2.0.0): packages and runs without a crash; it writes no log, so listening was not confirmed there; the second engine was not tried in Shipping |
 | Mac, Linux, consoles | not supported: the bundled libraries are 64-bit Windows builds |

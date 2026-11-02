@@ -39,6 +39,17 @@ repository's work and is not listed here.
 
 ### Fixed
 
+- **Custom phrases and Arabic on UE 5.6.** The model as published stores its
+  8 convolution weights as int8, and the ONNX Runtime of UE 5.6 (1.20) has no
+  int8 ConvInteger: the model did not load ("Could not find an implementation
+  for ConvInteger(10)"), while UE 5.8 (1.24) ran it. `Get-Models.ps1` now
+  shifts those weights and their zero point to uint8, in place: the
+  difference `w - zero point` is unchanged, so the outputs are bit-identical
+  (checked on onnxruntime 1.31), and the file loads on 1.20. Run the script
+  again on a model already downloaded and it converts it, checked by SHA-256
+  before and after. The edits come from `Tools/ModelPatch/conv_uint8.py`. On UE
+  5.6, all 22 tests pass. When the model does not load, the error now says to
+  run the script.
 - `Tools/Get-Models.ps1` run on its own, outside a clone (as the release notes
   tell Blueprint-only users to): it no longer stops on the sample grammar it
   copies for `en`, and without `-Destination` it says where models go instead
