@@ -73,7 +73,11 @@ The rest of the test audio is not in the repository:
 ## Speech models
 
 No model is in the repository. `Tools/Get-Models.ps1` downloads them from their
-publishers, and each keeps its publisher's licence:
+publishers, and each keeps its publisher's licence. The release's `-WithModels`
+zips redistribute two of them, US English and Omnilingual ASR, with the
+licence of each next to it; the Omnilingual model there is the converted one
+(see [docs/models.md](docs/models.md)), and its `CHANGES.txt` says what was
+changed, as the Apache License asks.
 
 | Language | What | Publisher | Licence |
 |---|---|---|---|

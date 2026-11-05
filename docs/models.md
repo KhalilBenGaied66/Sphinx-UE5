@@ -6,6 +6,12 @@ make up each word). No model is in this repository; they are downloaded.
 
 ## Getting them
 
+The release's `-WithModels` zips already hold the English model and the
+second engine's model (`en` and `omnilingual`, converted for UE 5.6 as below),
+with their licences: drag the zip's `Content` folder into your project and
+there is nothing else to fetch. For French, German, or the models alone, use
+the script:
+
 ```
 powershell -ExecutionPolicy Bypass -File Tools\Get-Models.ps1 -Language en,fr,de
 ```

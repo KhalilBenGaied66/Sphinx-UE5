@@ -23,6 +23,25 @@ PocketSphinx spots key phrases. Use the language code `any`, or an Arabic code
 model. Both engines sit behind the same Voice Command component. See Status
 for what has been measured.
 
+## Which download do I need?
+
+| You want to | Download | Then |
+|---|---|---|
+| **Add voice commands to your own project** (Blueprint-only or C++), UE 5.6 or 5.8 | From [Releases](https://github.com/KhalilBenGaied66/Sphinx-UE5/releases/latest), the **`-WithModels`** zip for your engine version (about 280 MB): the plugin and both speech models in one file | Open the zip and drag its `Plugins` and `Content` folders into your project folder, next to your `.uproject`. Open the project. Nothing to compile, no script to run |
+| The same, plugin only (English only, or you already have the models) | The zip without `-WithModels` for your engine version (about 28 MB) | Unzip it into your project's `Plugins` folder, then get the models with `Tools\Get-Models.ps1` ([docs/models.md](docs/models.md)) |
+| **Try the demo first** (a cube that obeys spoken commands) | This repository: *Code > Download ZIP*, or `git clone` | Needs Visual Studio 2022, because the demo compiles. For the models, drag the `Content` folder of a `-WithModels` zip into it, or run `Get-Models.ps1`. See [Quick start](#quick-start) |
+| Unreal Engine 5.5 | The 5.5 zip of [release 2.1.1](https://github.com/KhalilBenGaied66/Sphinx-UE5/releases/tag/v2.1.1) | Unzip it into `Plugins`; get the models with `Get-Models.ps1` from this repository |
+
+You never copy `SphinxSample.uproject` (the demo's project file) or anything
+else of the demo into your project: your project keeps its own `.uproject`.
+Only `Plugins/SpeechRecognition` and `Content/model` go into it.
+
+Then add a **Voice Command** component to an actor, pick a **Language**, fill
+in **Commands**, and bind **On Voice Command**. Before packaging a game, add
+one line to `Config/DefaultGame.ini` so the models are shipped with it:
+[docs/models.md](docs/models.md#shipping-a-game). Players of your game install
+nothing: the models travel inside the build.
+
 ## What it is for
 
 Voice as an input, next to the keyboard and the gamepad: a known set of things
@@ -138,7 +157,7 @@ after it), and one said inside a sentence about 430 ms sooner.
 | Arabic (`ar`, `aeb`, `ary`...), Omnilingual ASR through NNE with phrase scoring | built. On 89 synthetic Darija command clips and 18 distractors, inside Unreal: phrase scoring 78 of 89 commands, 0 false matches, 0 false accepts, against 50 of 89 for matching the model's text (thresholds chosen on those clips). Model loaded in 1.6 to 3.2 s; about 0.4 s per command with 8 ONNX Runtime threads, 0.7 s with 4, 2.4 s with 1; phrase scoring adds about 8 ms. The C++ matcher and phrase spellings agree with the Python ones on 1,343 and 143 cases |
 | ... with a person speaking | the author, Tunisian Darija, two live sessions in the sample: about 75% of commands worked with text matching, by the author's count, and "the Tunisian works" with phrase scoring. Not yet measured on recordings with known commands; MSA not yet spoken |
 | Invented words (`any`) | five made-up spell phrases, written once in Latin letters, spoken by two synthetic voices (English, French): 10 of 10 recognised, 0 wrong, 0 of 8 sentences of chat fired a spell. Nobody has spoken them yet |
-| Pre-built plugin (the release zip) in a Blueprint-only project, UE 5.6 and 5.8 | 2.2.0: each zip loads without compiling in its engine version; all 22 tests pass there, the second engine included (Tunisian, English, MSA and `any`). 2.2.0 has no 5.5 zip (2.1.1 has one) |
+| Pre-built plugin (the release zip) in a Blueprint-only project, UE 5.6 and 5.8 | 2.2.0: each zip loads without compiling in its engine version; all 22 tests pass there, the second engine included (Tunisian, English, MSA and `any`). The `-WithModels` zips, dragged into a new empty Blueprint-only project with no setting changed: models found, 20 tests pass, the French and German ones skip (those models are not in the zip). 2.2.0 has no 5.5 zip (2.1.1 has one) |
 | ... of which on the live microphone | start, switch mode, shut down, four times over: passes. The device is opened and read; nobody spoke into it |
 | Benchmark on audio files | run; 116 synthetic utterances (English, French), 31 recorded (1 English, 30 German) |
 | Sample project | builds and runs in the editor on UE 5.8; driven by the author's voice. Builds on UE 5.6 from a fresh clone, no compiler warning |
@@ -197,6 +216,10 @@ spell a phrase: [docs/custom-phrases.md](docs/custom-phrases.md) (in short:
 plainly, once, the way you would write it).
 
 To use the plugin in your own project:
+
+The shortest way is the `-WithModels` zip from Releases, which does steps 1
+and 2 at once (see [Which download do I need?](#which-download-do-i-need)).
+By hand:
 
 1. Copy `Plugins/SpeechRecognition` into your project's `Plugins` folder. For
    a Blueprint-only project, take the pre-built zip for your engine version
